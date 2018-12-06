@@ -4,21 +4,13 @@ import android.app.Activity
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.util.Log
 import com.firebase.ui.auth.AuthUI
-import com.google.firebase.FirebaseException
-import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
-import com.google.firebase.auth.PhoneAuthCredential
-import com.google.firebase.auth.PhoneAuthProvider
-import kotlinx.android.synthetic.main.activity_login.*
 import java.util.*
-import java.util.concurrent.TimeUnit
 import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.IdpResponse
-
+import kotlinx.android.synthetic.main.activity_login.*
 
 
 class Login : AppCompatActivity() {
@@ -28,24 +20,25 @@ class Login : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_login)
 
         if (FirebaseAuth.getInstance().currentUser != null) {
             startApp()
         }
         else {
-            startActivityForResult(
-                AuthUI.getInstance()
-                    .createSignInIntentBuilder()
-                    .setAvailableProviders(Arrays.asList(
-                        AuthUI.IdpConfig.GoogleBuilder().build()
-                    ))
-                    .setIsSmartLockEnabled(false)
-                    .build(),
-                REQUEST_CODE
-            )
+            buttonLogin.setOnClickListener {
+                startActivityForResult(
+                    AuthUI.getInstance()
+                        .createSignInIntentBuilder()
+                        .setAvailableProviders(Arrays.asList(
+                            AuthUI.IdpConfig.GoogleBuilder().build()
+                        ))
+                        .setIsSmartLockEnabled(false)
+                        .build(),
+                    REQUEST_CODE
+                )
+            }
         }
-
-        snackbar("Tets")
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -55,17 +48,16 @@ class Login : AppCompatActivity() {
 
             if (resultCode == Activity.RESULT_OK) {
                 startApp()
-            } else {
+            }
+            else {
                 if (response == null) {
                     snackbar("sign_in_cancelled")
                     return
                 }
-
                 if (response.error!!.errorCode == ErrorCodes.NO_NETWORK) {
                     snackbar("no_internet_connection")
                     return
                 }
-
                 snackbar("unknown_error")
                 Log.e(TAG, "Sign-in error: ", response.error)
             }
@@ -73,6 +65,7 @@ class Login : AppCompatActivity() {
     }
 
     fun startApp() {
+        snackbar("Successful Sign In")
         startActivity(Intent(this, MainActivity::class.java))
         finish()
     }

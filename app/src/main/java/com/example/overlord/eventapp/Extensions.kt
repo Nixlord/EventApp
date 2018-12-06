@@ -1,11 +1,10 @@
 package com.example.overlord.eventapp
 
 import android.app.Activity
-import android.support.design.widget.Snackbar
 import android.text.Editable
-import android.text.TextWatcher
-import android.view.View
 import android.widget.EditText
+import android.text.TextWatcher
+import android.support.design.widget.Snackbar
 
 fun EditText.onTextChange(onTextChange: (input : String) -> Unit ) {
     this.addTextChangedListener(object : TextWatcher {

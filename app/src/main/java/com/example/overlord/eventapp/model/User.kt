@@ -1,3 +1,4 @@
 package com.example.overlord.eventapp.model
 
-class Guest(var Name : String, var email : String)
+// Hello Kotlin, Bye (almost) boilerplate.
+class Guest(var name : String, var email : String)

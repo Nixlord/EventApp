@@ -1,9 +1,11 @@
 package com.example.overlord.eventapp
 
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
+import android.text.Editable
 import android.widget.EditText
+import android.text.TextWatcher
+import java.lang.IllegalArgumentException
+import java.util.*
 
 /**
  * All examples are true to my knowledge.
@@ -141,6 +143,7 @@ fun getName(color : Color) : String {
         Color.BLUE -> "Diksha"
         Color.INDIGO -> "Amrit"
         Color.VIOLET -> "Soubhagya"
+        //No else(default) required if exhaustive
     }
 }
 
@@ -150,6 +153,106 @@ fun getWarmth(color: Color) = when (color) {
     Color.BLUE, Color.INDIGO, Color.VIOLET -> "Cold"
 }
 
+fun mix(one : Color, two : Color) = when(setOf(one, two)) {
+    setOf(Color.RED, Color.YELLOW) -> Color.ORANGE
+    setOf(Color.YELLOW, Color.BLUE) -> Color.GREEN
+    else -> Color.VIOLET
+}
+
+/*
+Now some object oriented example. Inheritance based.
+ */
+
+interface Expr
+class Num(val value : Int) : Expr
+class Sum(val left : Expr, val right : Expr) : Expr
+
+/*
+JAVA equivalent
+
+public int eval(Expr e) {
+    if ( e instanceOf Num )
+        // This explicit cast is not required in Kotlin
+        // If you have checked type once, you don't need to cast
+        return (Num)e;
+    else if ( e instanceOf Sum )
+        // Ugly
+        return eval(((Sum)e).left) + eval(((Sum)e).right);
+    else
+        throw error;
+}
+ */
+
+
+fun eval(e : Expr) : Int = when(e) {
+    is Num -> e.value
+    is Sum -> eval(e.left) + eval(e.right)
+    else -> throw IllegalArgumentException("Unknown")
+}
+
+fun evalBlock(e : Expr) : Int {
+    // It will complain about return. Ignore
+    // Basically if you are in a block form, you'll have to explicitly return
+    when (e) {
+        is Num -> return e.value
+        is Sum -> return eval(e.left) + eval(e.right)
+        else -> throw IllegalArgumentException("Unknown")
+    }
+}
+
+//This form of when does not have parenthesis
+fun anotherFormOfWhen(n : Int, m : Int) = when {
+
+    n % 15 == 0 -> "3 and 5"
+    n % 3 == 0 -> "3"
+    n % 5 == 0 -> "5"
+    //You can have expressions from other variables
+    m % 3 == 0 -> "3"
+    //From other functions
+    squareBlock(n) == m -> "squares"
+    //Just take care while writing.
+    else -> "none"
+}
+
+// Range types in Kotlin must be [low, high]
+// The following is [1, 100] (includes 100)
+val range = 1..100
+val alphaRange = 'A'..'Z'
+
+// One form of for loop
+fun demoForForms() {
+    for (i in range)
+        Log.d("", i.toString())
+
+    // This starts from 100 and decreases 2 at a time until it reaches 1
+    for (i in 100 downTo 1 step 2)
+        Log.d("", i.toString())
+
+    // for (i in 0..100)
+    for (i in 0 until 100)
+        Log.d("", i.toString())
+
+    // Map iteration example
+    val binaryRepresentations = TreeMap<Char, String>()
+    // Map creation
+    for (c in 'A'..'Z') {
+        binaryRepresentations[c] = Integer.toBinaryString(c.toInt())
+    }
+    // for ((key, value) in binaryRepresentations)
+    for ((char, binary) in binaryRepresentations)
+        // String template Matching
+        Log.d("", "$char = $binary")
+
+    //This form is like repeat(i, n) and range-for combined
+    val friendList = arrayListOf("shibasis", "diksha", "soubhagya")
+    for ((index, element) in friendList.withIndex())
+        Log.d("", "$index: $element")
+
+    //TODO More forms
+}
+
+//It translates to the normal c >= 'a' && c <= 'z' || ...you know
+fun isAlpha(c : Char) = c in 'a'..'z' || c in 'A'..'Z'
 
 //Android Example
 /**
@@ -195,15 +298,12 @@ fun EditText.onTextChangeDemo(onTextChange: (input : String) -> Unit ) {
         }
     })
 }
-
-//Then call like
-fun demoExtensionFunctions(editText: EditText) {
-    editText.onTextChangeDemo { s -> Log.d("blah", s) }
-}
-
 /**
  * This will allow us to write much better code.
  * By correcting flaws in the Android Framework.
  */
 
-
+//Then call like
+fun demoExtensionFunctions(editText: EditText) {
+    editText.onTextChangeDemo { s -> Log.d("blah", s) }
+}

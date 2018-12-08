@@ -2,7 +2,9 @@ package com.example.overlord.eventapp
 
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
+import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import com.example.overlord.eventapp.model.Guest
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
@@ -11,8 +13,10 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    val firestore = FirebaseFirestore.getInstance()
-    val auth = FirebaseAuth.getInstance()
+    val TAG = "MAIN_ACT"
+
+    private val firestore = FirebaseFirestore.getInstance()
+    private val auth = FirebaseAuth.getInstance()
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
@@ -32,6 +36,22 @@ class MainActivity : AppCompatActivity() {
         false
     }
 
+    fun loadFragment(fragment: Fragment?) : Boolean {
+        fragment?.let {
+            supportFragmentManager.beginTransaction()
+//                .replace(R.id.fragment_container)
+
+        }
+    }
+
+    fun setupNav(navigationView: BottomNavigationView) {
+        navigationView.setOnNavigationItemSelectedListener {
+            when(it.itemId) {
+                R.id.navigation_home ->
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -46,6 +66,7 @@ class MainActivity : AppCompatActivity() {
                             input,
                             it
                         ))
+                    .addOnFailureListener { error -> Log.e(TAG + "onTextChange", error.message ) }
             }
         }
 

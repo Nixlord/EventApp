@@ -5,6 +5,8 @@ import android.text.Editable
 import android.widget.EditText
 import android.text.TextWatcher
 import android.support.design.widget.Snackbar
+import java.text.SimpleDateFormat
+import java.util.*
 
 fun EditText.onTextChange(onTextChange: (input : String) -> Unit ) {
     this.addTextChangedListener(object : TextWatcher {
@@ -27,3 +29,6 @@ fun Activity.snackbar(message : String) {
     // android.R.id.content Points to the layout file
     Snackbar.make(this.findViewById(android.R.id.content), message, Snackbar.LENGTH_SHORT).show()
 }
+
+fun timeStamp() = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
+

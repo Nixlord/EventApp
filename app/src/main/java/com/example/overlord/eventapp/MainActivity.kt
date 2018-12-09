@@ -24,13 +24,21 @@ class MainActivity : AppCompatActivity() {
                 textViewInput.setText(R.string.title_home)
                 return@OnNavigationItemSelectedListener true
             }
-            R.id.navigation_dashboard -> {
-                textViewInput.setText(R.string.title_dashboard)
+            R.id.navigation_events -> {
+                textViewInput.setText(R.string.title_events)
                 return@OnNavigationItemSelectedListener true
             }
-            R.id.navigation_notifications -> {
-                textViewInput.setText(R.string.title_notifications)
-                  return@OnNavigationItemSelectedListener true
+            R.id.navigation_camera -> {
+                textViewInput.setText(R.string.title_camera)
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.navigation_albums -> {
+                textViewInput.setText(R.string.title_albums)
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.navigation_guests -> {
+                textViewInput.setText(R.string.title_guests)
+                return@OnNavigationItemSelectedListener true
             }
         }
         false
@@ -58,6 +66,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+
 
         editTextName.onTextChange { input ->
             textViewInput.text = input

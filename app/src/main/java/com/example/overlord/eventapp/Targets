@@ -1,0 +1,116 @@
+GENERAL INSTRUCTIONS
+
+>All units will be individually built, and shared to GitHub
+>You will list all libraries you use along with their links in the LibrariesUsed file
+>All information here is true to my knowledge, will change in future
+>You will group classes according to screens, That is packages will be
+Package List
+
+common
+    extensionFunctions
+splash
+intro
+login
+main
+    common_main
+        FilterActivity
+        PostActivity
+    wall
+    event
+    camera
+    album
+    guests
+
+
+Global
+    Firestore
+    Firebase Storage
+    Kotlin
+    Speed
+    Profiling
+    UI improvements (Lottie, Wasabeef, Minor Details)
+/
+Schema (data classes / POJO) [PS: No arrays anywhere]
+    User
+    Common (Photo, Blog) as Post with boolean flag (Store photo link)
+    Event
+/
+Splash Screen
+    Select Front Photo
+    Implement Functionality
+    Skip Intro and Login if Logged in
+/
+Introduction Screen
+    Video play
+    Instructions to the app users
+/
+Login
+    Enter Details (Name, Side, Relation, Phone?)
+    Firebase Phone Authentication
+    Store auxillary Data in firestore
+/
+Main
+    Five option bottom nav bar
+    Fragments/Activities to open in each
+        (Check speed of Activity, unless too slow don't consider nested fragments)
+        (Nested Fragments vs Delay for Activity)
+        (Very Complex Main Activity vs Simpler Main Activity)
+        if activity : Activate appropriate option according to selected activity, copy navbar
+        else : Nested Fragment
+    Navigation Drawer
+    Collapsing Toolbar Layout (requires Coordinator Layout)
+/
+Wall - Fragment
+    Tab Layout with Fragments and ViewPager (Also
+    SearchView
+    SearchView query Firestore
+    FirestoreUI recyclerView
+    Floating Action Button linked to the following
+    Common(Photos, Blogs) -> Implement as an Activity / AppCompatDialog
+        ViewHolder (title, author, relation, date, location, tags, like, comment, share) engineering
+        ViewHolder UI
+        Photo(Photos) / Text(Photos/Blog)
+    Common Across Tabs (Wall(for Photos, FAB), Camera(TAB Item), Album (FAB))
+        Goto CameraActivity then return (with filtered(image) to new Post Activity)
+    Blog
+        Start Post Activity without Image
+    Post Activity
+        Have Options to enter (title, author, relation, date, location, tags)
+        Auto generate some Tags using FirebaseML
+        Upload Post to Firestore
+/
+Event
+    Event RecyclerView
+    Event ViewHolder ( Event Name, Photo, Time, Location, Map )
+    Alarm Set Functionality
+/
+Camera
+    Take Photo
+    Save in "Snigdha_Charan"
+    Send to FilterActivity
+        FilterActivity
+            Store original and filtered image in Gallery
+            Return Filtered Image
+    Upload filtered Image
+    If called > Return to Caller with photo
+    If not, to Wall
+/
+Album - Fragment
+    TabLayout with Fragments and ViewPager
+    AllFragment
+        FirestoreUI - GridRecyclerView
+        Group folders by tag and people (Mehendi, Professional, Manab)
+        Click on image to open that group in the side fragment ($name defaults to empty view)
+    AlbumFragment
+        Contains SearchView to replace current query
+        View Photos uploaded with the current tag
+/
+GuestList - Fragment
+    TabLayout with Fragments and ViewPager
+    Bride/Groom Fragment
+    Common (Bride, Groom)
+        FirestoreRecyclerView to keep Guests
+        GuestViewHolder ( Name, Relation, Phone )
+        Whatsapp / Call Intent Functionality
+
+

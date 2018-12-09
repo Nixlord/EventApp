@@ -35,11 +35,11 @@ class MainActivity : AppCompatActivity() {
         }
         false
     }
-
+/*
     fun loadFragment(fragment: Fragment?) : Boolean {
         fragment?.let {
             supportFragmentManager.beginTransaction()
-//                .replace(R.id.fragment_container)
+                .replace(R.id.fragment_container)
 
         }
     }
@@ -51,6 +51,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

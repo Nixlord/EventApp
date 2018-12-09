@@ -24,5 +24,6 @@ fun EditText.onTextChange(onTextChange: (input : String) -> Unit ) {
 
 
 fun Activity.snackbar(message : String) {
+    // android.R.id.content Points to the layout file
     Snackbar.make(this.findViewById(android.R.id.content), message, Snackbar.LENGTH_SHORT).show()
 }

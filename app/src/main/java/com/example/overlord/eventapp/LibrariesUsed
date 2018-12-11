@@ -10,5 +10,8 @@ https://bumptech.github.io/glide/doc/getting-started.html
 FirebaseUI
 https://github.com/firebase/FirebaseUI-Android
 
-Compressor
+Compressor ( Otherwise images are too large )
 https://github.com/zetbaitsu/Compressor
+
+PhotoView ( Has issue with Android ViewPager )
+https://github.com/chrisbanes/PhotoView

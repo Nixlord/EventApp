@@ -26,7 +26,6 @@ lateinit var cannotBeNull_YouMustAssignLater : String
 
 //Smart Casts - Learn later
 
-
 //No need to specify return type. Return type assumed void.
 fun demoFunction(name : String, rollno : Int) {
     Log.d(name, "" + rollno)

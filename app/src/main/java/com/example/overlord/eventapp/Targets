@@ -2,10 +2,11 @@ Long Term -> Learn ReactiveX http://www.andreamaglie.com/2015/rxjava-android-whe
 
 GENERAL INSTRUCTIONS
 
->All units will be individually built, and shared to GitHub
->You will list all libraries you use along with their links in the LibrariesUsed file
->All information here is true to my knowledge, will change in future
->You will group classes according to screens, That is packages will be
+> All units will be individually built, and shared to GitHub
+> You will list all libraries you use along with their links in the LibrariesUsed file
+> All information here is true to my knowledge, will change in future
+> You will group classes according to screens, That is packages will be
+--------------------------------------------------------------------------------------
 Package List
 
 common
@@ -113,6 +114,4 @@ GuestList - Fragment
     Common (Bride, Groom)
         FirestoreRecyclerView to keep Guests
         GuestViewHolder ( Name, Relation, Phone )
-        Whatsapp / Call Intent Functionality
-
-
+        WhatsApp / Call Intent Functionality

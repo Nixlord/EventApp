@@ -31,7 +31,7 @@ class Login : AppCompatActivity() {
                     AuthUI.getInstance()
                         .createSignInIntentBuilder()
                         .setAvailableProviders(Arrays.asList(
-                            AuthUI.IdpConfig.GoogleBuilder().build()
+                            AuthUI.IdpConfig.PhoneBuilder().build()
                         ))
                         .setIsSmartLockEnabled(false)
                         .build(),

@@ -80,7 +80,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-
         buttonSignOut.setOnClickListener {
             AuthUI.getInstance()
                 .signOut(this)

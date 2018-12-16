@@ -48,10 +48,8 @@ class MainActivity : AppCompatActivity() {
         fragment?.let {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container)
-
         }
     }
-
     fun setupNav(navigationView: BottomNavigationView) {
         navigationView.setOnNavigationItemSelectedListener {
             when(it.itemId) {
@@ -73,17 +71,18 @@ class MainActivity : AppCompatActivity() {
             auth?.currentUser?.email?.let {
                 firestore.collection("users")
                         .add(Guest(
-                            input,
-                            it
+                                input,
+                                it
                         ))
-                    .addOnFailureListener { error -> Log.e(TAG + "onTextChange", error.message ) }
+                        .addOnFailureListener { error -> Log.e(TAG + "onTextChange", error.message ) }
             }
         }
 
+
         buttonSignOut.setOnClickListener {
             AuthUI.getInstance()
-                .signOut(this)
-                .addOnCompleteListener { finish() }
+                    .signOut(this)
+                    .addOnCompleteListener { finish() }
         }
 
 

@@ -1,6 +1,7 @@
 package com.example.overlord.eventapp
 
 import android.app.Activity
+import android.content.Intent
 import android.text.Editable
 import android.widget.EditText
 import android.text.TextWatcher
@@ -28,6 +29,11 @@ fun EditText.onTextChange(onTextChange: (input : String) -> Unit ) {
 fun Activity.snackbar(message : String) {
     // android.R.id.content Points to the layout file
     Snackbar.make(this.findViewById(android.R.id.content), message, Snackbar.LENGTH_SHORT).show()
+}
+
+fun Activity.startActivity(SourceActivity : Activity, FinalActivity : Activity) {
+    startActivity(Intent(SourceActivity, FinalActivity::class.java))
+    finish()
 }
 
 fun timeStamp() = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())

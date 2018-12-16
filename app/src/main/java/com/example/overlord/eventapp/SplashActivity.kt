@@ -1,6 +1,5 @@
 package com.example.overlord.eventapp
 
-import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
@@ -16,12 +15,6 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        Handler().postDelayed({ startApp() }, SPLASH_TIME_OUT)
-    }
-
-    fun startApp() {
-        snackbar("Successful SplashActivity")
-        startActivity(Intent(this, IntroActivity::class.java))
-        finish()
+        Handler().postDelayed({ startActivity(this, IntroActivity()) }, SPLASH_TIME_OUT)
     }
 }

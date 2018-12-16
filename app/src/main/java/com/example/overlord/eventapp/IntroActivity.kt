@@ -5,9 +5,6 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_intro.*
 
-/**
- * Created by diksha on 16/12/18.
- */
 class IntroActivity :AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,4 +20,11 @@ class IntroActivity :AppCompatActivity() {
         if (isFinishing) return
         startActivity(this, Login())
     }
+
+/*
+    override fun onStop() {
+        super.onStop()
+        startActivity(this, Login())
+    }*/
+
 }

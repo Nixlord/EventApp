@@ -4,9 +4,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 
-/**
- * Created by diksha on 16/12/18.
- */
 class SplashActivity : AppCompatActivity() {
 
     val SPLASH_TIME_OUT = 5000L

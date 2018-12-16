@@ -1,6 +1,7 @@
 package com.example.overlord.eventapp
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -20,6 +21,8 @@ class Login : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        checkFirstRun()
+
         setContentView(R.layout.activity_login)
 
         if (FirebaseAuth.getInstance().currentUser != null) {
@@ -39,6 +42,8 @@ class Login : AppCompatActivity() {
                 )
             }
         }
+
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -68,5 +73,18 @@ class Login : AppCompatActivity() {
         snackbar("Successful Sign In")
         startActivity(Intent(this, MainActivity::class.java))
         finish()
+    }
+
+    fun checkFirstRun() {
+        val isFirstRun = getSharedPreferences("PREFERENCE", Context.MODE_PRIVATE)
+                .getBoolean("isFirstRun", true)
+
+        if (isFirstRun) {
+            startActivity(this, SplashActivity())
+        }
+
+        getSharedPreferences("PREFERENCE", Context.MODE_PRIVATE).edit()
+                .putBoolean("isFirstRun", false).apply()
+
     }
 }

@@ -29,7 +29,6 @@
             android:theme="@style/FullscreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
             </intent-filter>
         </activity>
 

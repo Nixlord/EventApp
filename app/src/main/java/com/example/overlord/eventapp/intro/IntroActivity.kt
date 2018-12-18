@@ -1,9 +1,10 @@
-package com.example.overlord.eventapp
+package com.example.overlord.eventapp.intro
 
 import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
+import com.example.overlord.eventapp.R
+import com.example.overlord.eventapp.common.startActivity
 import kotlinx.android.synthetic.main.activity_intro.*
 
 class IntroActivity :AppCompatActivity() {
@@ -21,7 +22,7 @@ class IntroActivity :AppCompatActivity() {
 
     private fun jump() {
         if (isFinishing) return
-        startActivity(this, Login())
+        startActivity(this, LoginActivity())
     }
 
     override fun onPause() {

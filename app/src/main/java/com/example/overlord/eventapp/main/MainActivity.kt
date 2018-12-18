@@ -1,10 +1,11 @@
-package com.example.overlord.eventapp
+package com.example.overlord.eventapp.main
 
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
-import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import com.example.overlord.eventapp.R
+import com.example.overlord.eventapp.common.onTextChange
 import com.example.overlord.eventapp.model.Guest
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth

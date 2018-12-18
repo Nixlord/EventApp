@@ -1,8 +1,10 @@
-package com.example.overlord.eventapp
+package com.example.overlord.eventapp.intro
 
 import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
+import com.example.overlord.eventapp.R
+import com.example.overlord.eventapp.common.startActivity
 
 class SplashActivity : AppCompatActivity() {
 

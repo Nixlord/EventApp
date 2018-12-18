@@ -1,4 +1,4 @@
-package com.example.overlord.eventapp
+package com.example.overlord.eventapp.main.common
 
 import android.content.Context
 import android.net.Uri
@@ -7,7 +7,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.fragment_home.*
+import com.example.overlord.eventapp.R
 
 
 // TODO: Rename parameter arguments, choose names that match

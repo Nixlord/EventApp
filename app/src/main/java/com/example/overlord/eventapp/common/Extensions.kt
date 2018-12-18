@@ -1,4 +1,4 @@
-package com.example.overlord.eventapp
+package com.example.overlord.eventapp.common
 
 import android.app.Activity
 import android.content.Intent

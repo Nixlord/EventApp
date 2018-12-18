@@ -1,4 +1,4 @@
-package com.example.overlord.eventapp
+package com.example.overlord.eventapp.intro
 
 import android.app.Activity
 import android.content.Context
@@ -6,6 +6,10 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import com.example.overlord.eventapp.R
+import com.example.overlord.eventapp.main.MainActivity
+import com.example.overlord.eventapp.common.snackbar
+import com.example.overlord.eventapp.common.startActivity
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import java.util.*
@@ -14,7 +18,7 @@ import com.firebase.ui.auth.IdpResponse
 import kotlinx.android.synthetic.main.activity_login.*
 
 
-class Login : AppCompatActivity() {
+class LoginActivity : AppCompatActivity() {
 
     val REQUEST_CODE = 1
     val TAG = "LoginActivity"

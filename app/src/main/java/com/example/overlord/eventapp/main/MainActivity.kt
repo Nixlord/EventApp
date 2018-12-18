@@ -2,6 +2,7 @@ package com.example.overlord.eventapp.main
 
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
+import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import com.example.overlord.eventapp.R
@@ -11,6 +12,23 @@ import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_main.*
+
+fun AppCompatActivity.loadFragment(containerID : Int, fragment : Fragment) {
+    val currentFragment = supportFragmentManager.findFragmentById(containerID)
+
+    if (currentFragment != null)
+        supportFragmentManager.beginTransaction()
+            .add(containerID, fragment)
+            .commit()
+    else
+        supportFragmentManager.beginTransaction()
+            .replace(containerID, fragment)
+            .commit()
+}
+
+fun AppCompatActivity.getName() : String {
+    return this.javaClass.simpleName
+}
 
 class MainActivity : AppCompatActivity() {
 

@@ -15,3 +15,32 @@ https://github.com/zetbaitsu/Compressor
 
 PhotoView ( Has issue with Android ViewPager )
 https://github.com/chrisbanes/PhotoView
+
+Kotlin Reflection
+implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+
+TOBEUSED
+https://github.com/mikepenz/AboutLibraries
+
+IcePick
+/*
+class ExampleActivity extends Activity {
+  @State String username; // This will be automatically saved and restored
+
+  @Override public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    Icepick.restoreInstanceState(this, savedInstanceState);
+  }
+
+  @Override public void onSaveInstanceState(Bundle outState) {
+    super.onSaveInstanceState(outState);
+    Icepick.saveInstanceState(this, outState);
+  }
+
+  // You can put the calls to Icepick into a BaseActivity
+  // All Activities extending BaseActivity automatically have state saved/restored
+}
+*/
+
+
+ToDo Implement listeners to work around shittyOnRequestPermissions and OnActivityResult

@@ -9,6 +9,23 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
+
+        <activity android:name=".intro.SplashActivity"
+                  android:theme="@style/FullscreenTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".intro.LoginActivity"
+                  android:theme="@style/FullscreenTheme" />
+
+
+        <activity android:name=".intro.IntroActivity"
+                  android:configChanges="orientation|keyboardHidden|screenLayout|screenSize"
+                  android:theme="@style/FullscreenTheme" />
+
         <activity
                 android:name=".main.MainActivity"
                 android:label="@string/app_name">
@@ -17,28 +34,5 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".intro.LoginActivity"
-                  android:theme="@style/FullscreenTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
-
-        <activity android:name=".intro.SplashActivity"
-            android:theme="@style/FullscreenTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-            </intent-filter>
-        </activity>
-
-        <activity android:name=".intro.IntroActivity"
-            android:theme="@style/FullscreenTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-            </intent-filter>
-        </activity>
-
     </application>
-
 </manifest>

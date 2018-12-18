@@ -11,9 +11,11 @@ Package List
 
 common
     extensionFunctions
-splash
+
 intro
-login
+    splash
+    intro
+    login
 main
     common_main
         FilterActivity

@@ -51,6 +51,13 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:16.0.5'
     implementation 'com.firebaseui:firebase-ui-auth:4.2.1'
 
+    def lifecycle_version = "1.1.1"
+    implementation "android.arch.lifecycle:runtime:$lifecycle_version"
+    kapt "android.arch.lifecycle:compiler:$lifecycle_version"
+    implementation "android.arch.lifecycle:common-java8:$lifecycle_version"
+
+    implementation 'com.github.halilozercan:BetterVideoPlayer:1.1.0'
+
 }
 
 apply plugin: 'com.google.gms.google-services'

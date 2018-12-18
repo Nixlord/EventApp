@@ -9,7 +9,7 @@ import android.util.Log
 import com.example.overlord.eventapp.R
 import com.example.overlord.eventapp.main.MainActivity
 import com.example.overlord.eventapp.common.snackbar
-import com.example.overlord.eventapp.common.startActivity
+
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import java.util.*
@@ -25,7 +25,7 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        checkFirstRun()
+//        checkFirstRun()
 
         setContentView(R.layout.activity_login)
 
@@ -79,6 +79,8 @@ class LoginActivity : AppCompatActivity() {
         finish()
     }
 
+    /*
+    ToDo @Diksha Delete this after understanding logic
     fun checkFirstRun() {
         val isFirstRun = getSharedPreferences("PREFERENCE", Context.MODE_PRIVATE)
                 .getBoolean("isFirstRun", true)
@@ -91,4 +93,5 @@ class LoginActivity : AppCompatActivity() {
                 .putBoolean("isFirstRun", false).apply()
 
     }
+    */
 }

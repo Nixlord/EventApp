@@ -1,43 +1,79 @@
 package com.example.overlord.eventapp.intro
 
+import android.arch.lifecycle.Lifecycle
+import android.arch.lifecycle.LifecycleObserver
+import android.arch.lifecycle.OnLifecycleEvent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.widget.MediaController
 import com.example.overlord.eventapp.R
-import com.example.overlord.eventapp.common.startActivity
+import com.example.overlord.eventapp.common.finishAndStart
+
 import kotlinx.android.synthetic.main.activity_intro.*
 
 class IntroActivity :AppCompatActivity() {
 
     var stopPosition : Int = 0
 
+    /*
+    Todo Complete this later. Maybe use builder pattern to abstract all this 253dp
+    Have tried BetterVideoPlayer.
+    Its better not to use library here. Shit library.
+
+    class VideoPlayer(activity: AppCompatActivity) : LifecycleObserver {
+
+        val mediaController = MediaController(activity)
+        var stopPosition : Int = 0
+
+        @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
+        fun onPause() {
+
+        }
+
+        @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
+
+
+    }
+ */
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_intro)
 
-        videoview.setVideoURI(Uri.parse("android.resource://" + packageName + "/" + R.raw.sns))
-        videoview.setOnCompletionListener { jump() }
-        videoview.start()
+
+
+        // ToDo Move video to Cloud Storage and change code
+        videoView.setVideoURI(Uri.parse("android.resource://" + packageName + "/" + R.raw.sns))
+        videoView.setOnPreparedListener {
+            val mediaController = MediaController(this)
+            mediaController.setAnchorView(videoView)
+            videoView.setMediaController(mediaController)
+        }
+        videoView.setOnCompletionListener { finishAndStart(LoginActivity::class.java) }
+        videoView.start()
+
     }
 
+    /* ToDo @Diksha, Why isFinishing? if isFinishing is there, nothing will happen?
     private fun jump() {
         if (isFinishing) return
-        startActivity(this, LoginActivity())
+        finishAndStart(LoginActivity::class.java)
     }
+    */
 
     override fun onPause() {
         super.onPause()
-        stopPosition = videoview.currentPosition //stopPosition is an int
-        if (videoview.isPlaying)
-            videoview.pause()
+        stopPosition = videoView.currentPosition //stopPosition is an int
+        if (videoView.isPlaying)
+            videoView.pause()
     }
 
     override fun onRestart() {
         super.onRestart()
-        if (videoview != null) {
-            videoview.seekTo(stopPosition)
-            videoview.start()
+        if (videoView != null) {
+            videoView.seekTo(stopPosition)
+            videoView.start()
         }
     }
-
 }

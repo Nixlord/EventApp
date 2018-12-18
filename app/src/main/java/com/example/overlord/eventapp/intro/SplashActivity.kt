@@ -8,12 +8,15 @@ import com.example.overlord.eventapp.common.startActivity
 
 class SplashActivity : AppCompatActivity() {
 
-    val SPLASH_TIME_OUT = 5000L
+    val SPLASH_TIME_OUT = 3000L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        Handler().postDelayed({ startActivity(this, IntroActivity()) }, SPLASH_TIME_OUT)
+        Handler().postDelayed(
+            { startActivity(this, IntroActivity()) },
+            SPLASH_TIME_OUT
+        )
     }
 }

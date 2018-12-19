@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import com.example.overlord.eventapp.R
-import com.example.overlord.eventapp.common.finishAndStart
+import com.example.overlord.eventapp.extensions.finishAndStart
 
 import com.example.overlord.eventapp.main.MainActivity
 import com.google.firebase.auth.FirebaseAuth

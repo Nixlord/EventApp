@@ -1,14 +1,11 @@
 package com.example.overlord.eventapp.intro
 
-import android.arch.lifecycle.Lifecycle
-import android.arch.lifecycle.LifecycleObserver
-import android.arch.lifecycle.OnLifecycleEvent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.MediaController
 import com.example.overlord.eventapp.R
-import com.example.overlord.eventapp.common.finishAndStart
+import com.example.overlord.eventapp.extensions.finishAndStart
 
 import kotlinx.android.synthetic.main.activity_intro.*
 

@@ -1,14 +1,14 @@
 package com.example.overlord.eventapp.intro
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import com.example.overlord.eventapp.R
+import com.example.overlord.eventapp.extensions.finishAndStart
 import com.example.overlord.eventapp.main.MainActivity
-import com.example.overlord.eventapp.common.snackbar
+import com.example.overlord.eventapp.extensions.snackbar
 
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
@@ -25,7 +25,6 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        checkFirstRun()
 
         setContentView(R.layout.activity_login)
 
@@ -75,8 +74,11 @@ class LoginActivity : AppCompatActivity() {
 
     fun startApp() {
         snackbar("Successful Sign In")
+        finishAndStart(MainActivity::class.java)
+        /*
         startActivity(Intent(this, MainActivity::class.java))
         finish()
+        */
     }
 
     /*

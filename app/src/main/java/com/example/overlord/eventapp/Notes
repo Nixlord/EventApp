@@ -1,0 +1,6 @@
+Android Activity
+
+Have a Intent Filter to allow other apps to share photos via this app
+
+Finish does not instantly destroy activity
+

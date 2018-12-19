@@ -17,6 +17,9 @@ class IntroActivity :AppCompatActivity() {
     var stopPosition : Int = 0
 
     /*
+
+    Ex: lifecycle.addObserver(VideoPlayer(this))
+    
     Todo Complete this later. Maybe use builder pattern to abstract all this 253dp
     Have tried BetterVideoPlayer.
     Its better not to use library here. Shit library.
@@ -42,7 +45,6 @@ class IntroActivity :AppCompatActivity() {
         setContentView(R.layout.activity_intro)
 
 
-
         // ToDo Move video to Cloud Storage and change code
         videoView.setVideoURI(Uri.parse("android.resource://" + packageName + "/" + R.raw.sns))
         videoView.setOnPreparedListener {
@@ -52,7 +54,6 @@ class IntroActivity :AppCompatActivity() {
         }
         videoView.setOnCompletionListener { finishAndStart(LoginActivity::class.java) }
         videoView.start()
-
     }
 
     /* ToDo @Diksha, Why isFinishing? if isFinishing is there, nothing will happen?

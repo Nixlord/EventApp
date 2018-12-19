@@ -46,7 +46,8 @@ fun Activity.startActivity(SourceActivity : Activity, FinalActivity : Activity) 
 }
 */
 
-// KClass is more idiomatic for Kotlin
+// Activity lifecycle runs to completion after calling finish, so have to be careful
+// Finish does not instantly destroy the activity
 fun Activity.finishAndStart(activity : Class<*>) {
     startActivity(Intent(this, activity))
     finish()

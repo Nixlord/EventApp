@@ -2,14 +2,16 @@
 package com.example.overlord.eventapp.extensions
 
 import android.content.Intent
+import android.os.Environment
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import com.crashlytics.android.Crashlytics
-import com.example.overlord.eventapp.abstractions.ActivityResultAction
 import com.example.overlord.eventapp.abstractions.DexterStepBuilder
-import pl.aprilapps.easyphotopicker.EasyImage
+import com.example.overlord.eventapp.model.Constants
+import id.zelory.compressor.Compressor
+import java.io.File
 import java.util.*
 
 
@@ -22,9 +24,6 @@ fun AppCompatActivity.snackbar(message : String) {
 fun AppCompatActivity.getName() : String {
     return this.javaClass.simpleName
 }
-
-
-
 
 fun logError(tag : String = "GlobalLog", message : String) {
     Log.e(tag, message)
@@ -46,7 +45,15 @@ fun AppCompatActivity.logDebug(message: String) {
     logDebug(tag, message)
 }
 
+fun AppCompatActivity.compressImage(image : File) : File {
 
+    val destinationRoot = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+    val destination = File(destinationRoot, Constants.localCompressedImages)
+
+    return Compressor(this)
+        .setDestinationDirectoryPath(destination.absolutePath)
+        .compressToFile(image)
+}
 
 /*
 > No memory leak here, but be careful with activity references.
@@ -85,25 +92,3 @@ fun AppCompatActivity.loadFragment(containerID : Int, fragment : Fragment) {
 fun AppCompatActivity.withPermissions(vararg permissions : String?) =
     DexterStepBuilder.withActivity(this).requestPermissions(permissions.toCollection(ArrayList()))
 
-fun AppCompatActivity.takePhoto() {
-    val action = {
-        EasyImage.openChooserWithDocuments(
-            this,
-            "Please Upload Photo",
-            0
-        )
-    }
-
-    val onSuccess : (Intent) -> Unit = {
-            intent ->
-                logDebug(intent.dataString)
-
-    }
-
-    val onError : (Error) -> Unit = {
-        error ->
-            logError(error.message!!)
-    }
-
-    val resultAction = ActivityResultAction(action, onSuccess, onError);
-}

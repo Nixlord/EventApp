@@ -2,14 +2,15 @@ package com.example.overlord.eventapp.intro
 
 import android.net.Uri
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.widget.MediaController
 import com.example.overlord.eventapp.R
+import com.example.overlord.eventapp.base.ResultListenerActivity
 import com.example.overlord.eventapp.extensions.finishAndStart
+import com.example.overlord.eventapp.main.MainActivity
 
 import kotlinx.android.synthetic.main.activity_intro.*
 
-class IntroActivity :AppCompatActivity() {
+class IntroActivity : ResultListenerActivity() {
 
     var stopPosition : Int = 0
 

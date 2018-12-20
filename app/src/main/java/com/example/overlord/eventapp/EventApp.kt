@@ -1,7 +1,10 @@
 package com.example.overlord.eventapp
 
 import android.app.Application
+import com.example.overlord.eventapp.model.Constants
 import pl.aprilapps.easyphotopicker.EasyImage
+import java.util.*
+import kotlin.random.Random
 
 class EventApp : Application() {
     override fun onCreate() {
@@ -9,8 +12,10 @@ class EventApp : Application() {
 
         // App Wide Initializations
 
+        Random(Date().time)
+
         EasyImage.configuration(this)
-            .setImagesFolderName("Snigdha_Charan")
+            .setImagesFolderName(Constants.localImages)
             .setCopyTakenPhotosToPublicGalleryAppFolder(true)
 
     }

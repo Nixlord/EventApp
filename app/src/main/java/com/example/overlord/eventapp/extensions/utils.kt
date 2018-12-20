@@ -1,3 +1,4 @@
+@file:JvmName("Utils")
 package com.example.overlord.eventapp.extensions
 
 import java.text.SimpleDateFormat

@@ -51,6 +51,10 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:16.0.5'
     implementation 'com.firebaseui:firebase-ui-auth:4.2.1'
 
+
+    implementation 'com.google.firebase:firebase-storage:16.0.3'
+    implementation 'com.firebaseui:firebase-ui-storage:4.2.1'
+
     def lifecycle_version = "1.1.1"
     implementation "android.arch.lifecycle:runtime:$lifecycle_version"
     kapt "android.arch.lifecycle:compiler:$lifecycle_version"
@@ -58,6 +62,18 @@ dependencies {
 
     implementation 'frankiesardo:icepick:3.2.0'
     compileOnly 'frankiesardo:icepick-processor:3.2.0'
+
+    implementation 'com.github.jkwiecien:EasyImage:2.1.0'
+    implementation 'com.karumi:dexter:5.0.0'
+
+    implementation 'id.zelory:compressor:2.1.0'
+
+    implementation 'com.github.chrisbanes:PhotoView:2.0.0'
+
+    implementation 'com.github.bumptech.glide:glide:4.8.0'
+    kapt 'com.github.bumptech.glide:compiler:4.8.0'
+
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.7'
 }
 
 apply plugin: 'com.google.gms.google-services'

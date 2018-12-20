@@ -1,3 +1,4 @@
+@file:JvmName("ViewUtils")
 package com.example.overlord.eventapp.extensions
 
 import android.text.Editable

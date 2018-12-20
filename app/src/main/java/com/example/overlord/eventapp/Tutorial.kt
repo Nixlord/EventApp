@@ -306,3 +306,80 @@ fun EditText.onTextChangeDemo(onTextChange: (input : String) -> Unit ) {
 fun demoExtensionFunctions(editText: EditText) {
     editText.onTextChangeDemo { s -> Log.d("blah", s) }
 }
+
+
+fun<T> join(
+    collection : Collection<T>,
+    prefix : String = "",
+    postfix : String = "",
+    separator : String = ""
+    ) : String {
+
+    val builder = StringBuilder(prefix)
+    for ( (idx, element) in collection.withIndex() ) {
+        if (idx > 0) builder.append(separator)
+        builder.append(element)
+    }
+    builder.append(postfix)
+
+    return builder.toString()
+}
+
+fun testJoin() {
+    val joined = join(listOf(1, 2, 3), "(", ")", ", ")
+    //You can convert this join easily to an Extension function
+}
+
+/**
+ * Extensions functions are stored in a class as static functions
+ * Ex : See extensions/activities
+ * There is a line at the start
+ * @file:JvmName("ActivityUtils")
+ * This is how you specify the name of the class that will house these functions for calling from Java
+ * All those functions will stored in a class ActivityUtils as static functions
+ *
+ */
+
+// Be very careful while implementing different Extension functions on Base and Sub classes.
+// Ex : Activity and AppCompatActivity having the same function signature but different implementation
+// The declaration time type of the parameter will be used, not the runtime.
+// Ex Activity act = AppCompatActivity()
+// act.Extension will call the one in Activity not in AppCompatActivity
+
+// Do not write Extension function with the same name as a member function. Always the member will be called.
+
+/*
+Example of INFIX function use
+*/
+
+enum class Suit {
+    HEARTS,
+    SPADES,
+    CLUBS,
+    DIAMONDS
+}
+enum class Rank {
+    TWO, THREE, FOUR, FIVE,
+    SIX, SEVEN, EIGHT, NINE,
+    TEN, JACK, QUEEN, KING, ACE
+}
+
+data class Card(val rank: Rank, val suit: Suit)
+
+infix fun Rank.of(suit : Suit) = Card(this, suit)
+
+val card = Rank.QUEEN of Suit.HEARTS
+
+/** I have to find more uses. This is new */
+
+private interface testIface {
+
+}
+
+
+
+
+
+
+
+

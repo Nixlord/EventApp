@@ -20,6 +20,12 @@ import java.io.File
 import java.io.FileInputStream
 import java.lang.Exception
 
+/**
+ * Try to push all this garbage into its own file and then expose via an extension function ?
+ * Inheritance has been used in a very ugly manner.
+ * This must be cleaned up.
+ */
+
 abstract class BaseActivity : StatefulActivity() {
 
     val firebaseAuth = FirebaseAuth.getInstance()

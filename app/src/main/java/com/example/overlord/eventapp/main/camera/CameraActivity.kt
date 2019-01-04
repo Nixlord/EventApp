@@ -117,7 +117,7 @@ class CameraActivity : AppCompatActivity() {
 
     withPermissions()
     doThis()
-    onError()
+    addOnFailureListener()
 
     startActivityForResult()
     onComplete()

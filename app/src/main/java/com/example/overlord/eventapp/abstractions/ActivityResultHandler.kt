@@ -31,6 +31,8 @@ class ActivityResultHandler {
         return atomicInteger.incrementAndGet()
     }
 
+    fun createAction(requestCode: Int) = ActionBuilder(requestCode)
+
     inner class ActionBuilder(private val requestCode: Int) {
 
         fun perform(runnable: () -> Unit) : ActionBuilder {
@@ -39,18 +41,16 @@ class ActivityResultHandler {
             return this
         }
 
-        fun onSuccess(onSuccess: (Intent) -> Unit) : ActionBuilder {
+        fun addOnSuccessListener(onSuccess: (Intent) -> Unit) : ActionBuilder {
             actionRequests[requestCode]?.onSuccess = onSuccess
             return this
         }
-
-        fun onError(onError: (Error) -> Unit): ActionBuilder {
+        fun addOnFailureListener(onError: (Error) -> Unit): ActionBuilder {
             actionRequests[requestCode]?.onError = onError
             return this
         }
-    }
 
-    fun createAction(requestCode: Int) = ActionBuilder(requestCode)
+    }
 
     fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 

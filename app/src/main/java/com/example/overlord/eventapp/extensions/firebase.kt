@@ -7,7 +7,7 @@ import com.google.firebase.storage.UploadTask
 import java.io.File
 import java.io.FileInputStream
 
-fun StorageReference.saveImage(compressedImage : File) : UploadTask {
+fun StorageReference.pushImage(compressedImage : File) : UploadTask {
     val imagesRef = FirebaseStorage.getInstance().reference.child(Constants.remoteCompressedImages)
     return imagesRef.child(timeStamp())
         .putStream(

@@ -61,8 +61,10 @@ fun AppCompatActivity.compressImage(image : File) : File {
     val destination = File(destinationRoot, Constants.localCompressedImages)
 
     return Compressor(this)
+        .setMaxWidth(1920)
+        .setMaxHeight(1080)
         .setDestinationDirectoryPath(destination.absolutePath)
-        .compressToFile(image)
+        .compressToFile(image, "IMG_${timeStamp()}")
 }
 
 /*

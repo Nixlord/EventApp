@@ -26,7 +26,7 @@ import java.lang.Exception
  * This must be cleaned up.
  */
 
-abstract class BaseActivity : StatefulActivity() {
+abstract class BaseActivity : ResultListenerActivity() {
 
     val firebaseAuth = FirebaseAuth.getInstance()
     val firebaseStorage = FirebaseStorage.getInstance().reference
@@ -105,6 +105,11 @@ abstract class BaseActivity : StatefulActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         cameraResultHandler?.invoke(requestCode, resultCode, data)
+    }
+
+    fun test1() {
+        takePhoto("Please Select")
+            .onSuccess { imageFile ->  }
     }
 }
 

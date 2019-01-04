@@ -37,6 +37,11 @@
                   android:configChanges="orientation|keyboardHidden|screenLayout|screenSize"
                   android:theme="@style/FullscreenTheme" />
 
+        <activity android:name=".SecondActivity"
+                  android:screenOrientation="portrait"
+                  android:configChanges="orientation|keyboardHidden|screenLayout|screenSize"
+                  android:theme="@style/FullscreenTheme" />
+
         <activity
                 android:configChanges="orientation|keyboardHidden|screenLayout|screenSize"
                 android:name=".main.MainActivity"

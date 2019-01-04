@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 apply plugin: 'kotlin-android'
-
+apply plugin: 'io.fabric'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.google.gms.google-services'
 
@@ -61,7 +61,7 @@ dependencies {
     implementation "android.arch.lifecycle:common-java8:$lifecycle_version"
 
     implementation 'frankiesardo:icepick:3.2.0'
-    compileOnly 'frankiesardo:icepick-processor:3.2.0'
+    kapt 'frankiesardo:icepick-processor:3.2.0'
 
     implementation 'com.github.jkwiecien:EasyImage:2.1.0'
     implementation 'com.karumi:dexter:5.0.0'

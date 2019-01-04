@@ -16,3 +16,4 @@ fun StorageReference.saveImage(compressedImage : File) : UploadTask {
             )
         )
 }
+    

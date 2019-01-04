@@ -1,25 +1,21 @@
 package com.example.overlord.eventapp.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
-import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import com.example.overlord.eventapp.R
+import com.example.overlord.eventapp.SecondActivity
+import com.example.overlord.eventapp.base.BaseActivity
+import com.example.overlord.eventapp.extensions.logDebug
+import com.example.overlord.eventapp.extensions.logError
 import com.example.overlord.eventapp.extensions.onTextChange
 import com.example.overlord.eventapp.model.Guest
 import com.firebase.ui.auth.AuthUI
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_main.*
 
 
 
-class MainActivity : AppCompatActivity() {
-
-    val TAG = "MAIN_ACT"
-
-    private val firestore = FirebaseFirestore.getInstance()
-    private val auth = FirebaseAuth.getInstance()
+class MainActivity : BaseActivity() {
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
@@ -56,13 +52,13 @@ class MainActivity : AppCompatActivity() {
 
         editTextName.onTextChange { input ->
             textViewInput.text = input
-            auth?.currentUser?.email?.let {
+            firebaseAuth?.currentUser?.email?.let {
                 firestore.collection("users")
                         .add(Guest(
                                 input,
                                 it
                         ))
-                        .addOnFailureListener { error -> Log.e(TAG + "onTextChange", error.message ) }
+                        .addOnFailureListener { error -> logError(error.message) }
             }
         }
 
@@ -73,6 +69,10 @@ class MainActivity : AppCompatActivity() {
                     .addOnCompleteListener { finish() }
         }
 
-
+        buttonNewActivity.setOnClickListener {
+            startActivityGetResult(Intent(this, SecondActivity::class.java))
+                .onSuccess { intent -> logDebug(intent.getStringExtra("Name")) }
+                .onError { error -> logError(error.message) }
+        }
     }
 }

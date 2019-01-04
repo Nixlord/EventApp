@@ -5,4 +5,7 @@ object Constants {
 
     const val localImages = "Snigdha_Charan"
     const val localCompressedImages = "Snigdha_Charan_Compressed"
+
+
+    const val customActivityRequestCodeStart = 1000
 }

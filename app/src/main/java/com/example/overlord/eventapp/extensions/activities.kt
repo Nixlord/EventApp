@@ -25,24 +25,34 @@ fun AppCompatActivity.getName() : String {
     return this.javaClass.simpleName
 }
 
-fun logError(tag : String = "GlobalLog", message : String) {
-    Log.e(tag, message)
-    Crashlytics.log(Log.ERROR, tag, message)
+fun logError(tag : String = "GlobalLog", message : String?) {
+
+    val text = if (message != null) message else "NullMessage"
+
+    Log.e(tag, text)
+    Crashlytics.log(Log.ERROR, "F:$tag", text)
 }
 
-fun logDebug(tag : String = "GlobalLog", message: String) {
-    Log.d(tag, message)
-    Crashlytics.log(Log.DEBUG, tag, message)
+fun logDebug(tag : String = "GlobalLog", message: String?) {
+
+    val text = if (message != null) message else "NullMessage"
+
+    Log.d(tag, text)
+    Crashlytics.log(Log.DEBUG, "F:$tag", text)
 }
 
-fun AppCompatActivity.logError(message : String) {
-    val tag = this.getName().substring(0..20)
-    logError(tag, message)
+fun AppCompatActivity.getTag() : String {
+    val length = this.getName().length
+    val till = Math.min(length - 1, 20)
+    return this.getName().substring(0..till)
 }
 
-fun AppCompatActivity.logDebug(message: String) {
-    val tag = this.getName().substring(0..20)
-    logDebug(tag, message)
+fun AppCompatActivity.logError(message : String?) {
+    logError(getTag(), message)
+}
+
+fun AppCompatActivity.logDebug(message: String?) {
+    logDebug(getTag(), message)
 }
 
 fun AppCompatActivity.compressImage(image : File) : File {

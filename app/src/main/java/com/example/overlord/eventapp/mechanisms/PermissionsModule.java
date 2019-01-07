@@ -1,4 +1,4 @@
-package com.example.overlord.eventapp.abstractions;
+package com.example.overlord.eventapp.mechanisms;
 
 import android.app.Activity;
 import android.support.v4.util.Consumer;
@@ -14,7 +14,7 @@ import java.util.List;
 
 import static com.example.overlord.eventapp.extensions.ActivityUtils.logError;
 
-public class DexterStepBuilder {
+public class PermissionsModule {
     private ArrayList<String> permissions;
     private Runnable onSuccessCallback;
     private Consumer<DexterError> onErrorCallback;
@@ -38,50 +38,50 @@ public class DexterStepBuilder {
     public interface internalFinalStep {
         void build();
     }
-
+  
     public static class StepBuilder
             implements internalPermissionsStep, internalOnSuccessStep, internalOnErrorStep, internalFinalStep {
 
         Activity activity;
-        DexterStepBuilder dexterStepBuilder;
+        PermissionsModule permissionsModule;
 
         private StepBuilder(Activity activity) {
             this.activity = activity;
-            dexterStepBuilder = new DexterStepBuilder();
+            permissionsModule = new PermissionsModule();
         }
 
         @Override
         public internalOnSuccessStep requestPermissions(ArrayList<String> permissions) {
-            dexterStepBuilder.permissions = permissions;
+            permissionsModule.permissions = permissions;
             return this;
         }
 
         @Override
         public internalOnErrorStep onSuccess(Runnable onSuccessCallback) {
-            dexterStepBuilder.onSuccessCallback = onSuccessCallback;
+            permissionsModule.onSuccessCallback = onSuccessCallback;
             return this;
         }
 
         @Override
         public internalFinalStep onError(Consumer<DexterError> onErrorCallback) {
-            dexterStepBuilder.onErrorCallback = onErrorCallback;
+            permissionsModule.onErrorCallback = onErrorCallback;
             return this;
         }
 
         @Override
         public void build() {
             Dexter.withActivity(activity)
-                    .withPermissions(dexterStepBuilder.permissions)
+                    .withPermissions(permissionsModule.permissions)
                     .withListener(new MultiplePermissionsListener() {
                         @Override
                         public void onPermissionsChecked(MultiplePermissionsReport report) {
                             if (report != null) {
                                 if (report.areAllPermissionsGranted()) {
-                                    dexterStepBuilder.onSuccessCallback.run();
+                                    permissionsModule.onSuccessCallback.run();
                                 }
                                 else {
-                                    logError("DexterStepBuilder", "AllPermissionsAreNotGranted");
-                                    dexterStepBuilder.onErrorCallback.accept(DexterError.REQUEST_ONGOING);
+                                    logError("PermissionsModule", "AllPermissionsAreNotGranted");
+                                    permissionsModule.onErrorCallback.accept(DexterError.REQUEST_ONGOING);
                                 }
                             }
                         }
@@ -93,7 +93,7 @@ public class DexterStepBuilder {
                             }
                         }
                     })
-                    .withErrorListener(dexterStepBuilder.onErrorCallback::accept)
+                    .withErrorListener(permissionsModule.onErrorCallback::accept)
                     .check();
 
             activity = null;

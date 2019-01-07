@@ -1,4 +1,4 @@
-package com.example.overlord.eventapp;
+package com.example.overlord.eventapp.xtra;
 
 import io.reactivex.Completable;
 import io.reactivex.Observable;

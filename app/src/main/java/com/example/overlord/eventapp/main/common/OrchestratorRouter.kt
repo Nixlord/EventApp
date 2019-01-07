@@ -2,8 +2,8 @@ package com.example.overlord.eventapp.main.common
 
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
-import com.example.overlord.eventapp.Presenter
-import com.example.overlord.eventapp.abstractions.OrchestratorInterface
+import com.example.overlord.eventapp.base.Presenter
+import com.example.overlord.eventapp.base.OrchestratorInterface
 import com.example.overlord.eventapp.extensions.getName
 
 fun orchestratorFor(fragment: Fragment) : OrchestratorInterface {

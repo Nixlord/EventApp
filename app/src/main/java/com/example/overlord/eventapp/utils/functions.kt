@@ -1,9 +1,7 @@
 @file:JvmName("Utils")
-package com.example.overlord.eventapp.extensions
+package com.example.overlord.eventapp.utils
 
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.random.Random
-import kotlin.random.nextInt
 
 fun timeStamp() = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())

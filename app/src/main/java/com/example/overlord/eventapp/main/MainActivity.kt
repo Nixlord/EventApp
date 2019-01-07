@@ -1,30 +1,21 @@
 package com.example.overlord.eventapp.main
 
-import android.Manifest
 import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
-import android.util.Log
 import com.example.overlord.eventapp.R
-import com.example.overlord.eventapp.SecondActivity
-import com.example.overlord.eventapp.abstractions.createCameraResultHandler
+import com.example.overlord.eventapp.xtra.SecondActivity
 import com.example.overlord.eventapp.base.BaseActivity
 import com.example.overlord.eventapp.extensions.*
 import com.example.overlord.eventapp.model.Guest
 import com.firebase.ui.auth.AuthUI
 import kotlinx.android.synthetic.main.activity_main.*
-import pl.aprilapps.easyphotopicker.EasyImage
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.util.concurrent.CompletableFuture
 
 class MainActivity : BaseActivity() {
-
-    private val cameraModuleHandler = createCameraResultHandler({ image ->
-            val compressed = compressImage(image)
-            firebaseStorage.pushImage(compressed)
-                .addOnSuccessListener { textViewInput.text = image.name }
-        }, { error ->
-            logError(error.message)
-        }
-    )
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
@@ -39,10 +30,14 @@ class MainActivity : BaseActivity() {
             R.id.navigation_camera -> {
                 textViewInput.setText(R.string.title_camera)
 
-                EasyImage.openChooserWithDocuments(
-                    this,
-                    "Upload Photo",
-                    1)
+                takePhoto("Upload to Firebase")
+                    .addOnSuccessListener { image ->
+                        logDebug("Name: ${image.name}")
+                        val compressed = compressImage(image)
+                        firebaseStorage.pushImage(compressed)
+                            .addOnSuccessListener { logDebug("Uploaded ${image.name}") }
+                    }
+
 
 
                 return@OnNavigationItemSelectedListener true
@@ -90,10 +85,5 @@ class MainActivity : BaseActivity() {
                 .addOnSuccessListener { intent -> logDebug(intent.getStringExtra("Name")) }
                 .addOnFailureListener { error -> logError(error.message) }
         }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        cameraModuleHandler(requestCode, resultCode, data)
     }
 }

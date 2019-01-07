@@ -1,4 +1,4 @@
-package com.example.overlord.eventapp
+package com.example.overlord.eventapp.xtra
 
 import android.util.Log
 import android.text.Editable
@@ -153,8 +153,14 @@ fun getWarmth(color: Color) = when (color) {
 }
 
 fun mix(one : Color, two : Color) = when(setOf(one, two)) {
-    setOf(Color.RED, Color.YELLOW) -> Color.ORANGE
-    setOf(Color.YELLOW, Color.BLUE) -> Color.GREEN
+    setOf(
+        Color.RED,
+        Color.YELLOW
+    ) -> Color.ORANGE
+    setOf(
+        Color.YELLOW,
+        Color.BLUE
+    ) -> Color.GREEN
     else -> Color.VIOLET
 }
 
@@ -164,7 +170,8 @@ Now some object oriented example. Inheritance based.
 
 interface Expr
 class Num(val value : Int) : Expr
-class Sum(val left : Expr, val right : Expr) : Expr
+class Sum(val left : Expr, val right : Expr) :
+    Expr
 
 /*
 JAVA equivalent
@@ -185,7 +192,9 @@ public int eval(Expr e) {
 
 fun eval(e : Expr) : Int = when(e) {
     is Num -> e.value
-    is Sum -> eval(e.left) + eval(e.right)
+    is Sum -> eval(e.left) + eval(
+        e.right
+    )
     else -> throw IllegalArgumentException("Unknown")
 }
 
@@ -194,7 +203,9 @@ fun evalBlock(e : Expr) : Int {
     // Basically if you are in a block form, you'll have to explicitly return
     when (e) {
         is Num -> return e.value
-        is Sum -> return eval(e.left) + eval(e.right)
+        is Sum -> return eval(e.left) + eval(
+            e.right
+        )
         else -> throw IllegalArgumentException("Unknown")
     }
 }
@@ -366,7 +377,8 @@ enum class Rank {
 
 data class Card(val rank: Rank, val suit: Suit)
 
-infix fun Rank.of(suit : Suit) = Card(this, suit)
+infix fun Rank.of(suit : Suit) =
+    Card(this, suit)
 
 val card = Rank.QUEEN of Suit.HEARTS
 

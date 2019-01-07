@@ -8,13 +8,12 @@ import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import com.crashlytics.android.Crashlytics
-import com.example.overlord.eventapp.abstractions.DexterStepBuilder
+import com.example.overlord.eventapp.mechanisms.PermissionsModule
 import com.example.overlord.eventapp.model.Constants
+import com.example.overlord.eventapp.utils.timeStamp
 import id.zelory.compressor.Compressor
 import java.io.File
 import java.util.*
-
-
 
 fun AppCompatActivity.snackbar(message : String) {
     // android.R.id.content Points to the layout file
@@ -60,9 +59,11 @@ fun AppCompatActivity.compressImage(image : File) : File {
     val destinationRoot = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
     val destination = File(destinationRoot, Constants.localCompressedImages)
 
+    // Do this in background
+
     return Compressor(this)
-        .setMaxWidth(1920)
-        .setMaxHeight(1080)
+//        .setMaxWidth(1920)
+//        .setMaxHeight(1080)
         .setDestinationDirectoryPath(destination.absolutePath)
         .compressToFile(image, "IMG_${timeStamp()}")
 }
@@ -83,6 +84,7 @@ fun Activity.startActivity(SourceActivity : Activity, FinalActivity : Activity) 
 // Activity lifecycle runs to completion after calling finish, so have to be careful
 // Finish does not instantly destroy the activity
 // Possible Concern -> Not like other startActivity functions
+
 fun AppCompatActivity.finishAndStart(activity : Class<*>) {
     startActivity(Intent(this, activity))
     finish()
@@ -91,7 +93,7 @@ fun AppCompatActivity.finishAndStart(activity : Class<*>) {
 fun AppCompatActivity.loadFragment(containerID : Int, fragment : Fragment) {
     val currentFragment = supportFragmentManager.findFragmentById(containerID)
 
-    if (currentFragment != null)
+    if (currentFragment == null)
         supportFragmentManager.beginTransaction()
             .add(containerID, fragment)
             .commit()
@@ -102,5 +104,4 @@ fun AppCompatActivity.loadFragment(containerID : Int, fragment : Fragment) {
 }
 
 fun AppCompatActivity.withPermissions(vararg permissions : String?) =
-    DexterStepBuilder.withActivity(this).requestPermissions(permissions.toCollection(ArrayList()))
-
+    PermissionsModule.withActivity(this).requestPermissions(permissions.toCollection(ArrayList()))

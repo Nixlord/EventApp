@@ -1,9 +1,10 @@
-package com.example.overlord.eventapp
+package com.example.overlord.eventapp.xtra
 
 import android.app.Activity
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.example.overlord.eventapp.R
 
 class SecondActivity : AppCompatActivity() {
 

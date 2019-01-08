@@ -1,19 +1,18 @@
 package com.example.overlord.eventapp.main
 
+import android.Manifest
 import android.content.Intent
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import com.example.overlord.eventapp.R
 import com.example.overlord.eventapp.xtra.SecondActivity
 import com.example.overlord.eventapp.base.BaseActivity
 import com.example.overlord.eventapp.extensions.*
+import com.example.overlord.eventapp.mechanisms.compressImage
 import com.example.overlord.eventapp.model.Guest
 import com.firebase.ui.auth.AuthUI
 import kotlinx.android.synthetic.main.activity_main.*
-import java.io.ByteArrayOutputStream
-import java.io.File
-import java.util.concurrent.CompletableFuture
+
 
 class MainActivity : BaseActivity() {
 
@@ -30,13 +29,25 @@ class MainActivity : BaseActivity() {
             R.id.navigation_camera -> {
                 textViewInput.setText(R.string.title_camera)
 
-                takePhoto("Upload to Firebase")
-                    .addOnSuccessListener { image ->
-                        logDebug("Name: ${image.name}")
-                        val compressed = compressImage(image)
-                        firebaseStorage.pushImage(compressed)
-                            .addOnSuccessListener { logDebug("Uploaded ${image.name}") }
-                    }
+                /**
+                 * Hello Callback hell
+                 * Get out by learning RxJava
+                 */
+                withPermissions(
+                    Manifest.permission.CAMERA,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ).execute({
+                    takePhoto("Upload to Firebase")
+                        .addOnSuccessListener { image ->
+                            logDebug("Name: ${image.name}")
+                            val compressed = compressImage(image)
+                            firebaseStorage.pushImage(compressed)
+                                .addOnSuccessListener { logDebug("Uploaded ${image.name}") }
+
+                        }
+                }, this::logError)
+
+
 
 
 
@@ -60,7 +71,6 @@ class MainActivity : BaseActivity() {
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
-
         editTextName.onTextChange { input ->
             textViewInput.text = input
             firebaseAuth?.currentUser?.email?.let {
@@ -69,10 +79,9 @@ class MainActivity : BaseActivity() {
                                 input,
                                 it
                         ))
-                        .addOnFailureListener { error -> logError(error.message) }
+                        .addOnFailureListener { exception -> logError("FirestoreSaveFail", exception) }
             }
         }
-
 
         buttonSignOut.setOnClickListener {
             AuthUI.getInstance()
@@ -83,7 +92,9 @@ class MainActivity : BaseActivity() {
         buttonNewActivity.setOnClickListener {
             startActivityGetResult(Intent(this, SecondActivity::class.java))
                 .addOnSuccessListener { intent -> logDebug(intent.getStringExtra("Name")) }
-                .addOnFailureListener { error -> logError(error.message) }
+                .addOnFailureListener(this::logError)
         }
+
+
     }
 }

@@ -15,7 +15,7 @@ class CameraModule {
 
     private fun reset() {
         onSuccess = { image -> logDebug("DefaultCameraCallback", image.name) }
-        onError = { error -> logError("DefaultCameraCallback", error.message) }
+        onError = { error -> logError("DefaultCameraCallback", error) }
     }
 
     init { reset() }

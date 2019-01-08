@@ -283,7 +283,7 @@ public static void onTextChange(EditText editText, Consumer<String> onTextChange
     public void afterTextChanged(Editable editable) {}
     });
 }
- *  And then to call this, we can do,
+ *  And addOnSuccessListener to call this, we can do,
  *  Utils.onTextChange(editText, s -> Log.d(s)); or something
  *
  *  But in kotlin, we don't need utils classes

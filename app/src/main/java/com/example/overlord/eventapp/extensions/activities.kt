@@ -13,7 +13,9 @@ import com.example.overlord.eventapp.model.Constants
 import com.example.overlord.eventapp.utils.timeStamp
 import id.zelory.compressor.Compressor
 import java.io.File
+import java.lang.Exception
 import java.util.*
+import kotlin.collections.ArrayList
 
 fun AppCompatActivity.snackbar(message : String) {
     // android.R.id.content Points to the layout file
@@ -24,48 +26,11 @@ fun AppCompatActivity.getName() : String {
     return this.javaClass.simpleName
 }
 
-fun logError(tag : String = "GlobalLog", message : String?) {
-
-    val text = if (message != null) message else "NullMessage"
-
-    Log.e(tag, text)
-    Crashlytics.log(Log.ERROR, "F:$tag", text)
-}
-
-fun logDebug(tag : String = "GlobalLog", message: String?) {
-
-    val text = if (message != null) message else "NullMessage"
-
-    Log.d(tag, text)
-    Crashlytics.log(Log.DEBUG, "F:$tag", text)
-}
 
 fun AppCompatActivity.getTag() : String {
     val length = this.getName().length
     val till = Math.min(length - 1, 20)
     return this.getName().substring(0..till)
-}
-
-fun AppCompatActivity.logError(message : String?) {
-    logError(getTag(), message)
-}
-
-fun AppCompatActivity.logDebug(message: String?) {
-    logDebug(getTag(), message)
-}
-
-fun AppCompatActivity.compressImage(image : File) : File {
-
-    val destinationRoot = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-    val destination = File(destinationRoot, Constants.localCompressedImages)
-
-    // Do this in background
-
-    return Compressor(this)
-//        .setMaxWidth(1920)
-//        .setMaxHeight(1080)
-        .setDestinationDirectoryPath(destination.absolutePath)
-        .compressToFile(image, "IMG_${timeStamp()}")
 }
 
 /*
@@ -103,5 +68,5 @@ fun AppCompatActivity.loadFragment(containerID : Int, fragment : Fragment) {
             .commit()
 }
 
-fun AppCompatActivity.withPermissions(vararg permissions : String?) =
-    PermissionsModule.withActivity(this).requestPermissions(permissions.toCollection(ArrayList()))
+
+

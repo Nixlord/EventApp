@@ -52,12 +52,22 @@
             app:layout_constraintTop_toBottomOf="@+id/editTextName"
             android:layout_marginStart="8dp" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/buttonNewActivity"/>
+            app:layout_constraintBottom_toTopOf="@+id/buttonNewActivity"
+            app:layout_constraintVertical_bias="0.282"/>
     <Button
-            android:text="Button"
+            android:text="ResultCheck"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/buttonNewActivity" android:layout_marginBottom="92dp"
+            android:id="@+id/buttonNewActivity"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="48dp" app:layout_constraintBottom_toTopOf="@+id/buttonLibraries"/>
+    <Button
+            android:text="Libraries Used"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonLibraries" android:layout_marginBottom="44dp"
             app:layout_constraintBottom_toTopOf="@+id/navigation" app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp"/>

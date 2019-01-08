@@ -16,7 +16,7 @@ class ActivityResultHandler {
 
         init {
             onSuccess = { intent -> logDebug("DefaultARACallback", intent.dataString) }
-            onError = { error -> logError("DefaultARACallback", error.message) }
+            onError = { error -> logError("DefaultARACallback", error) }
         }
     }
 
@@ -29,6 +29,7 @@ class ActivityResultHandler {
 
         fun perform(runnable: () -> Unit) : ActionBuilder {
             actionRequests[requestCode] = ActivityResultAction()
+            // ToDo Sloppy hack. Improve this
             Handler().postDelayed(runnable, 100)
             return this
         }

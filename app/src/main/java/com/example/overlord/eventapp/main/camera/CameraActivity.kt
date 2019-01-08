@@ -11,8 +11,6 @@ import android.util.Log
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.example.overlord.eventapp.R
-import com.example.overlord.eventapp.extensions.logError
-import com.example.overlord.eventapp.extensions.withPermissions
 import com.google.firebase.storage.FirebaseStorage
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
@@ -46,21 +44,6 @@ class CameraActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_camera)
 //        setSupportActionBar(toolbar)
-
-
-        withPermissions(
-            Manifest.permission.CAMERA,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
-        ).onSuccess {
-            snackbar("All granted")
-            EasyImage.openChooserWithDocuments(
-                this@CameraActivity,
-                "Upload Photo",
-                1
-            )
-        }.onError {
-            logError(it.toString())
-        }.build()
 
 
         FloatingActionButton(this)
@@ -120,7 +103,7 @@ class CameraActivity : AppCompatActivity() {
     addOnFailureListener()
 
     startActivityForResult()
-    onComplete()
+    execute()
 
      */
 

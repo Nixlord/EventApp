@@ -18,8 +18,8 @@ class MainActivity : BaseActivity() {
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
-            R.id.navigation_home -> {
-                textViewInput.setText(R.string.title_home)
+            R.id.navigation_wall -> {
+                textViewInput.setText(R.string.title_wall)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_events -> {
@@ -46,10 +46,6 @@ class MainActivity : BaseActivity() {
 
                         }
                 }, this::logError)
-
-
-
-
 
                 return@OnNavigationItemSelectedListener true
             }

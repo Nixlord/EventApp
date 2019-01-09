@@ -1,4 +1,4 @@
-package com.example.overlord.eventapp.main.common
+package com.example.overlord.eventapp.base
 
 import android.content.Context
 import android.net.Uri

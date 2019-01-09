@@ -1,4 +1,4 @@
-package com.example.overlord.eventapp.main.common
+package com.example.overlord.eventapp.base
 
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity

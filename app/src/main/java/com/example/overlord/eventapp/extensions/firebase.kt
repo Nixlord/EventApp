@@ -34,14 +34,15 @@ object Firebase {
 }
 
 
-fun pushImage(compressedImage : File, imageName: String) : UploadTask {
+//Erroneous. Will be corrected
+fun StorageReference.pushImage(compressedImage : File, imageName: String) : UploadTask {
 
-    val imageStorage = storage.child(Constants.remoteCompressedImages).child(imageName)
+    val imageStorage = this.child(Constants.remoteCompressedImages).child(imageName)
     val imageDatabase= firestore.collection("images").document(imageName)
 
     imageDatabase.set(Image(imageName, auth.currentUser?.displayName ?: "UNKNOWN"))
 
-    return imagesRef.child(uniqueName())
+    return imageStorage.child(uniqueName())
         .putStream(
             FileInputStream(
                 compressedImage

@@ -15,6 +15,7 @@ import com.example.overlord.eventapp.extensions.*
 import com.example.overlord.eventapp.extensions.Firebase.auth
 import com.example.overlord.eventapp.extensions.Firebase.firestore
 import com.example.overlord.eventapp.extensions.Firebase.storage
+import com.example.overlord.eventapp.utils.uniqueName
 
 
 class MainActivity : BaseActivity() {
@@ -44,7 +45,7 @@ class MainActivity : BaseActivity() {
                         .addOnSuccessListener { image ->
                             logDebug("Name: ${image.name}")
                             val compressed = compressImage(image)
-                            storage.pushImage(compressed)
+                            storage.pushImage(compressed, uniqueName())
                                 .addOnSuccessListener { logDebug("Uploaded ${image.name}") }
 
                         }

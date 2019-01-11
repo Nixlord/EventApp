@@ -16,10 +16,9 @@ Classes that will be needed -
 4. Events - has information of all the events in the wedding
 
 User/
-    user_id = (name+phone_no)?
+    user_id
     name
     phone no
-    email id?
     profile photo
     wedding side
     relation with couple

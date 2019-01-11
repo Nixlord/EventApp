@@ -16,13 +16,13 @@ Classes that will be needed -
 4. Events - has information of all the events in the wedding
 
 User/
-    user_id
-    name
-    phone no
-    profile photo
-    wedding side
-    relation with couple
-    key_contact (boolean)?
+    user_id/
+        name
+        phone no
+        profile photo
+        wedding side
+        relation with couple
+        key_contact (boolean)?
 
 Comment/
     comment_id/

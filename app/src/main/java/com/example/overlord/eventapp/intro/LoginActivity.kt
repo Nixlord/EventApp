@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import com.example.overlord.eventapp.R
 import com.example.overlord.eventapp.extensions.Firebase
+import com.example.overlord.eventapp.extensions.Firebase.auth
 import com.example.overlord.eventapp.extensions.finishAndStart
 import com.example.overlord.eventapp.main.MainActivity
 import com.example.overlord.eventapp.extensions.snackbar
@@ -28,7 +29,7 @@ class LoginActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_login)
 
-        if (Firebase.auth.currentUser != null) {
+        if (auth.currentUser != null) {
             startApp()
         }
         else {
@@ -77,19 +78,4 @@ class LoginActivity : AppCompatActivity() {
         finishAndStart(MainActivity::class.java)
     }
 
-    /*
-    ToDo @Diksha Delete this after understanding logic
-    fun checkFirstRun() {
-        val isFirstRun = getSharedPreferences("PREFERENCE", Context.MODE_PRIVATE)
-                .getBoolean("isFirstRun", true)
-
-        if (isFirstRun) {
-            startActivity(this, SplashActivity())
-        }
-
-        getSharedPreferences("PREFERENCE", Context.MODE_PRIVATE).edit()
-                .putBoolean("isFirstRun", false).apply()
-
-    }
-    */
 }

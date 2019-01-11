@@ -17,7 +17,7 @@ class EventApp : Application() {
         EasyImage.configuration(this)
             .setImagesFolderName(Constants.localImages)
             .setCopyTakenPhotosToPublicGalleryAppFolder(true)
-            .setAllowMultiplePickInGallery(true) // Not Working
+            .setAllowMultiplePickInGallery(true)
     }
 
     override fun onTerminate() {

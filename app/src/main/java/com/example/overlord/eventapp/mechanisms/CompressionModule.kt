@@ -14,7 +14,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import java.io.File
 
-fun AppCompatActivity.compressImage(image : File) : File {
+fun AppCompatActivity.compressImage(image : File, name : String) : File {
 
     val destinationRoot = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
     val destination = File(destinationRoot, Constants.localCompressedImages)
@@ -27,7 +27,7 @@ fun AppCompatActivity.compressImage(image : File) : File {
         .setQuality(50)
 
     return compressor
-        .compressToFile(image, "IMG_${timeStamp()}")
+        .compressToFile(image, name)
 }
 
 /*

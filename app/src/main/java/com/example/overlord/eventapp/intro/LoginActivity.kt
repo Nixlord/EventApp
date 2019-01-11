@@ -5,6 +5,7 @@ import android.os.Bundle
 import com.example.overlord.eventapp.R
 import com.example.overlord.eventapp.base.BaseActivity
 import com.example.overlord.eventapp.extensions.Firebase.auth
+import com.example.overlord.eventapp.extensions.Firebase.firestore
 import com.example.overlord.eventapp.extensions.finishAndStart
 import com.example.overlord.eventapp.extensions.logError
 import com.example.overlord.eventapp.main.MainActivity
@@ -20,12 +21,7 @@ import java.lang.Error
 
 class LoginActivity : BaseActivity() {
 
-    private fun startApp() {
-        snackbar("Successful Sign In")
-        finishAndStart(MainActivity::class.java)
-    }
-
-    fun createPhoneLoginIntent() : Intent {
+    private fun createPhoneLoginIntent() : Intent {
         return AuthUI.getInstance()
             .createSignInIntentBuilder()
             .setAvailableProviders(Arrays.asList(
@@ -35,6 +31,10 @@ class LoginActivity : BaseActivity() {
             .build()
     }
 
+    private fun startApp() {
+        snackbar("Successful Sign In")
+        finishAndStart(MainActivity::class.java)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +48,30 @@ class LoginActivity : BaseActivity() {
             buttonLogin.setOnClickListener {
                 startActivityGetResult(
                     createPhoneLoginIntent()
+
                 ).addOnSuccessListener {
+                    val user = auth.currentUser
+                    /*
+
+                    You can get these two parameters from the User object
+                    user!!.uid
+                    user!!.phoneNumber
+
+                    object!!.parameter implies that we know this object is not null
+                    This is required sometimes when a function returns a nullable type
+                    But dynamic application logic ensures this is not null
+                    Since the logic is dynamic, static analysis won't flag it as not null
+                    Hence we mark it manually.
+
+
+                    Take these parameters and others you input from editTexts and create User (model) object
+
+                    Then you can save like this
+                    firestore.collection("users").document(user!!.uid).set(User(<insert data from editText and user auth object>))
+                    */
+
+
+                    firestore.collection("users")
                     startApp()
 
                 }.addOnFailureListener { error, intent ->
@@ -71,28 +94,4 @@ class LoginActivity : BaseActivity() {
         }
     }
 
-    /*
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_CODE) {
-            val response = IdpResponse.fromResultIntent(data)
-
-            if (resultCode == Activity.RESULT_OK) {
-                startApp()
-            }
-            else {
-                if (response == null) {
-                    snackbar("sign_in_cancelled")
-                    return
-                }
-                if (response.error!!.errorCode == ErrorCodes.NO_NETWORK) {
-                    snackbar("no_internet_connection")
-                    return
-                }
-                snackbar("unknown_error")
-                Log.e(TAG, "Sign-in error: ", response.error)
-            }
-        }
-    }
-    */
 }

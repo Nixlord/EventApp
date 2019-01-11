@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
+import android.support.v4.app.Fragment
 import com.example.overlord.eventapp.R
 import com.example.overlord.eventapp.xtra.SecondActivity
 import com.example.overlord.eventapp.base.BaseActivity
@@ -20,8 +21,16 @@ import com.example.overlord.eventapp.utils.uniqueName
 
 class MainActivity : BaseActivity() {
 
+    class WallFragment : Fragment() {}
+    private val fragmentFor : Map<Int, Fragment> = mapOf(
+        Pair(R.id.navigation_wall, { WallFragment() /*REPLACE BY CREATE FRAGMENT FUNCTION, IIFE */ } () )
+    )
+
+
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+        loadFragment(3, fragmentFor[item.itemId]!!)
         when (item.itemId) {
+
             R.id.navigation_wall -> {
                 textViewInput.setText(R.string.title_wall)
                 return@OnNavigationItemSelectedListener true
@@ -43,10 +52,16 @@ class MainActivity : BaseActivity() {
                 ).execute({
                     takePhoto("Upload to Firebase")
                         .addOnSuccessListener { image ->
-                            logDebug("Name: ${image.name}")
-                            val compressed = compressImage(image)
-                            storage.pushImage(compressed, uniqueName())
-                                .addOnSuccessListener { logDebug("Uploaded ${image.name}") }
+
+                            logDebug("Cache Name: ${image.name}")
+
+                            val imageName = uniqueName()
+
+                            val compressed = compressImage(image, imageName)
+                            storage.pushImage(compressed, imageName)
+                                .addOnSuccessListener {
+                                    logDebug("Uploaded ${image.name}")
+                                }
 
                         }
                 }, this::logError)
@@ -92,7 +107,7 @@ class MainActivity : BaseActivity() {
         buttonNewActivity.setOnClickListener {
             startActivityGetResult(Intent(this, SecondActivity::class.java))
                 .addOnSuccessListener { intent -> logDebug(intent.getStringExtra("Name")) }
-                .addOnFailureListener {error, _ -> logError(error) }
+                .addOnFailureListener { error, _ -> logError(error) }
         }
 
 

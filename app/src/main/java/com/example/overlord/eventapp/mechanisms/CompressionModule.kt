@@ -22,10 +22,9 @@ fun AppCompatActivity.compressImage(image : File) : File {
     // Do this in background
     val compressor = Compressor(this)
         .setDestinationDirectoryPath(destination.absolutePath)
-        .setCompressFormat(Bitmap.CompressFormat.WEBP)
         .setMaxWidth(1920)
         .setMaxHeight(1080)
-        .setQuality(75)
+        .setQuality(50)
 
     return compressor
         .compressToFile(image, "IMG_${timeStamp()}")

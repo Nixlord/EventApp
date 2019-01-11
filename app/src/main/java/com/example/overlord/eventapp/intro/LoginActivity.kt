@@ -6,12 +6,12 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import com.example.overlord.eventapp.R
+import com.example.overlord.eventapp.extensions.Firebase
 import com.example.overlord.eventapp.extensions.finishAndStart
 import com.example.overlord.eventapp.main.MainActivity
 import com.example.overlord.eventapp.extensions.snackbar
 
 import com.firebase.ui.auth.AuthUI
-import com.google.firebase.auth.FirebaseAuth
 import java.util.*
 import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.IdpResponse
@@ -28,7 +28,7 @@ class LoginActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_login)
 
-        if (FirebaseAuth.getInstance().currentUser != null) {
+        if (Firebase.auth.currentUser != null) {
             startApp()
         }
         else {
@@ -75,10 +75,6 @@ class LoginActivity : AppCompatActivity() {
     fun startApp() {
         snackbar("Successful Sign In")
         finishAndStart(MainActivity::class.java)
-        /*
-        startActivity(Intent(this, MainActivity::class.java))
-        finish()
-        */
     }
 
     /*

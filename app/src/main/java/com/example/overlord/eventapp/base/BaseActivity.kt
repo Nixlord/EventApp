@@ -8,20 +8,12 @@ import com.example.overlord.eventapp.mechanisms.ActivityResultHandler
 import com.example.overlord.eventapp.mechanisms.CameraModule
 import com.example.overlord.eventapp.mechanisms.PermissionsModule
 import com.example.overlord.eventapp.utils.LoopingAtomicInteger
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.storage.FirebaseStorage
 import icepick.Icepick
 import io.reactivex.disposables.CompositeDisposable
 
 abstract class BaseActivity : AppCompatActivity() {
 
     protected val compositeDisposable = CompositeDisposable()
-
-    protected val firebaseAuth = FirebaseAuth.getInstance()
-    protected val firebaseStorage = FirebaseStorage.getInstance().reference
-    protected val firestore = FirebaseFirestore.getInstance() //Has reference to Context, can't be placed in singleton
-
     private val loopingAtomicInteger = LoopingAtomicInteger(100, 999)
     private val activityResultHandler = ActivityResultHandler()
 //    private val compressionModule = CompressionModule()

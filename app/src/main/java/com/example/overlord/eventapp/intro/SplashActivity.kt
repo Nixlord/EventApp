@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import com.example.overlord.eventapp.R
+import com.example.overlord.eventapp.extensions.Firebase.auth
 import com.example.overlord.eventapp.extensions.finishAndStart
 
 import com.example.overlord.eventapp.main.MainActivity
@@ -11,11 +12,7 @@ import com.google.firebase.auth.FirebaseAuth
 
 class SplashActivity : AppCompatActivity() {
 
-    val SPLASH_TIME_OUT = 3000L
-
-    //ToDo init using application class
-
-    val auth = FirebaseAuth.getInstance()
+    private val SPLASH_TIME_OUT = 3000L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

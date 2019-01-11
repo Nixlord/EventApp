@@ -7,17 +7,14 @@ import android.support.design.widget.BottomNavigationView
 import com.example.overlord.eventapp.R
 import com.example.overlord.eventapp.xtra.SecondActivity
 import com.example.overlord.eventapp.base.BaseActivity
+import com.example.overlord.eventapp.extensions.*
 import com.example.overlord.eventapp.mechanisms.compressImage
 import com.example.overlord.eventapp.model.Guest
 import com.firebase.ui.auth.AuthUI
 import kotlinx.android.synthetic.main.activity_main.*
-import com.example.overlord.eventapp.extensions.*
-import com.example.overlord.eventapp.extensions.Firebase.auth
-import com.example.overlord.eventapp.extensions.Firebase.firestore
-import com.example.overlord.eventapp.extensions.Firebase.storage
 
 
-class MainActivity : BaseActivity() {
+abstract class MainActivityBackup : BaseActivity() {
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
@@ -44,7 +41,7 @@ class MainActivity : BaseActivity() {
                         .addOnSuccessListener { image ->
                             logDebug("Name: ${image.name}")
                             val compressed = compressImage(image)
-                            storage.pushImage(compressed)
+                            firebaseStorage.pushImage(compressed)
                                 .addOnSuccessListener { logDebug("Uploaded ${image.name}") }
 
                         }
@@ -72,7 +69,7 @@ class MainActivity : BaseActivity() {
 
         editTextName.onTextChange { input ->
             textViewInput.text = input
-            auth.currentUser?.email?.let {
+            firebaseAuth?.currentUser?.email?.let {
                 firestore.collection("users")
                         .add(Guest(
                                 input,

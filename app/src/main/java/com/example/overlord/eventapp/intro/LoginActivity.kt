@@ -1,13 +1,9 @@
 package com.example.overlord.eventapp.intro
 
-import android.app.Activity
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import com.example.overlord.eventapp.R
 import com.example.overlord.eventapp.base.BaseActivity
-import com.example.overlord.eventapp.extensions.Firebase
 import com.example.overlord.eventapp.extensions.Firebase.auth
 import com.example.overlord.eventapp.extensions.finishAndStart
 import com.example.overlord.eventapp.extensions.logError
@@ -29,6 +25,17 @@ class LoginActivity : BaseActivity() {
         finishAndStart(MainActivity::class.java)
     }
 
+    fun createPhoneLoginIntent() : Intent {
+        return AuthUI.getInstance()
+            .createSignInIntentBuilder()
+            .setAvailableProviders(Arrays.asList(
+                AuthUI.IdpConfig.PhoneBuilder().build()
+            ))
+            .setIsSmartLockEnabled(false)
+            .build()
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -40,13 +47,7 @@ class LoginActivity : BaseActivity() {
         else {
             buttonLogin.setOnClickListener {
                 startActivityGetResult(
-                    AuthUI.getInstance()
-                        .createSignInIntentBuilder()
-                        .setAvailableProviders(Arrays.asList(
-                            AuthUI.IdpConfig.PhoneBuilder().build()
-                        ))
-                        .setIsSmartLockEnabled(false)
-                        .build()
+                    createPhoneLoginIntent()
                 ).addOnSuccessListener {
                     startApp()
 
@@ -71,8 +72,6 @@ class LoginActivity : BaseActivity() {
     }
 
     /*
-
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE) {
@@ -95,6 +94,5 @@ class LoginActivity : BaseActivity() {
             }
         }
     }
-
     */
 }

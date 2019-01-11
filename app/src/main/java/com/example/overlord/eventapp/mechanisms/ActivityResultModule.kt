@@ -12,11 +12,11 @@ class ActivityResultHandler {
 
     private class ActivityResultAction {
         var onSuccess: ((Intent) -> Unit)
-        var onError: ((Error) -> Unit)
+        var onError: ((Error, Intent?) -> Unit)
 
         init {
             onSuccess = { intent -> logDebug("DefaultARACallback", intent.dataString) }
-            onError = { error -> logError("DefaultARACallback", error) }
+            onError = { error, intent -> logError("DefaultARACallback", error) }
         }
     }
 
@@ -38,7 +38,7 @@ class ActivityResultHandler {
             actionRequests[requestCode]?.onSuccess = onSuccess
             return this
         }
-        fun addOnFailureListener(onError: (Error) -> Unit): ActionBuilder {
+        fun addOnFailureListener(onError: (Error, Intent?) -> Unit): ActionBuilder {
             actionRequests[requestCode]?.onError = onError
             return this
         }
@@ -53,11 +53,11 @@ class ActivityResultHandler {
                         action.onSuccess(data)
                     }
                     else {
-                        action.onError(Error("NULL DATA"))
+                        action.onError(Error("NULL DATA"), data)
                     }
                 }
                 else {
-                    action.onError(Error("RESULT CANCELLED"))
+                    action.onError(Error("RESULT CANCELLED"), data)
                 }
 
                 actionRequests.remove(RC)

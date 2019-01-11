@@ -92,7 +92,7 @@ class MainActivity : BaseActivity() {
         buttonNewActivity.setOnClickListener {
             startActivityGetResult(Intent(this, SecondActivity::class.java))
                 .addOnSuccessListener { intent -> logDebug(intent.getStringExtra("Name")) }
-                .addOnFailureListener(this::logError)
+                .addOnFailureListener {error, _ -> logError(error) }
         }
 
 

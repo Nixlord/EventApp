@@ -13,7 +13,7 @@ import com.example.overlord.eventapp.model.Guest
 import com.firebase.ui.auth.AuthUI
 import kotlinx.android.synthetic.main.activity_main.*
 
-
+/*
 abstract class MainActivityBackup : BaseActivity() {
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
@@ -94,3 +94,4 @@ abstract class MainActivityBackup : BaseActivity() {
 
     }
 }
+        */

@@ -2,14 +2,12 @@ package com.example.overlord.eventapp.intro
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import com.example.overlord.eventapp.R
 import com.example.overlord.eventapp.base.BaseActivity
 import com.example.overlord.eventapp.extensions.Firebase.auth
 import com.example.overlord.eventapp.extensions.Firebase.firestore
 import com.example.overlord.eventapp.extensions.finishAndStart
 import com.example.overlord.eventapp.extensions.logError
-import com.example.overlord.eventapp.extensions.onTextChange
 import com.example.overlord.eventapp.main.MainActivity
 import com.example.overlord.eventapp.extensions.snackbar
 import com.example.overlord.eventapp.model.User
@@ -116,7 +114,7 @@ class LoginActivity : BaseActivity() {
                 "Cousin", "Sister-in-law", "Brother-in-law", "Uncle", "Aunt", "Friend",
                 "Common Friend", "Wedding Photographer")
 
-        userRelation.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener {
+        userRelation.setOnItemSelectedListener(MaterialSpinner.OnItemSelectedListener {
             @Override
             fun onItemSelected(item : String) {
                 user.relation = item

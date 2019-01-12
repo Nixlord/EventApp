@@ -8,13 +8,16 @@ import com.example.overlord.eventapp.extensions.Firebase.auth
 import com.example.overlord.eventapp.extensions.Firebase.firestore
 import com.example.overlord.eventapp.extensions.finishAndStart
 import com.example.overlord.eventapp.extensions.logError
+import com.example.overlord.eventapp.extensions.onTextChange
 import com.example.overlord.eventapp.main.MainActivity
 import com.example.overlord.eventapp.extensions.snackbar
+import com.example.overlord.eventapp.model.Guest
 
 import com.firebase.ui.auth.AuthUI
 import java.util.*
 import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.IdpResponse
+import com.firebase.ui.auth.data.model.User
 import kotlinx.android.synthetic.main.activity_login.*
 import java.lang.Error
 
@@ -41,6 +44,8 @@ class LoginActivity : BaseActivity() {
 
         setContentView(R.layout.activity_login)
 
+
+
         if (auth.currentUser != null) {
             startApp()
         }
@@ -51,6 +56,8 @@ class LoginActivity : BaseActivity() {
 
                 ).addOnSuccessListener {
                     val user = auth.currentUser
+
+
                     /*
 
                     You can get these two parameters from the User object
@@ -67,7 +74,8 @@ class LoginActivity : BaseActivity() {
                     Take these parameters and others you input from editTexts and create User (model) object
 
                     Then you can save like this
-                    firestore.collection("users").document(user!!.uid).set(User(<insert data from editText and user auth object>))
+                    firestore.collection("users")
+                        .document(user!!.uid).set(User(<insert data from editText and user auth object>))
                     */
 
 

@@ -2,54 +2,64 @@
 <android.support.constraint.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
         android:layout_height="match_parent">
 
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/Name"
+            android:id="@+id/name"
             android:text="@string/user_name"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp" android:layout_marginTop="16dp" app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginEnd="8dp" app:layout_constraintEnd_toStartOf="@+id/imageView2"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/userProfilePhoto"
             app:layout_constraintHorizontal_bias="0.0"/>
 
     <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/EditTextName"
+            android:id="@+id/userName"
             android:inputType="text"
             android:hint="@string/enter_name"
             android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/Name" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/name"
+            app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
-            app:layout_constraintEnd_toStartOf="@+id/imageView2" app:layout_constraintHorizontal_bias="0.0"
-            android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/userProfilePhoto"
+            app:layout_constraintHorizontal_bias="0.0"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintVertical_bias="0.0"/>
 
     <TextView
             android:layout_width="195dp"
             android:layout_height="31dp"
-            android:id="@+id/RelationshipWithCouple"
+            android:id="@+id/relationshipWithCouple"
             android:text="@string/user_relation"
             android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="120dp"
-            app:layout_constraintTop_toTopOf="parent" android:layout_marginEnd="8dp"
-            app:layout_constraintEnd_toStartOf="@+id/uploadProfilePhoto" app:layout_constraintHorizontal_bias="0.0"/>
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/uploadProfilePhoto"
+            app:layout_constraintHorizontal_bias="0.0"/>
 
     <Spinner
             android:layout_width="197dp"
             android:layout_height="23dp"
-            android:id="@+id/relations"
+            android:id="@+id/userRelation"
             android:entries="@array/relations"
             android:prompt="@string/relation_prompt"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
-            android:layout_marginTop="12dp" app:layout_constraintTop_toBottomOf="@+id/RelationshipWithCouple"
+            android:layout_marginTop="12dp"
+            app:layout_constraintTop_toBottomOf="@+id/relationshipWithCouple"
             android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0" app:layout_constraintBottom_toBottomOf="@+id/uploadProfilePhoto"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintBottom_toBottomOf="@+id/uploadProfilePhoto"
             app:layout_constraintVertical_bias="0.062">
     </Spinner>
 
@@ -61,7 +71,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="8dp"
-            android:id="@+id/imageView2" app:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/userProfilePhoto"
+            app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp" app:layout_constraintHorizontal_bias="1.0"/>
     <Button
             android:layout_width="113dp"
@@ -70,14 +81,14 @@
             android:drawablePadding="10dp"
             android:id="@+id/uploadProfilePhoto"
             android:text="@string/upload_photo"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2"
+            app:layout_constraintTop_toBottomOf="@+id/userProfilePhoto"
             android:layout_marginEnd="32dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="8dp"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="1.0"/>
 
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/wedding_side"
+            android:id="@+id/userWeddingSide"
             android:text="@string/wedding_side"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -107,7 +118,7 @@
         <ImageView android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:src="@drawable/female"
-                   android:id="@+id/Bride"
+                   android:id="@+id/bride"
                    android:layout_weight="0.475"/>
 
         <View android:layout_width="1dp"
@@ -121,7 +132,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/male"
-                android:id="@+id/Groom"
+                android:id="@+id/groom"
                 android:layout_weight="0.475"/>
     </LinearLayout>
 

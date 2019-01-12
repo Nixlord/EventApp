@@ -2,11 +2,16 @@ package com.example.overlord.eventapp.intro
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import com.example.overlord.eventapp.R
 import com.example.overlord.eventapp.base.BaseActivity
 import com.example.overlord.eventapp.extensions.Firebase.auth
 import com.example.overlord.eventapp.extensions.Firebase.firestore
 import com.example.overlord.eventapp.extensions.finishAndStart
+import com.example.overlord.eventapp.extensions.logDebug
 import com.example.overlord.eventapp.extensions.logError
 import com.example.overlord.eventapp.main.MainActivity
 import com.example.overlord.eventapp.extensions.snackbar
@@ -105,7 +110,30 @@ class LoginActivity : BaseActivity() {
         }
     }
 
+    fun setupSpinner(spinner : Spinner, textArrayResID : Int, onItemSelected : (String) -> Unit) {
+        ArrayAdapter.createFromResource(
+            this,
+            textArrayResID,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            // Specify the layout to use when the list of choices appears
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            // Apply the adapter to the spinner
+            spinner.adapter = adapter
+        }
+
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                logDebug("Nothing Selected")
+            }
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                onItemSelected(parent?.getItemAtPosition(position) as String)
+            }
+        }
+    }
+
     fun setUpViews() {
+
 
         user.name = userName.text.toString()
 
@@ -113,18 +141,7 @@ class LoginActivity : BaseActivity() {
         groom.setOnClickListener { user.wedding_side = "Groom" }
 
         user.relation = "Friend"
-        userRelation.setItems(relationships)
-
-        userRelation.setOnItemSelectedListener(object :MaterialSpinner.OnItemSelectedListener<String> {
-            override fun onItemSelected(view: MaterialSpinner?, position: Int, id: Long, item: String?) {
-                item?.let {
-                    user.relation = item
-                }
-            }
-        })
-
-//      This may also work
-//      userRelation.setOnItemSelectedListener { _, _, _, item -> item?.let { user.relation = Relationship.valueOf(item as String) } }
+        setupSpinner(userRelation, R.array.relations) { selected -> user.relation = selected }
 
     }
 

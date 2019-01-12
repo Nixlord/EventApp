@@ -1,17 +1,13 @@
-package com.example.overlord.eventapp.main.album
+package com.example.overlord.eventapp.main.event
 
-import android.content.Context
-import android.net.Uri
+
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-
-import com.example.overlord.eventapp.R
 import java.io.Serializable
+import com.example.overlord.eventapp.R
 
-class AlbumFragment : Fragment() {
+
+class EventFragment : Fragment() {
 
     //Declare your data here
     class FragmentInputs(val firstName: String = "Diksha", val surname: String = "Agarwal") : Serializable
@@ -29,7 +25,7 @@ class AlbumFragment : Fragment() {
     companion object {
         @JvmStatic
         fun newInstance(inputs: FragmentInputs, interactor: FragmentInteractor) =
-            AlbumFragment().apply {
+            EventFragment().apply {
                 arguments = Bundle().apply {
                     putSerializable("inputs", inputs)
                     putSerializable("interactor", interactor)

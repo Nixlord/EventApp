@@ -7,7 +7,7 @@
         android:layout_height="match_parent"
         tools:context=".main.MainActivity" tools:layout_editor_absoluteY="81dp">
 
-    <android.support.v4.view.ViewPager
+    <com.example.overlord.eventapp.utils.SwipeDisabledViewPager
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>

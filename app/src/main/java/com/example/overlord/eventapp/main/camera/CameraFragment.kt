@@ -12,7 +12,7 @@ import java.io.Serializable
 
 class CameraFragment : Fragment() {
 
-    class FragmentInputs(val firstName : String, val surname : String) : Serializable
+    class FragmentInputs(val firstName : String = "Shibasis", val surname : String = "Patnaik") : Serializable
 
     interface FragmentInteractor : Serializable {
         fun onSnackbarButtonPressed(message: String)

@@ -31,7 +31,9 @@ class MainActivity : BaseActivity() {
         }
         false
     }
-     fun setupBottomNavigationUI() {
+
+    fun setupBottomNavigationUI() {
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

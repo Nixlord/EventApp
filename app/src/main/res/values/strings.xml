@@ -22,7 +22,7 @@
     <string name="wedding_side">Which side do you belong to?</string>
     <string name="login_button">Join our wedding</string>
     <string name="relation_prompt">Relation</string>
-    <string name="upload_photo"> Upload</string>
+    <string name="upload_photo">Upload</string>
     <string-array name="relations">
         <item>Bride</item>
         <item>Groom</item>

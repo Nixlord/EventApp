@@ -1,12 +1,13 @@
 package com.example.overlord.eventapp.model
 
 import android.media.Image
+import java.net.URL
 
 // Hello Kotlin, Bye (almost) boilerplate.
-class Guest(
+class User(
         var name : String,
-        var phoneno : Int,
+        var phoneno : String,
         var wedding_side : String,
         var relation : String,
         var key_contact : Boolean,
-        var profile_photo : Image)
+        var profile_photo : String)

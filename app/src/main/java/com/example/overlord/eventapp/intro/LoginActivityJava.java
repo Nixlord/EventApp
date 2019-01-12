@@ -9,16 +9,13 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.*;
 import com.example.overlord.eventapp.R;
+import com.example.overlord.eventapp.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginActivityJava extends AppCompatActivity
         implements AdapterView.OnItemSelectedListener {
 
-    private String name;
-    private String weddingSide;
-    private String relation;
-    private final boolean keyContact = false;
-    private Image profilePhoto;
+    private User user;
     private FirebaseAuth auth = FirebaseAuth.getInstance();
 
     private Button loginButton;
@@ -46,7 +43,7 @@ public class LoginActivityJava extends AppCompatActivity
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                name = userName.getText().toString();
+                user.setName(userName.getText().toString());
             }
 
             @Override
@@ -55,10 +52,8 @@ public class LoginActivityJava extends AppCompatActivity
             }
         });
 
-
-        findViewById(R.id.bride).setOnClickListener(view -> weddingSide = "Bride");
-        findViewById(R.id.groom).setOnClickListener(view -> weddingSide = "Groom");
-
+        findViewById(R.id.bride).setOnClickListener(view -> user.setWedding_side("Bride"));
+        findViewById(R.id.groom).setOnClickListener(view -> user.setWedding_side("Groom"));
 
         userRelation.setOnItemSelectedListener(this);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -85,6 +80,11 @@ public class LoginActivityJava extends AppCompatActivity
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        relation = adapterView.getItemAtPosition(i).toString();
+        user.relation = adapterView.getItemAtPosition(i).toString();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 }

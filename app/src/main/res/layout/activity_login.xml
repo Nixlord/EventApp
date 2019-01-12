@@ -30,8 +30,7 @@
             android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toStartOf="@+id/userProfilePhoto"
             app:layout_constraintHorizontal_bias="0.0"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="8dp" app:layout_constraintBottom_toTopOf="@+id/relationshipWithCouple"
             app:layout_constraintVertical_bias="0.0"/>
 
     <TextView
@@ -48,20 +47,20 @@
             app:layout_constraintEnd_toStartOf="@+id/uploadProfilePhoto"
             app:layout_constraintHorizontal_bias="0.0"/>
 
-    <Spinner
+    <com.jaredrummler.materialspinner.MaterialSpinner
             android:layout_width="197dp"
             android:layout_height="23dp"
             android:id="@+id/userRelation"
-            android:entries="@array/relations"
-            android:prompt="@string/relation_prompt"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="12dp"
             app:layout_constraintTop_toBottomOf="@+id/relationshipWithCouple"
-            android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintBottom_toBottomOf="@+id/uploadProfilePhoto"
             app:layout_constraintVertical_bias="0.062">
-    </Spinner>
+    </com.jaredrummler.materialspinner.MaterialSpinner>
 
     <ImageView
             android:layout_width="153dp"
@@ -113,7 +112,8 @@
             app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
             app:layout_constraintHorizontal_bias="0.0" android:layout_marginBottom="104dp"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/userWeddingSide">
 
         <ImageView android:layout_width="wrap_content"
                    android:layout_height="wrap_content"

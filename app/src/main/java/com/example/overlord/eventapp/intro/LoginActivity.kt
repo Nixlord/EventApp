@@ -2,6 +2,7 @@ package com.example.overlord.eventapp.intro
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import com.example.overlord.eventapp.R
 import com.example.overlord.eventapp.base.BaseActivity
 import com.example.overlord.eventapp.extensions.Firebase.auth
@@ -11,19 +12,20 @@ import com.example.overlord.eventapp.extensions.logError
 import com.example.overlord.eventapp.extensions.onTextChange
 import com.example.overlord.eventapp.main.MainActivity
 import com.example.overlord.eventapp.extensions.snackbar
-import com.example.overlord.eventapp.model.Guest
+import com.example.overlord.eventapp.model.User
 
 import com.firebase.ui.auth.AuthUI
 import java.util.*
 import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.IdpResponse
-import com.firebase.ui.auth.data.model.User
+import com.jaredrummler.materialspinner.MaterialSpinner
 import kotlinx.android.synthetic.main.activity_login.*
 import java.lang.Error
 
 
 class LoginActivity : BaseActivity() {
 
+    lateinit var user : User
     private fun createPhoneLoginIntent() : Intent {
         return AuthUI.getInstance()
             .createSignInIntentBuilder()
@@ -41,10 +43,9 @@ class LoginActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_login)
 
-
+        setUpViews()
 
         if (auth.currentUser != null) {
             startApp()
@@ -101,5 +102,25 @@ class LoginActivity : BaseActivity() {
             }
         }
     }
+
+    fun setUpViews() {
+        user = User("User", "9999999999",
+            "Bride", "Friend", false, "photo");
+
+        user.name = userName.text.toString()
+
+        bride.setOnClickListener { user.wedding_side = "Bride" }
+        groom.setOnClickListener { user.wedding_side = "Groom" }
+
+        userRelation.setItems("Bride", "Groom", "Mother", "Father", "Brother", "Sister",
+                "Cousin", "Sister-in-law", "Brother-in-law", "Uncle", "Aunt", "Friend",
+                "Common Friend", "Wedding Photographer")
+
+        userRelation.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener {
+            @Override
+            fun onItemSelected(item : String) {
+                user.relation = item
+            }
+        }
 
 }

@@ -23,13 +23,15 @@ import java.lang.Error
 
 class LoginActivity : BaseActivity() {
 
-    lateinit var user : User
-    private fun createPhoneLoginIntent() : Intent {
+    lateinit var user: User
+    private fun createPhoneLoginIntent(): Intent {
         return AuthUI.getInstance()
             .createSignInIntentBuilder()
-            .setAvailableProviders(Arrays.asList(
-                AuthUI.IdpConfig.PhoneBuilder().build()
-            ))
+            .setAvailableProviders(
+                Arrays.asList(
+                    AuthUI.IdpConfig.PhoneBuilder().build()
+                )
+            )
             .setIsSmartLockEnabled(false)
             .build()
     }
@@ -47,8 +49,7 @@ class LoginActivity : BaseActivity() {
 
         if (auth.currentUser != null) {
             startApp()
-        }
-        else {
+        } else {
             buttonLogin.setOnClickListener {
                 startActivityGetResult(
                     createPhoneLoginIntent()
@@ -85,12 +86,11 @@ class LoginActivity : BaseActivity() {
                     logError(error)
                     val response = IdpResponse.fromResultIntent(intent)
 
-                    if (response == null){
+                    if (response == null) {
                         val message = "Sign In Cancelled"
                         logError(Error(message))
                         snackbar(message)
-                    }
-                    else if (response.error!!.errorCode == ErrorCodes.NO_NETWORK) {
+                    } else if (response.error!!.errorCode == ErrorCodes.NO_NETWORK) {
                         val message = "No Internet Connection"
                         logError(Error(message))
                         snackbar(message)
@@ -102,23 +102,24 @@ class LoginActivity : BaseActivity() {
     }
 
     fun setUpViews() {
-        user = User("User", "9999999999",
-            "Bride", "Friend", false, "photo");
+        user = User(
+            "User", "9999999999",
+            "Bride", "Friend", false, "photo"
+        )
 
         user.name = userName.text.toString()
 
         bride.setOnClickListener { user.wedding_side = "Bride" }
         groom.setOnClickListener { user.wedding_side = "Groom" }
 
-        userRelation.setItems("Bride", "Groom", "Mother", "Father", "Brother", "Sister",
-                "Cousin", "Sister-in-law", "Brother-in-law", "Uncle", "Aunt", "Friend",
-                "Common Friend", "Wedding Photographer")
+        userRelation.setItems(
+            "Bride", "Groom", "Mother", "Father", "Brother", "Sister",
+            "Cousin", "Sister-in-law", "Brother-in-law", "Uncle", "Aunt", "Friend",
+            "Common Friend", "Wedding Photographer"
+        )
 
-        userRelation.setOnItemSelectedListener(MaterialSpinner.OnItemSelectedListener {
-            @Override
-            fun onItemSelected(item : String) {
-                user.relation = item
-            }
-        }
+        userRelation.setOnItemSelectedListener(user.relation = )
+
+    }
 
 }

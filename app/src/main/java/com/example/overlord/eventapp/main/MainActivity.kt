@@ -7,6 +7,9 @@ import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentStatePagerAdapter
 import android.support.v4.content.ContextCompat
+import android.support.v7.view.menu.MenuBuilder
+import android.view.MenuInflater
+import android.view.MenuItem
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation
 import com.example.overlord.eventapp.R
 import com.example.overlord.eventapp.base.BaseActivity
@@ -80,6 +83,13 @@ class MainActivity : BaseActivity() {
         )
     }
 
+    private val indexMenu = mapOf(
+        Pair(R.id.navigation_wall, 0),
+        Pair(R.id.navigation_events, 1),
+        Pair(R.id.navigation_camera, 2),
+        Pair(R.id.navigation_albums, 3),
+        Pair(R.id.navigation_guests, 4)
+    )
 
     private fun setupViewPager(viewPager: SwipeDisabledViewPager) {
 
@@ -89,6 +99,7 @@ class MainActivity : BaseActivity() {
 
             adapter = object : FragmentStatePagerAdapter(supportFragmentManager) {
                 override fun getItem(p0: Int): Fragment = when(p0) {
+
                     0 -> createWallFragment()
                     1 -> createEventFragment()
                     2 -> createCameraFragment()
@@ -134,9 +145,14 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        setSupportActionBar(toolbar)
-        supportActionBar?.title = "Snigdha Weds Charan "
         setupViewPager(viewPager)
+
+
+//        bottomNavigation.setOnNavigationItemSelectedListener {
+//                menuItem -> viewPager.currentItem = indexMenu[menuItem.itemId]!!
+//            true
+//        }
+//
         setupBottomNavigation(bottomNavigation, R.menu.navigation, R.array.colors)
         bottomNavigation.setOnTabSelectedListener { position, wasSelected ->
             if (!wasSelected)

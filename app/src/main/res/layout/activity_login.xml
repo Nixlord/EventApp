@@ -12,17 +12,22 @@
             android:text="@string/user_name"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="8dp" android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"/>
+            android:layout_marginStart="8dp" android:layout_marginTop="16dp" app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginEnd="8dp" app:layout_constraintEnd_toStartOf="@+id/imageView2"
+            app:layout_constraintHorizontal_bias="0.0"/>
 
     <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/EditTextName"
             android:inputType="text"
-            android:text="Enter your name here"
+            android:hint="@string/enter_name"
             android:layout_marginTop="8dp"
             app:layout_constraintTop_toBottomOf="@+id/Name" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="8dp"/>
+            android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/imageView2" app:layout_constraintHorizontal_bias="0.0"
+            android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.0"/>
 
     <TextView
             android:layout_width="195dp"
@@ -31,7 +36,9 @@
             android:text="@string/user_relation"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/EditTextName"/>
+            android:layout_marginTop="120dp"
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/uploadProfilePhoto" app:layout_constraintHorizontal_bias="0.0"/>
 
     <Spinner
             android:layout_width="197dp"
@@ -40,8 +47,32 @@
             android:entries="@array/relations"
             android:prompt="@string/relation_prompt"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/RelationshipWithCouple">
+            android:layout_marginTop="12dp" app:layout_constraintTop_toBottomOf="@+id/RelationshipWithCouple"
+            android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0" app:layout_constraintBottom_toBottomOf="@+id/uploadProfilePhoto"
+            app:layout_constraintVertical_bias="0.062">
     </Spinner>
+
+    <ImageView
+            android:layout_width="153dp"
+            android:layout_height="145dp"
+            android:src="@drawable/placeholder"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp"
+            android:id="@+id/imageView2" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp" app:layout_constraintHorizontal_bias="1.0"/>
+    <Button
+            android:layout_width="113dp"
+            android:layout_height="41dp"
+            android:drawableStart="@drawable/camera"
+            android:drawablePadding="10dp"
+            android:id="@+id/uploadProfilePhoto"
+            android:text="@string/upload_photo"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2"
+            android:layout_marginEnd="32dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="8dp"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="1.0"/>
 
     <TextView
             android:layout_width="wrap_content"
@@ -49,62 +80,68 @@
             android:id="@+id/wedding_side"
             android:text="@string/wedding_side"
             android:textSize="18sp"
-            tools:layout_editor_absoluteY="193dp"
-            tools:layout_editor_absoluteX="0dp"/>
-
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.0"
+            android:layout_marginTop="216dp" app:layout_constraintTop_toTopOf="parent"
+    />
     <View android:layout_width="wrap_content"
           android:layout_height="1dp"
           android:background="@android:color/darker_gray"
-          tools:layout_editor_absoluteY="222dp"
-          tools:layout_editor_absoluteX="0dp">
+          android:id="@+id/view"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+          app:layout_constraintBottom_toTopOf="@+id/linearLayout">
     </View>
-
-    <ImageView
-            android:layout_width="153dp"
-            android:layout_height="141dp"
-            android:src="@drawable/Placeholder"
-            android:layout_marginTop="8dp"
-            app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="8dp" android:id="@+id/imageView2"/>
-    <Button
-            android:layout_width="113dp"
-            android:layout_height="41dp"
-            android:drawableLeft="@drawable/camera"
-            android:drawablePadding="10dp"
-            android:id="@+id/upload_profile_photo"
-            android:text="@string/upload_photo"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2"
-            android:layout_marginEnd="32dp" app:layout_constraintEnd_toEndOf="parent"/>
 
     <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal" tools:layout_editor_absoluteY="223dp" tools:layout_editor_absoluteX="30dp">
+            android:layout_height="151dp"
+            android:orientation="horizontal"
+            android:id="@+id/linearLayout"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+            app:layout_constraintHorizontal_bias="0.0" android:layout_marginBottom="104dp"
+            app:layout_constraintBottom_toBottomOf="parent">
 
         <ImageView android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
-                   android:src="@drawable/Female"
-                    android:layout_weight="0.45"/>
+                   android:src="@drawable/female"
+                   android:id="@+id/Bride"
+                   android:layout_weight="0.475"/>
 
-        <View android:layout_width="2dp"
+        <View android:layout_width="1dp"
               android:layout_height="match_parent"
               android:background="@android:color/darker_gray"
-                android:layout_weight="0.1">
+              android:layout_weight="0.05">
 
         </View>
 
         <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/Male"
-                android:layout_weight="0.45"/>
+                android:src="@drawable/male"
+                android:id="@+id/Groom"
+                android:layout_weight="0.475"/>
     </LinearLayout>
 
+    <View android:layout_width="wrap_content"
+          android:layout_height="1dp"
+          android:background="@android:color/darker_gray"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+          app:layout_constraintBottom_toTopOf="@+id/buttonLogin"
+          app:layout_constraintHorizontal_bias="0.0" android:id="@+id/view2" android:layout_marginBottom="40dp"
+          app:layout_constraintTop_toBottomOf="@+id/linearLayout" app:layout_constraintVertical_bias="0.0">
+    </View>
 
     <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/buttonLogin"
-            android:text="@string/login_button" tools:layout_editor_absoluteY="431dp"
-            tools:layout_editor_absoluteX="116dp"/>
+            android:text="@string/login_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp" android:layout_marginBottom="40dp"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 </android.support.constraint.ConstraintLayout>

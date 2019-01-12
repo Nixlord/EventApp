@@ -17,8 +17,9 @@
 
     <!-- Login Activity Strings -->
     <string name="user_name">Name</string>
+    <string name="enter_name">Enter your name</string>
     <string name="user_relation">Relation with couple</string>
-    <string name="wedding_side">Which side do you belog to?</string>
+    <string name="wedding_side">Which side do you belong to?</string>
     <string name="login_button">Join our wedding</string>
     <string name="relation_prompt">Relation</string>
     <string name="upload_photo"> Upload</string>

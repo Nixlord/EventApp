@@ -13,7 +13,7 @@ fun orchestratorFor(fragment: Fragment) : OrchestratorInterface {
         "WallFragment" -> /*Ex: `Wall*/Presenter
         "EventFragment" -> Presenter
         "EventFragment" -> Presenter
-        "GuestsFragment" -> Presenter
+        "GuestFragment" -> Presenter
 
         else -> throw IllegalArgumentException("Fragment '${fragment.getName()}' not found !")
     }

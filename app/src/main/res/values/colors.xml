@@ -4,5 +4,19 @@
     <color name="colorPrimaryDark">#4a148c</color>
     <color name="colorAccent">#f8bbd0</color>
 
+    <color name="wall_tab">@color/colorPrimary</color>
+    <color name="event_tab">@color/colorAccent</color>
+    <color name="camera_tab">@color/colorPrimaryDark</color>
+    <color name="album_tab">@color/colorAccent</color>
+    <color name="guest_tab">@color/colorPrimary</color>
+
+    <array name="colors">
+        <item>#6CCC3D</item>
+        <item>#EA5C46</item>
+        <item>#33b3cc</item>
+        <item>#EA5C46</item>
+        <item>#33b3cc</item>
+    </array>
+
     <color name="black_overlay">#66000000</color>
 </resources>

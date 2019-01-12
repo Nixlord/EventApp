@@ -23,7 +23,6 @@ import com.firebase.ui.auth.AuthUI
 import java.util.*
 import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.IdpResponse
-import com.jaredrummler.materialspinner.MaterialSpinner
 import kotlinx.android.synthetic.main.activity_login.*
 import java.lang.Error
 import kotlin.collections.ArrayList
@@ -38,7 +37,7 @@ class LoginActivity : BaseActivity() {
             .createSignInIntentBuilder()
             .setAvailableProviders(
                 Arrays.asList(
-                    AuthUI.IdpConfig.PhoneBuilder().build()
+                    AuthUI.IdpConfig.GoogleBuilder().build()
                 )
             )
             .setIsSmartLockEnabled(false)

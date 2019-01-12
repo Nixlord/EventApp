@@ -4,19 +4,16 @@ package com.example.overlord.eventapp.main.guests
 import android.os.Bundle
 import android.support.v4.app.Fragment
 
-import com.example.overlord.eventapp.R
 import java.io.Serializable
 
-class GuestsFragment : Fragment() {
+class GuestFragment : Fragment() {
 
     //Declare your data here
     class FragmentInputs(val firstName: String = "Diksha", val surname: String = "Agarwal") : Serializable
 
     interface FragmentInteractor : Serializable {
         //Implement your methods here
-        fun onSnackbarButtonPressed(message: String)
-
-        fun onSwitchFragmentButtonPressed()
+        fun onButtonPressed(message: String)
     }
 
     private lateinit var inputs: FragmentInputs
@@ -25,7 +22,7 @@ class GuestsFragment : Fragment() {
     companion object {
         @JvmStatic
         fun newInstance(inputs: FragmentInputs, interactor: FragmentInteractor) =
-            GuestsFragment().apply {
+            GuestFragment().apply {
                 arguments = Bundle().apply {
                     putSerializable("inputs", inputs)
                     putSerializable("interactor", interactor)

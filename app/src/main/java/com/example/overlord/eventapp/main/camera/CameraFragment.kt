@@ -15,8 +15,7 @@ class CameraFragment : Fragment() {
     class FragmentInputs(val firstName : String = "Shibasis", val surname : String = "Patnaik") : Serializable
 
     interface FragmentInteractor : Serializable {
-        fun onSnackbarButtonPressed(message: String)
-        fun onSwitchFragmentButtonPressed()
+        fun onButtonPressed(message: String)
     }
 
     private lateinit var inputs: FragmentInputs

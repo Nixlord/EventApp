@@ -18,9 +18,7 @@ class AlbumFragment : Fragment() {
 
     interface FragmentInteractor : Serializable {
         //Implement your methods here
-        fun onSnackbarButtonPressed(message: String)
-
-        fun onSwitchFragmentButtonPressed()
+        fun onButtonPressed(message: String)
     }
 
     private lateinit var inputs: FragmentInputs

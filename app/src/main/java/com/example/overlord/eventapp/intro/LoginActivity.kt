@@ -10,7 +10,7 @@ import com.example.overlord.eventapp.extensions.finishAndStart
 import com.example.overlord.eventapp.extensions.logError
 import com.example.overlord.eventapp.main.MainActivity
 import com.example.overlord.eventapp.extensions.snackbar
-import com.example.overlord.eventapp.model.Relationship
+
 import com.example.overlord.eventapp.model.User
 import com.example.overlord.eventapp.model.relationships
 
@@ -106,10 +106,6 @@ class LoginActivity : BaseActivity() {
     }
 
     fun setUpViews() {
-//        user = User(
-//            "User", "9999999999",
-//            "Bride", "Friend", false, "photo"
-//        )
 
         user.name = userName.text.toString()
 

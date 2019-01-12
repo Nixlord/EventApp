@@ -1,31 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/background"
->
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/Name"
+            android:text="@string/user_name"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp" android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"/>
+
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/EditTextName"
+            android:inputType="text"
+            android:text="Enter your name here"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/Name" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp"/>
+
+    <TextView
+            android:layout_width="195dp"
+            android:layout_height="31dp"
+            android:id="@+id/RelationshipWithCouple"
+            android:text="@string/user_relation"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/EditTextName"/>
+
+    <Spinner
+            android:layout_width="197dp"
+            android:layout_height="23dp"
+            android:id="@+id/relations"
+            android:entries="@array/relations"
+            android:prompt="@string/relation_prompt"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/RelationshipWithCouple">
+    </Spinner>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/wedding_side"
+            android:text="@string/wedding_side"
+            android:textSize="18sp"
+            tools:layout_editor_absoluteY="193dp"
+            tools:layout_editor_absoluteX="0dp"/>
+
+    <View android:layout_width="wrap_content"
+          android:layout_height="1dp"
+          android:background="@android:color/darker_gray"
+          tools:layout_editor_absoluteY="222dp"
+          tools:layout_editor_absoluteX="0dp">
+    </View>
+
+    <ImageView
+            android:layout_width="153dp"
+            android:layout_height="141dp"
+            android:src="@drawable/Placeholder"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp" android:id="@+id/imageView2"/>
+    <Button
+            android:layout_width="113dp"
+            android:layout_height="41dp"
+            android:drawableLeft="@drawable/camera"
+            android:drawablePadding="10dp"
+            android:id="@+id/upload_profile_photo"
+            android:text="@string/upload_photo"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2"
+            android:layout_marginEnd="32dp" app:layout_constraintEnd_toEndOf="parent"/>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" tools:layout_editor_absoluteY="223dp" tools:layout_editor_absoluteX="30dp">
+
+        <ImageView android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:src="@drawable/Female"
+                    android:layout_weight="0.45"/>
+
+        <View android:layout_width="2dp"
+              android:layout_height="match_parent"
+              android:background="@android:color/darker_gray"
+                android:layout_weight="0.1">
+
+        </View>
+
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/Male"
+                android:layout_weight="0.45"/>
+    </LinearLayout>
+
 
     <Button
-            android:text="Log in"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/buttonLogin"
-            android:layout_marginBottom="124dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="8dp"/>
-    <TextView
-            android:text="@string/intro_description"
-            android:layout_width="218dp"
-            android:layout_height="106dp"
-            android:id="@+id/textView"
-            android:textColor="@color/common_google_signin_btn_text_dark_default" android:gravity="center"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="8dp"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/buttonLogin" android:layout_marginTop="8dp"
-            app:layout_constraintTop_toTopOf="parent" app:layout_constraintVertical_bias="0.924"
-            android:textSize="18sp"/>
+            android:text="@string/login_button" tools:layout_editor_absoluteY="431dp"
+            tools:layout_editor_absoluteX="116dp"/>
 </android.support.constraint.ConstraintLayout>

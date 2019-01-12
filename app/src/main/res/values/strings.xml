@@ -14,4 +14,30 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Login Activity Strings -->
+    <string name="user_name">Name</string>
+    <string name="user_relation">Relation with couple</string>
+    <string name="wedding_side">Which side do you belog to?</string>
+    <string name="login_button">Join our wedding</string>
+    <string name="relation_prompt">Relation</string>
+    <string name="upload_photo"> Upload</string>
+    <string-array name="relations">
+        <item>Bride</item>
+        <item>Groom</item>
+        <item>Mother</item>
+        <item>Father</item>
+        <item>Brother</item>
+        <item>Sister</item>
+        <item>Cousin</item>
+        <item>Sister-in-law</item>
+        <item>Brother-in-law</item>
+        <item>Uncle</item>
+        <item>Aunt</item>
+        <item>Friend</item>
+        <item>Common friend</item>
+        <item>GrandParent</item>
+        <item>Wedding Photographer</item>
+        <item>Wedding Planner</item>
+    </string-array>
 </resources>

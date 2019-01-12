@@ -21,14 +21,9 @@ import com.example.overlord.eventapp.utils.uniqueName
 
 class MainActivity : BaseActivity() {
 
-    class WallFragment : Fragment() {}
-    private val fragmentFor : Map<Int, Fragment> = mapOf(
-        Pair(R.id.navigation_wall, { WallFragment() /*REPLACE BY CREATE FRAGMENT FUNCTION, IIFE */ } () )
-    )
-
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-        loadFragment(3, fragmentFor[item.itemId]!!)
+
         when (item.itemId) {
 
             R.id.navigation_wall -> {

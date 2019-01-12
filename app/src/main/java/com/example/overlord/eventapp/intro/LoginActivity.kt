@@ -10,7 +10,9 @@ import com.example.overlord.eventapp.extensions.finishAndStart
 import com.example.overlord.eventapp.extensions.logError
 import com.example.overlord.eventapp.main.MainActivity
 import com.example.overlord.eventapp.extensions.snackbar
+import com.example.overlord.eventapp.model.Relationship
 import com.example.overlord.eventapp.model.User
+import com.example.overlord.eventapp.model.relationships
 
 import com.firebase.ui.auth.AuthUI
 import java.util.*
@@ -19,6 +21,7 @@ import com.firebase.ui.auth.IdpResponse
 import com.jaredrummler.materialspinner.MaterialSpinner
 import kotlinx.android.synthetic.main.activity_login.*
 import java.lang.Error
+import kotlin.collections.ArrayList
 
 
 class LoginActivity : BaseActivity() {
@@ -113,18 +116,20 @@ class LoginActivity : BaseActivity() {
         bride.setOnClickListener { user.wedding_side = "Bride" }
         groom.setOnClickListener { user.wedding_side = "Groom" }
 
-        userRelation.setItems(
-            "Bride", "Groom", "Mother", "Father", "Brother", "Sister",
-            "Cousin", "Sister-in-law", "Brother-in-law", "Uncle", "Aunt", "Friend",
-            "Common Friend", "Wedding Photographer"
-        )
+        val relations = Relationship.values().map { relationship -> relationship.name }
+
+        user.relation = Relationship.FRIEND
+        userRelation.setItems(relations)
 
         userRelation.setOnItemSelectedListener(object :MaterialSpinner.OnItemSelectedListener<String> {
             override fun onItemSelected(view: MaterialSpinner?, position: Int, id: Long, item: String?) {
-                // data ?: "set this if data is null"
-                user.relation = item ?: "Bride"
+                item?.let {
+                    user.relation = Relationship.valueOf(item)
+                }
             }
         })
+//        This may also work
+//        userRelation.setOnItemSelectedListener { _, _, _, item -> item?.let { user.relation = Relationship.valueOf(item as String) } }
 
     }
 

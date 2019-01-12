@@ -116,20 +116,19 @@ class LoginActivity : BaseActivity() {
         bride.setOnClickListener { user.wedding_side = "Bride" }
         groom.setOnClickListener { user.wedding_side = "Groom" }
 
-        val relations = Relationship.values().map { relationship -> relationship.name }
-
-        user.relation = Relationship.FRIEND
-        userRelation.setItems(relations)
+        user.relation = "Friend"
+        userRelation.setItems(relationships)
 
         userRelation.setOnItemSelectedListener(object :MaterialSpinner.OnItemSelectedListener<String> {
             override fun onItemSelected(view: MaterialSpinner?, position: Int, id: Long, item: String?) {
                 item?.let {
-                    user.relation = Relationship.valueOf(item)
+                    user.relation = item
                 }
             }
         })
-//        This may also work
-//        userRelation.setOnItemSelectedListener { _, _, _, item -> item?.let { user.relation = Relationship.valueOf(item as String) } }
+
+//      This may also work
+//      userRelation.setOnItemSelectedListener { _, _, _, item -> item?.let { user.relation = Relationship.valueOf(item as String) } }
 
     }
 

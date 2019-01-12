@@ -8,16 +8,15 @@ class User(
         var name : String = "",
         var phoneno : String = "",
         var wedding_side : String = "",
-        var relation : Relationship = Relationship.FRIEND,
+        var relation : String = "Friend",
         var key_contact : Boolean = false,
         var profile_photo : String = "")
 
-enum class Relationship {
-        BRIDE,
-        GROOM,
-        MOTHER, FATHER, BROTHER, SISTER,
-        AUNT, UNCLE, COUSIN,
-        SISTER_IN_LAW, BROTHER_IN_LAW,
-        FRIEND,
-        WEDDING_PHOTOGRAPHER
-}
+val relationships = arrayListOf(
+        "Bride", "Groom",
+        "Mother", "Father", "Brother", "Sister",
+        "Uncle", "Aunt", "Cousin",
+        "Friend",
+        "Sister-in-law", "Brother-in-law",
+        "Wedding Photographer"
+)

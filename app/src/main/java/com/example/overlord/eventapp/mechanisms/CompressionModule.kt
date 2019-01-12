@@ -9,7 +9,6 @@ import com.example.overlord.eventapp.extensions.logError
 import com.example.overlord.eventapp.model.Constants
 import com.example.overlord.eventapp.utils.timeStamp
 import id.zelory.compressor.Compressor
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import java.io.File

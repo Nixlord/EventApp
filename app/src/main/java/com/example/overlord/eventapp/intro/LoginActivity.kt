@@ -23,7 +23,8 @@ import java.lang.Error
 
 class LoginActivity : BaseActivity() {
 
-    lateinit var user: User
+    private var user = User()
+
     private fun createPhoneLoginIntent(): Intent {
         return AuthUI.getInstance()
             .createSignInIntentBuilder()
@@ -102,10 +103,10 @@ class LoginActivity : BaseActivity() {
     }
 
     fun setUpViews() {
-        user = User(
-            "User", "9999999999",
-            "Bride", "Friend", false, "photo"
-        )
+//        user = User(
+//            "User", "9999999999",
+//            "Bride", "Friend", false, "photo"
+//        )
 
         user.name = userName.text.toString()
 
@@ -118,7 +119,12 @@ class LoginActivity : BaseActivity() {
             "Common Friend", "Wedding Photographer"
         )
 
-        userRelation.setOnItemSelectedListener(user.relation = )
+        userRelation.setOnItemSelectedListener(object :MaterialSpinner.OnItemSelectedListener<String> {
+            override fun onItemSelected(view: MaterialSpinner?, position: Int, id: Long, item: String?) {
+                // data ?: "set this if data is null"
+                user.relation = item ?: "Bride"
+            }
+        })
 
     }
 

@@ -1,53 +1,89 @@
 package com.example.overlord.eventapp.mechanisms
 
-import android.support.v7.app.AppCompatActivity
+import android.content.pm.PackageManager
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
+import com.example.overlord.eventapp.base.BaseActivity
 import com.example.overlord.eventapp.extensions.*
-import com.karumi.dexter.Dexter
-import com.karumi.dexter.MultiplePermissionsReport
-import com.karumi.dexter.PermissionToken
-import com.karumi.dexter.listener.DexterError
-import com.karumi.dexter.listener.PermissionRequest
-import com.karumi.dexter.listener.multi.MultiplePermissionsListener
+import java.util.concurrent.ConcurrentHashMap
+
 
 class PermissionsModule {
 
-    private lateinit var dexter: Any
+    private class PermissionAction {
+        var permissions = arrayListOf<String>()
 
-    fun withPermissions(activity: AppCompatActivity, permissions : ArrayList<String>) : PermissionsModule {
-        dexter = Dexter.withActivity(activity)
-            .withPermissions(permissions)
-        return this
+        var requestPermissions: () -> Unit =
+            { logError(Error("Permission Request not made")) }
+
+        var onGranted: () -> Unit =
+            {  logDebug("DefaultPermissionCallback", "onGranted") }
+
+        var onError: ((Error) -> Unit) =
+            { error -> logError("DefaultARACallback", error) }
     }
 
-    fun execute(
-        onGranted : () -> Unit = { logDebug("DefaultPermitCallback", "Default") },
-        onError: (Error) -> Unit = { error -> logError("DefaultPermitCallback", error) }
-    ) {
-        (dexter as Dexter)
-            .withListener(object : MultiplePermissionsListener {
-                override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
-                    if (report != null) {
-                        if (report.areAllPermissionsGranted()) {
-                            onGranted()
-                        }
-                        else {
-                            logError("PermissionsModule", Error("AllPermissionsAreNotGranted"))
-                            onError(Error(DexterError.REQUEST_ONGOING.name))
-                        }
-                    }
-                    else {
-                        onError(Error("NULL REPORT"))
-                    }
-                }
+    private val permissionRequests : MutableMap<Int, PermissionAction> = ConcurrentHashMap()
 
-                override fun onPermissionRationaleShouldBeShown(
-                    permissions: List<PermissionRequest>,
-                    token: PermissionToken?
-                ) {
-                    token?.continuePermissionRequest()
+    private fun checkPermission(activity: BaseActivity, permission : String) : Boolean {
+        return ContextCompat.checkSelfPermission(activity, permission) == PackageManager.PERMISSION_GRANTED
+    }
+
+    inner class PermissionBuilder(private val requestCode : Int) {
+
+        fun withPermissions(activity: BaseActivity, permissions : ArrayList<String>) : PermissionBuilder {
+
+            permissionRequests[requestCode] = PermissionAction().apply {
+                this.permissions = permissions
+                requestPermissions = { ActivityCompat.requestPermissions(activity, permissions.toTypedArray(), requestCode) }
+            }
+
+            return this
+        }
+
+        fun execute(
+            onGranted : () -> Unit = { logDebug("DefaultPermitCallback", "Default") },
+            onError: (Error) -> Unit = { error -> logError("DefaultPermitCallback", error) }
+        ) {
+            permissionRequests[requestCode].apply {
+                this?.onGranted = onGranted
+                this?.onError = onError
+                this?.requestPermissions?.invoke()
+            }
+        }
+    }
+
+    private fun createMap(permissions: Array<out String>, grantResults: IntArray) : MutableMap<String, Boolean> {
+        val map : MutableMap<String, Boolean> = HashMap()
+        permissions.mapIndexed { index, permission ->
+            map[permission] = grantResults[index] == PackageManager.PERMISSION_GRANTED
+        }
+        return map
+    }
+
+    fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+
+        val permissionResult = createMap(permissions, grantResults)
+
+        for ((RC, action) in permissionRequests) {
+            if (RC == requestCode) {
+                val allGranted =
+                    action.permissions
+                        .map { permission -> permissionResult[permission] ?: false }
+                        .reduce { acc, b -> acc && b }
+                if (allGranted) {
+                    action.onGranted()
                 }
-            })
-            .withErrorListener{ error: DexterError? -> onError(Error(error?.name ?: "NullDexterError")) }
-            .check()
+                else {
+                    logError(Error("All Permissions not granted"))
+                    action.permissions
+                        .forEach { permission ->
+                            if ( ! (permissionResult[permission] ?: false) )
+                                logError(Error("$permission not granted"))
+                        }
+                }
+                permissionRequests.remove(RC)
+            }
+        }
     }
 }

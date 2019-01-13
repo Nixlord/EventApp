@@ -27,11 +27,13 @@ import java.util.*
 import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.IdpResponse
 import kotlinx.android.synthetic.main.activity_login.*
+import java.io.File
 import java.lang.Error
 
 class LoginActivity : BaseActivity() {
 
     private var user = User()
+    private var compressedImage : File? = null
 
     private fun createPhoneLoginIntent(): Intent {
         return AuthUI.getInstance()
@@ -67,17 +69,26 @@ class LoginActivity : BaseActivity() {
                 ).addOnSuccessListener {
 
                     user.phoneno = auth.currentUser!!.phoneNumber.toString()
-                    user.ID = auth.currentUser!!.uid
+                    compressedImage?.let {image ->
 
-                    firestore.collection("users")
-                        .add(user)
-                        .addOnSuccessListener { documentReference ->
-                            logDebug("DocumentSnapshot added with ID: " + documentReference.id)
-                            startApp()
-                        }
-                        .addOnFailureListener { e ->
-                            logError("Error adding document", e)
-                        }
+                        storage.pushImage(image, user.profile_photo)
+                            .addOnSuccessListener {
+
+                                logDebug("Uploaded ${image.name}")
+                            }
+
+                        firestore.collection("users")
+                            .add(user)
+                            .addOnSuccessListener { documentReference ->
+
+                                logDebug("DocumentSnapshot added with ID: " + documentReference.id)
+                                startApp()
+                            }
+                            .addOnFailureListener { e ->
+
+                                logError("Error adding document", e)
+                            }
+                    }
                 }.addOnFailureListener { error, intent ->
                     logError(error)
                     val response = IdpResponse.fromResultIntent(intent)
@@ -91,7 +102,6 @@ class LoginActivity : BaseActivity() {
                         logError(Error(message))
                         snackbar(message)
                     }
-
                 }
             }
         }
@@ -139,46 +149,21 @@ class LoginActivity : BaseActivity() {
         setupSpinner(userRelation, R.array.relations) { selected -> user.relation = selected }
 
         uploadProfilePhoto.setOnClickListener {
-            takePhoto("Add Profile Photo")
-                .addOnSuccessListener { image ->
-                    logDebug("Testing", "Clicked")
-                    logDebug("Profile photo name: ${image.name}")
-
-                    user.profile_photo = uniqueName()
-
-                    val compressed = compressImage(image, user.profile_photo)
-                    Glide.with(this).load(compressed).into(userProfilePhoto)
-                    storage.pushImage(compressed, user.profile_photo)
-                        .addOnSuccessListener {
-
-                            val reference = storage.child(remoteCompressedImages).child(user.profile_photo)
-                            Glide.with(this).load(reference).into(userProfilePhoto)
-
-                            logDebug("Uploaded ${image.name}")
-                        }
-
-                }
-
-            /*withPermissions(
-                Manifest.permission.CAMERA,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            withPermissions(
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.CAMERA
             ).execute({
                 takePhoto("Add Profile Photo")
                     .addOnSuccessListener { image ->
-                        logDebug("Testing", "Clicked")
                         logDebug("Profile photo name: ${image.name}")
 
                         user.profile_photo = uniqueName()
 
-                        val compressed = compressImage(image, user.profile_photo)
-                        storage.pushImage(compressed, user.profile_photo)
-                            .addOnSuccessListener {
-                                Glide.with(this).load(compressed).into(userProfilePhoto)
-                                logDebug("Uploaded ${image.name}")
-                            }
+                        compressedImage = compressImage(image, user.profile_photo)
 
+                        Glide.with(this).load(image).into(userProfilePhoto)
                     }
-            }, this::logError)*/
+            }, this::logError)
         }
 
     }

@@ -5,12 +5,14 @@ import java.net.URL
 
 // Hello Kotlin, Bye (almost) boilerplate.
 class User(
+        var ID : String = "",
         var name : String = "",
         var phoneno : String = "",
         var wedding_side : String = "Bride",
         var relation : String = "Friend",
         var key_contact : Boolean = false,
-        var profile_photo : String = "")
+        var profile_photo : String = ""
+)
 
 val relationships = arrayListOf(
         "Bride", "Groom",

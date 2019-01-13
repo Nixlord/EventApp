@@ -73,7 +73,6 @@ class LoginActivity : BaseActivity() {
                         storage.pushImage(image, user.profile_photo)
                             .addOnSuccessListener {
 
-                                Glide.with(this).load(image).into(userProfilePhoto)
                                 logDebug("Uploaded ${image.name}")
                             }
 
@@ -102,7 +101,6 @@ class LoginActivity : BaseActivity() {
                         logError(Error(message))
                         snackbar(message)
                     }
-
                 }
             }
         }
@@ -156,13 +154,13 @@ class LoginActivity : BaseActivity() {
             ).execute({
                 takePhoto("Add Profile Photo")
                     .addOnSuccessListener { image ->
-
                         logDebug("Profile photo name: ${image.name}")
 
                         user.profile_photo = uniqueName()
 
                         compressedImage = compressImage(image, user.profile_photo)
 
+                        Glide.with(this).load(image).into(userProfilePhoto)
                     }
             }, this::logError)
         }

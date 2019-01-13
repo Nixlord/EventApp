@@ -81,10 +81,11 @@ class LoginActivity : BaseActivity() {
                                 }
 
                             firestore.collection("users")
-                                .add(user)
+                                .document(auth.currentUser!!.uid)
+                                .set(user)
                                 .addOnSuccessListener { documentReference ->
 
-                                    logDebug("DocumentSnapshot added with ID: " + documentReference.id)
+                                    logDebug("DocumentSnapshot added with ID: " + auth.currentUser!!.uid)
                                     startApp()
                                 }
                                 .addOnFailureListener { e ->

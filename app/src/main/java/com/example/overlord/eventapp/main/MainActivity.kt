@@ -1,6 +1,5 @@
 package com.example.overlord.eventapp.main
 
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -19,7 +18,6 @@ import com.example.overlord.eventapp.utils.SwipeDisabledViewPager
 import kotlinx.android.synthetic.main.activity_main.*
 import java.lang.RuntimeException
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter
-import com.example.overlord.eventapp.extensions.getTag
 
 class MainActivity : BaseActivity() {
 

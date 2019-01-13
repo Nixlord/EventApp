@@ -7,7 +7,6 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
-import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.example.overlord.eventapp.R
 import com.example.overlord.eventapp.base.BaseActivity
@@ -63,45 +62,51 @@ class LoginActivity : BaseActivity() {
         } else {
             buttonLogin.setOnClickListener {
 
-                startActivityGetResult(
-                    createPhoneLoginIntent()
+                if(user.name == "") {
+                    snackbar("Please enter your name!")
+                } else {
+                    startActivityGetResult(
+                        createPhoneLoginIntent()
 
-                ).addOnSuccessListener {
+                    ).addOnSuccessListener {
 
-                    user.phoneno = auth.currentUser!!.phoneNumber.toString()
-                    compressedImage?.let {image ->
+                        user.phoneno = auth.currentUser!!.phoneNumber.toString()
+                        user.ID = auth.currentUser!!.uid
+                        compressedImage?.let {image ->
 
-                        storage.pushImage(image, user.profile_photo)
-                            .addOnSuccessListener {
+                            storage.pushImage(image, user.profile_photo)
+                                .addOnSuccessListener {
 
-                                logDebug("Uploaded ${image.name}")
-                            }
+                                    logDebug("Uploaded ${image.name}")
+                                }
 
-                        firestore.collection("users")
-                            .add(user)
-                            .addOnSuccessListener { documentReference ->
+                            firestore.collection("users")
+                                .add(user)
+                                .addOnSuccessListener { documentReference ->
 
-                                logDebug("DocumentSnapshot added with ID: " + documentReference.id)
-                                startApp()
-                            }
-                            .addOnFailureListener { e ->
+                                    logDebug("DocumentSnapshot added with ID: " + documentReference.id)
+                                    startApp()
+                                }
+                                .addOnFailureListener { e ->
 
-                                logError("Error adding document", e)
-                            }
+                                    logError("Error adding document", e)
+                                }
+                        }
                     }
-                }.addOnFailureListener { error, intent ->
-                    logError(error)
-                    val response = IdpResponse.fromResultIntent(intent)
+                        .addOnFailureListener { error, intent ->
+                            logError(error)
+                            val response = IdpResponse.fromResultIntent(intent)
 
-                    if (response == null) {
-                        val message = "Sign In Cancelled"
-                        logError(Error(message))
-                        snackbar(message)
-                    } else if (response.error!!.errorCode == ErrorCodes.NO_NETWORK) {
-                        val message = "No Internet Connection"
-                        logError(Error(message))
-                        snackbar(message)
-                    }
+                            if (response == null) {
+                                val message = "Sign In Cancelled"
+                                logError(Error(message))
+                                snackbar(message)
+                            } else if (response.error!!.errorCode == ErrorCodes.NO_NETWORK) {
+                                val message = "No Internet Connection"
+                                logError(Error(message))
+                                snackbar(message)
+                            }
+                        }
                 }
             }
         }

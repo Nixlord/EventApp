@@ -17,6 +17,7 @@ import com.example.overlord.eventapp.extensions.Firebase.firestore
 import com.example.overlord.eventapp.extensions.Firebase.storage
 import com.example.overlord.eventapp.main.MainActivity
 import com.example.overlord.eventapp.mechanisms.compressImage
+import com.example.overlord.eventapp.model.Constants.remoteCompressedImages
 
 import com.example.overlord.eventapp.model.User
 import com.example.overlord.eventapp.utils.uniqueName
@@ -66,8 +67,8 @@ class LoginActivity : BaseActivity() {
                     createPhoneLoginIntent()
 
                 ).addOnSuccessListener {
-                    user.phoneno = auth.currentUser!!.phoneNumber.toString()
 
+                    user.phoneno = auth.currentUser!!.phoneNumber.toString()
                     compressedImage?.let {image ->
 
                         storage.pushImage(image, user.profile_photo)

@@ -33,23 +33,25 @@ class PermissionsModule {
 
         fun withPermissions(activity: BaseActivity, permissions : ArrayList<String>) : PermissionBuilder {
 
-            val pendingPermissions = arrayListOf<String>()
-
-            permissions.map {
-                checkPermission(activity, it)
-            }.mapIndexed { index, granted ->
-                if ( ! granted )
-                    pendingPermissions.add(permissions[index])
+            permissionRequests[requestCode] = PermissionAction().apply {
+                this.permissions = permissions
+                requestPermissions = { ActivityCompat.requestPermissions(activity, permissions.toTypedArray(), requestCode) }
             }
-
-            pendingPermissions.forEach { activity.logDebug(it) }
-
-            if (pendingPermissions.isNotEmpty()) {
-                permissionRequests[requestCode] = PermissionAction().apply {
-                    this.permissions = pendingPermissions
-                    requestPermissions = { ActivityCompat.requestPermissions(activity, pendingPermissions.toTypedArray(), requestCode) }
-                }
-            }
+//
+//            val pendingPermissions = arrayListOf<String>()
+//
+//            permissions.map {
+//                checkPermission(activity, it)
+//            }.mapIndexed { index, granted ->
+//                if ( ! granted )
+//                    pendingPermissions.add(permissions[index])
+//            }
+//
+//            pendingPermissions.forEach { activity.logDebug(it) }
+//
+//            if (pendingPermissions.isNotEmpty()) {
+//
+//            }
 
             return this
         }
@@ -86,7 +88,6 @@ class PermissionsModule {
                         .reduce { acc, b -> acc && b }
                 if (allGranted) {
                     action.onGranted()
-                    permissionRequests.remove(RC)
                 }
                 else {
                     logError(Error("All Permissions not granted"))
@@ -96,6 +97,7 @@ class PermissionsModule {
                                 logError(Error("$permission not granted"))
                         }
                 }
+                permissionRequests.remove(RC)
             }
         }
     }

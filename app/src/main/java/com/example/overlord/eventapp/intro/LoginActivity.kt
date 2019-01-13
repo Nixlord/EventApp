@@ -26,11 +26,13 @@ import java.util.*
 import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.IdpResponse
 import kotlinx.android.synthetic.main.activity_login.*
+import java.io.File
 import java.lang.Error
 
 class LoginActivity : BaseActivity() {
 
     private var user = User()
+    private var compressedImage : File? = null
 
     private fun createPhoneLoginIntent(): Intent {
         return AuthUI.getInstance()
@@ -65,15 +67,28 @@ class LoginActivity : BaseActivity() {
 
                 ).addOnSuccessListener {
                     user.phoneno = auth.currentUser!!.phoneNumber.toString()
-                    firestore.collection("users")
-                        .add(user)
-                        .addOnSuccessListener { documentReference ->
-                            logDebug("DocumentSnapshot added with ID: " + documentReference.id)
-                            startApp()
-                        }
-                        .addOnFailureListener { e ->
-                            logError("Error adding document", e)
-                        }
+
+                    compressedImage?.let {image ->
+
+                        storage.pushImage(image, user.profile_photo)
+                            .addOnSuccessListener {
+
+                                Glide.with(this).load(image).into(userProfilePhoto)
+                                logDebug("Uploaded ${image.name}")
+                            }
+
+                        firestore.collection("users")
+                            .add(user)
+                            .addOnSuccessListener { documentReference ->
+
+                                logDebug("DocumentSnapshot added with ID: " + documentReference.id)
+                                startApp()
+                            }
+                            .addOnFailureListener { e ->
+
+                                logError("Error adding document", e)
+                            }
+                    }
                 }.addOnFailureListener { error, intent ->
                     logError(error)
                     val response = IdpResponse.fromResultIntent(intent)
@@ -146,12 +161,7 @@ class LoginActivity : BaseActivity() {
 
                         user.profile_photo = uniqueName()
 
-                        val compressed = compressImage(image, user.profile_photo)
-                        storage.pushImage(compressed, user.profile_photo)
-                            .addOnSuccessListener {
-                                Glide.with(this).load(compressed).into(userProfilePhoto)
-                                logDebug("Uploaded ${image.name}")
-                            }
+                        compressedImage = compressImage(image, user.profile_photo)
 
                     }
             }, this::logError)

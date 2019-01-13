@@ -7,7 +7,7 @@ import java.net.URL
 class User(
         var name : String = "",
         var phoneno : String = "",
-        var wedding_side : String = "",
+        var wedding_side : String = "Bride",
         var relation : String = "Friend",
         var key_contact : Boolean = false,
         var profile_photo : String = "")

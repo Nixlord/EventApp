@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import android.widget.Toast
 import com.example.overlord.eventapp.R
 import com.example.overlord.eventapp.base.BaseActivity
 import com.example.overlord.eventapp.extensions.Firebase.auth
@@ -17,7 +18,6 @@ import com.example.overlord.eventapp.main.MainActivity
 import com.example.overlord.eventapp.extensions.snackbar
 
 import com.example.overlord.eventapp.model.User
-import com.example.overlord.eventapp.model.relationships
 
 import com.firebase.ui.auth.AuthUI
 import java.util.*
@@ -25,8 +25,6 @@ import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.IdpResponse
 import kotlinx.android.synthetic.main.activity_login.*
 import java.lang.Error
-import kotlin.collections.ArrayList
-
 
 class LoginActivity : BaseActivity() {
 
@@ -37,7 +35,7 @@ class LoginActivity : BaseActivity() {
             .createSignInIntentBuilder()
             .setAvailableProviders(
                 Arrays.asList(
-                    AuthUI.IdpConfig.GoogleBuilder().build()
+                    AuthUI.IdpConfig.PhoneBuilder().build()
                 )
             )
             .setIsSmartLockEnabled(false)
@@ -59,37 +57,21 @@ class LoginActivity : BaseActivity() {
             startApp()
         } else {
             buttonLogin.setOnClickListener {
+
                 startActivityGetResult(
                     createPhoneLoginIntent()
 
                 ).addOnSuccessListener {
-                    val user = auth.currentUser
-
-
-                    /*
-
-                    You can get these two parameters from the User object
-                    user!!.uid
-                    user!!.phoneNumber
-
-                    object!!.parameter implies that we know this object is not null
-                    This is required sometimes when a function returns a nullable type
-                    But dynamic application logic ensures this is not null
-                    Since the logic is dynamic, static analysis won't flag it as not null
-                    Hence we mark it manually.
-
-
-                    Take these parameters and others you input from editTexts and create User (model) object
-
-                    Then you can save like this
+                    user.phoneno = auth.currentUser!!.phoneNumber.toString()
                     firestore.collection("users")
-                        .document(user!!.uid).set(User(<insert data from editText and user auth object>))
-                    */
-
-
-                    firestore.collection("users")
-                    startApp()
-
+                        .add(user)
+                        .addOnSuccessListener { documentReference ->
+                            logDebug("DocumentSnapshot added with ID: " + documentReference.id)
+                            startApp()
+                        }
+                        .addOnFailureListener { e ->
+                            logError("Error adding document", e)
+                        }
                 }.addOnFailureListener { error, intent ->
                     logError(error)
                     val response = IdpResponse.fromResultIntent(intent)
@@ -131,13 +113,21 @@ class LoginActivity : BaseActivity() {
         }
     }
 
-    fun setUpViews() {
+    private fun setUpViews() {
 
+        user.name = userName?.text.toString()
+        Toast.makeText(this, user.name, Toast.LENGTH_SHORT).show()
 
-        user.name = userName.text.toString()
-
-        bride.setOnClickListener { user.wedding_side = "Bride" }
-        groom.setOnClickListener { user.wedding_side = "Groom" }
+        bride.setOnClickListener {
+            groom.setImageResource(R.drawable.male_bw)
+            bride.setImageResource(R.drawable.female)
+            user.wedding_side = "Bride"
+        }
+        groom.setOnClickListener {
+            bride.setImageResource(R.drawable.female_bw)
+            groom.setImageResource(R.drawable.male)
+            user.wedding_side = "Groom"
+        }
 
         user.relation = "Friend"
         setupSpinner(userRelation, R.array.relations) { selected -> user.relation = selected }

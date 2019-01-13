@@ -1,15 +1,11 @@
 package com.example.overlord.eventapp.main
 
-import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentStatePagerAdapter
 import android.support.v4.content.ContextCompat
-import android.support.v7.view.menu.MenuBuilder
-import android.view.MenuInflater
-import android.view.MenuItem
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation
 import com.example.overlord.eventapp.R
 import com.example.overlord.eventapp.base.BaseActivity
@@ -23,9 +19,7 @@ import com.example.overlord.eventapp.utils.SwipeDisabledViewPager
 import kotlinx.android.synthetic.main.activity_main.*
 import java.lang.RuntimeException
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter
-
-
-
+import com.example.overlord.eventapp.extensions.getTag
 
 class MainActivity : BaseActivity() {
 
@@ -83,14 +77,6 @@ class MainActivity : BaseActivity() {
         )
     }
 
-    private val indexMenu = mapOf(
-        Pair(R.id.navigation_wall, 0),
-        Pair(R.id.navigation_events, 1),
-        Pair(R.id.navigation_camera, 2),
-        Pair(R.id.navigation_albums, 3),
-        Pair(R.id.navigation_guests, 4)
-    )
-
     private fun setupViewPager(viewPager: SwipeDisabledViewPager) {
 
         viewPager.apply {
@@ -147,12 +133,6 @@ class MainActivity : BaseActivity() {
 
         setupViewPager(viewPager)
 
-
-//        bottomNavigation.setOnNavigationItemSelectedListener {
-//                menuItem -> viewPager.currentItem = indexMenu[menuItem.itemId]!!
-//            true
-//        }
-//
         setupBottomNavigation(bottomNavigation, R.menu.navigation, R.array.colors)
         bottomNavigation.setOnTabSelectedListener { position, wasSelected ->
             if (!wasSelected)

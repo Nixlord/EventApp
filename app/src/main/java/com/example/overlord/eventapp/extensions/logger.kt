@@ -28,3 +28,4 @@ fun logDebug(tag : String = "GlobalLog", message: String?) {
     Log.d(tag, text)
     Crashlytics.log(Log.DEBUG, "F:$tag", text)
 }
+

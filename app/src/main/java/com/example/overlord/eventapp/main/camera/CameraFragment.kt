@@ -1,5 +1,6 @@
 package com.example.overlord.eventapp.main.camera
 
+import android.Manifest
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -7,6 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.overlord.eventapp.R
 import com.example.overlord.eventapp.base.BaseActivity
+import com.example.overlord.eventapp.extensions.Firebase.firestore
+import com.example.overlord.eventapp.extensions.Firebase.storage
+import com.example.overlord.eventapp.extensions.logDebug
+import com.example.overlord.eventapp.extensions.pushImage
+import com.example.overlord.eventapp.mechanisms.compressImage
+import com.example.overlord.eventapp.utils.uniqueName
 import kotlinx.android.synthetic.main.fragment_camera.*
 import java.io.Serializable
 
@@ -49,11 +56,30 @@ class CameraFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         fabNewPhoto.setOnClickListener {
             (activity as BaseActivity).apply {
                 withPermissions(
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.CAMERA
+                ).execute {
+                    takePhoto("Upload Photos")
+                        .addOnSuccessListener { image ->
 
-                )
+                            logDebug("Cache File ${image.name}")
+
+                            val imageName = uniqueName()
+                            val compressed = compressImage(image, imageName)
+
+                            storage.pushImage(compressed, imageName)
+                                .addOnSuccessListener {
+                                    logDebug("Uploaded ${image.name}")
+                                }
+                            firestore.collection("images")
+                                .document()
+
+                        }
+                }
             }
         }
     }

@@ -9,13 +9,10 @@ import android.widget.Spinner
 import android.widget.Toast
 import com.example.overlord.eventapp.R
 import com.example.overlord.eventapp.base.BaseActivity
+import com.example.overlord.eventapp.extensions.*
 import com.example.overlord.eventapp.extensions.Firebase.auth
 import com.example.overlord.eventapp.extensions.Firebase.firestore
-import com.example.overlord.eventapp.extensions.finishAndStart
-import com.example.overlord.eventapp.extensions.logDebug
-import com.example.overlord.eventapp.extensions.logError
 import com.example.overlord.eventapp.main.MainActivity
-import com.example.overlord.eventapp.extensions.snackbar
 
 import com.example.overlord.eventapp.model.User
 
@@ -115,14 +112,19 @@ class LoginActivity : BaseActivity() {
 
     private fun setUpViews() {
 
-        user.name = userName?.text.toString()
+//        user.name = userName?.text.toString()
+        // ToDo @Diksha read onTextChange implementation and understand how extension function works
+        userName.onTextChange { text -> user.name = text }
+
         Toast.makeText(this, user.name, Toast.LENGTH_SHORT).show()
+        // ToDo @ Diksha Convert this to toast(user.name) using an extension function
 
         bride.setOnClickListener {
             groom.setImageResource(R.drawable.male_bw)
             bride.setImageResource(R.drawable.female)
             user.wedding_side = "Bride"
         }
+
         groom.setOnClickListener {
             bride.setImageResource(R.drawable.female_bw)
             groom.setImageResource(R.drawable.male)

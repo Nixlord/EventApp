@@ -37,21 +37,6 @@ class PermissionsModule {
                 this.permissions = permissions
                 requestPermissions = { ActivityCompat.requestPermissions(activity, permissions.toTypedArray(), requestCode) }
             }
-//
-//            val pendingPermissions = arrayListOf<String>()
-//
-//            permissions.map {
-//                checkPermission(activity, it)
-//            }.mapIndexed { index, granted ->
-//                if ( ! granted )
-//                    pendingPermissions.add(permissions[index])
-//            }
-//
-//            pendingPermissions.forEach { activity.logDebug(it) }
-//
-//            if (pendingPermissions.isNotEmpty()) {
-//
-//            }
 
             return this
         }

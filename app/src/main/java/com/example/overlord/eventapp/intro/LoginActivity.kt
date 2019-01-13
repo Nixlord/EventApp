@@ -112,12 +112,7 @@ class LoginActivity : BaseActivity() {
 
     private fun setUpViews() {
 
-//        user.name = userName?.text.toString()
-        // ToDo @Diksha read onTextChange implementation and understand how extension function works
         userName.onTextChange { text -> user.name = text }
-
-        Toast.makeText(this, user.name, Toast.LENGTH_SHORT).show()
-        // ToDo @ Diksha Convert this to toast(user.name) using an extension function
 
         bride.setOnClickListener {
             groom.setImageResource(R.drawable.male_bw)

@@ -7,6 +7,7 @@ import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.widget.Toast
 import com.crashlytics.android.Crashlytics
 import com.example.overlord.eventapp.mechanisms.PermissionsModule
 import com.example.overlord.eventapp.model.Constants
@@ -31,6 +32,10 @@ fun AppCompatActivity.getTag() : String {
     val length = this.getName().length
     val till = Math.min(length - 1, 20)
     return this.getName().substring(0..till)
+}
+
+fun AppCompatActivity.toast(message : String) {
+    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 }
 
 /*

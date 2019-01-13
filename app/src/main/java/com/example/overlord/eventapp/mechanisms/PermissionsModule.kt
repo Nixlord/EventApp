@@ -75,11 +75,11 @@ class PermissionsModule {
                     action.onGranted()
                 }
                 else {
-                    logError(Error("All Permissions not granted"))
+                    action.onError(Error("All Permissions not granted"))
                     action.permissions
                         .forEach { permission ->
                             if ( ! (permissionResult[permission] ?: false) )
-                                logError(Error("$permission not granted"))
+                                action.onError(Error("$permission not granted"))
                         }
                 }
                 permissionRequests.remove(RC)

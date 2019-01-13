@@ -24,6 +24,7 @@
     <string name="relation_prompt">Relation</string>
     <string name="upload_photo">Upload</string>
     <string-array name="relations">
+        <item>Friend</item>
         <item>Bride</item>
         <item>Groom</item>
         <item>Mother</item>
@@ -35,10 +36,7 @@
         <item>Brother-in-law</item>
         <item>Uncle</item>
         <item>Aunt</item>
-        <item>Friend</item>
-        <item>Common friend</item>
         <item>GrandParent</item>
         <item>Wedding Photographer</item>
-        <item>Wedding Planner</item>
     </string-array>
 </resources>

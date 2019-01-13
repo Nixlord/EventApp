@@ -17,6 +17,7 @@ import com.example.overlord.eventapp.extensions.Firebase.firestore
 import com.example.overlord.eventapp.extensions.Firebase.storage
 import com.example.overlord.eventapp.main.MainActivity
 import com.example.overlord.eventapp.mechanisms.compressImage
+import com.example.overlord.eventapp.model.Constants.remoteCompressedImages
 
 import com.example.overlord.eventapp.model.User
 import com.example.overlord.eventapp.utils.uniqueName
@@ -64,7 +65,10 @@ class LoginActivity : BaseActivity() {
                     createPhoneLoginIntent()
 
                 ).addOnSuccessListener {
+
                     user.phoneno = auth.currentUser!!.phoneNumber.toString()
+                    user.ID = auth.currentUser!!.uid
+
                     firestore.collection("users")
                         .add(user)
                         .addOnSuccessListener { documentReference ->
@@ -135,13 +139,33 @@ class LoginActivity : BaseActivity() {
         setupSpinner(userRelation, R.array.relations) { selected -> user.relation = selected }
 
         uploadProfilePhoto.setOnClickListener {
-            withPermissions(
+            takePhoto("Add Profile Photo")
+                .addOnSuccessListener { image ->
+                    logDebug("Testing", "Clicked")
+                    logDebug("Profile photo name: ${image.name}")
+
+                    user.profile_photo = uniqueName()
+
+                    val compressed = compressImage(image, user.profile_photo)
+                    Glide.with(this).load(compressed).into(userProfilePhoto)
+                    storage.pushImage(compressed, user.profile_photo)
+                        .addOnSuccessListener {
+
+                            val reference = storage.child(remoteCompressedImages).child(user.profile_photo)
+                            Glide.with(this).load(reference).into(userProfilePhoto)
+
+                            logDebug("Uploaded ${image.name}")
+                        }
+
+                }
+
+            /*withPermissions(
                 Manifest.permission.CAMERA,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
             ).execute({
                 takePhoto("Add Profile Photo")
                     .addOnSuccessListener { image ->
-
+                        logDebug("Testing", "Clicked")
                         logDebug("Profile photo name: ${image.name}")
 
                         user.profile_photo = uniqueName()
@@ -154,7 +178,7 @@ class LoginActivity : BaseActivity() {
                             }
 
                     }
-            }, this::logError)
+            }, this::logError)*/
         }
 
     }

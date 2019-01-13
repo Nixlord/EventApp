@@ -136,8 +136,8 @@ class LoginActivity : BaseActivity() {
 
         uploadProfilePhoto.setOnClickListener {
             withPermissions(
-                Manifest.permission.CAMERA,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.CAMERA
             ).execute({
                 takePhoto("Add Profile Photo")
                     .addOnSuccessListener { image ->

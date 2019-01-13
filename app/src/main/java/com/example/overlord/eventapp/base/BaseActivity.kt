@@ -14,7 +14,7 @@ import io.reactivex.disposables.CompositeDisposable
 abstract class BaseActivity : AppCompatActivity() {
 
     protected val compositeDisposable = CompositeDisposable()
-    private val loopingAtomicInteger = LoopingAtomicInteger(100, 999)
+    private val loopingAtomicInteger = LoopingAtomicInteger(100, 10000)
     private val activityResultHandler = ActivityResultHandler()
 //    private val compressionModule = CompressionModule()
     private val permissionsModule = PermissionsModule()
@@ -34,7 +34,9 @@ abstract class BaseActivity : AppCompatActivity() {
         }
 
     /** PermissionsModule */
-    fun withPermissions(vararg permissions : String) = permissionsModule.withPermissions(this, permissions.toCollection(ArrayList()))
+    fun withPermissions(vararg permissions : String) =
+        permissionsModule.PermissionBuilder(loopingAtomicInteger.nextInt())
+            .withPermissions(this, permissions.toCollection(ArrayList()))
 
     /** CompressionModule */
 //    fun compressImage(image : File) = compressionModule.compressImage(this, image)
@@ -44,6 +46,11 @@ abstract class BaseActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         activityResultHandler.onActivityResult(requestCode, resultCode, data)
         camera.internalOnActivityResult(this, requestCode, resultCode, data)
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        permissionsModule.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
     /** Stateful Portion */

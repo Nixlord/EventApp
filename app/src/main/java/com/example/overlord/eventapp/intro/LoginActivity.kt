@@ -1,5 +1,6 @@
 package com.example.overlord.eventapp.intro
 
+import android.Manifest
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -7,14 +8,18 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.Toast
+import com.bumptech.glide.Glide
 import com.example.overlord.eventapp.R
 import com.example.overlord.eventapp.base.BaseActivity
 import com.example.overlord.eventapp.extensions.*
 import com.example.overlord.eventapp.extensions.Firebase.auth
 import com.example.overlord.eventapp.extensions.Firebase.firestore
+import com.example.overlord.eventapp.extensions.Firebase.storage
 import com.example.overlord.eventapp.main.MainActivity
+import com.example.overlord.eventapp.mechanisms.compressImage
 
 import com.example.overlord.eventapp.model.User
+import com.example.overlord.eventapp.utils.uniqueName
 
 import com.firebase.ui.auth.AuthUI
 import java.util.*
@@ -128,6 +133,29 @@ class LoginActivity : BaseActivity() {
 
         user.relation = "Friend"
         setupSpinner(userRelation, R.array.relations) { selected -> user.relation = selected }
+
+        uploadProfilePhoto.setOnClickListener {
+            withPermissions(
+                Manifest.permission.CAMERA,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ).execute({
+                takePhoto("Add Profile Photo")
+                    .addOnSuccessListener { image ->
+
+                        logDebug("Profile photo name: ${image.name}")
+
+                        user.profile_photo = uniqueName()
+
+                        val compressed = compressImage(image, user.profile_photo)
+                        storage.pushImage(compressed, user.profile_photo)
+                            .addOnSuccessListener {
+                                Glide.with(this).load(compressed).into(userProfilePhoto)
+                                logDebug("Uploaded ${image.name}")
+                            }
+
+                    }
+            }, this::logError)
+        }
 
     }
 

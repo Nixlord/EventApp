@@ -68,7 +68,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="8dp"
             android:layout_marginTop="8dp"
-            android:cropToPadding="true"
             android:background="@android:color/darker_gray"
             android:padding="1dp"
             app:layout_constraintTop_toTopOf="parent"/>

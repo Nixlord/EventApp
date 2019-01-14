@@ -39,4 +39,22 @@
         <item>GrandParent</item>
         <item>Wedding Photographer</item>
     </string-array>
+
+
+    <!-- Event Activity String -->
+    <string name="event_title">Event Name</string>
+    <string name="mehendi">Mehendi</string>
+    <string name="haldi">Haldi</string>
+    <string name="sangeet">Sangeet</string>
+    <string name="wedding">Wedding</string>
+    <string name="reception">Reception</string>
+    <string name="event_time">--:-- onwards</string>
+    <string name="event_address">Mayfair, Bhubaneswar</string>
+    <string name="event_map">Goto Maps</string>
+    <string name="event_message">Welcome to our wedding!</string>
+    <string name="event_year">2019</string>
+    <string name="event_month">Feb</string>
+    <string name="event_date">10</string>
+    <string name="event_date_text">Calender</string>
+
 </resources>

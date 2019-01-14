@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.example.overlord.eventapp.R
 import com.example.overlord.eventapp.base.BaseActivity
+import com.example.overlord.eventapp.base.BaseFragment
 import com.example.overlord.eventapp.extensions.*
 import com.example.overlord.eventapp.extensions.Firebase.auth
 import com.example.overlord.eventapp.extensions.Firebase.firestore
@@ -24,7 +25,7 @@ import kotlinx.android.synthetic.main.fragment_camera.*
 import java.io.File
 import java.io.Serializable
 
-class CameraFragment : Fragment() {
+class CameraFragment : BaseFragment() {
 
     class FragmentInputs(val firstName : String = "Shibasis", val surname : String = "Patnaik") : Serializable
 
@@ -92,7 +93,7 @@ class CameraFragment : Fragment() {
         }
 
         photoView.setOnClickListener {
-            (activity as BaseActivity).apply {
+            base.apply {
                 withPermissions(
                     Manifest.permission.WRITE_EXTERNAL_STORAGE,
                     Manifest.permission.CAMERA
@@ -115,7 +116,6 @@ class CameraFragment : Fragment() {
         contentView.onTextChange { content -> post.content = content }
 
         submitButton.setOnClickListener {
-            interactor?.onImageUploaded("Hello") ?: logError(Error("Null Interactor"))
             compressedImage?.let { image ->
                 val newPostID = uniqueName()
                 post.postID = newPostID
@@ -129,7 +129,9 @@ class CameraFragment : Fragment() {
                     .addOnSuccessListener {
                         storage.pushImage(compressedImage!!, post.imageID!!)
                             .addOnSuccessListener {
-                                logDebug("Uploaded : $newPostID")
+                                val success = "Uploaded : $newPostID"
+                                logDebug(success)
+                                base.toastSuccess(success)
                                 resetViews()
                             }
                             .addOnFailureListener { error -> logError(error) }
@@ -149,5 +151,7 @@ class CameraFragment : Fragment() {
 
         post = Post()
         compressedImage = null
+
+        interactor?.onImageUploaded(postID)
     }
 }

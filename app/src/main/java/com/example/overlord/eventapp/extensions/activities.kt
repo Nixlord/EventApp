@@ -12,6 +12,7 @@ import com.crashlytics.android.Crashlytics
 import com.example.overlord.eventapp.mechanisms.PermissionsModule
 import com.example.overlord.eventapp.model.Constants
 import com.example.overlord.eventapp.utils.timeStamp
+import es.dmoral.toasty.Toasty
 import id.zelory.compressor.Compressor
 import java.io.File
 import java.lang.Exception
@@ -34,9 +35,16 @@ fun AppCompatActivity.getTag() : String {
     return this.getName().substring(0..till)
 }
 
-fun AppCompatActivity.toast(message : String) {
-    Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+fun AppCompatActivity.toastSuccess(message : String) {
+    Toasty.success(this, message, Toast.LENGTH_SHORT, true).show()
 }
+
+fun AppCompatActivity.toastError(message : String) {
+    Toasty.error(this, message, Toast.LENGTH_SHORT, true).show()
+}
+
+
+
 
 /*
 > No memory leak here, but be careful with activity references.

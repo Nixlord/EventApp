@@ -6,11 +6,19 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
 
 import com.example.overlord.eventapp.R
+import com.example.overlord.eventapp.base.BaseFragment
+import com.example.overlord.eventapp.extensions.Firebase.storage
+import com.example.overlord.eventapp.extensions.logError
+import com.example.overlord.eventapp.extensions.toastSuccess
+import com.example.overlord.eventapp.model.Constants
+import kotlinx.android.synthetic.main.fragment_camera.*
 import java.io.Serializable
+import java.lang.Error
 
-class WallFragment : Fragment() {
+class WallFragment : BaseFragment() {
 
     //Declare your data here
     class FragmentInputs(val postID: String? = null) : Serializable
@@ -44,6 +52,14 @@ class WallFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        inputs?.postID?.apply {
+
+            val imageRef = storage.child(Constants.remoteCompressedImages).child(this)
+            Glide.with(base).load(imageRef).into(photoView)
+            base.toastSuccess("HeHeHe")
+
+        } ?: logError(Error("PostID null"))
 
     }
 }

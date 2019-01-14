@@ -4,7 +4,6 @@ import java.sql.Time
 import java.util.*
 
 class Event (
-    val id : String = "",
     val name : String = "",
     val date : Date,
     val time : Time,

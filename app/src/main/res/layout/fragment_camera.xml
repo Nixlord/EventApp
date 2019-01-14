@@ -16,10 +16,10 @@
             android:layout_marginStart="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="8dp"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintBottom_toTopOf="@+id/submitButton" android:layout_marginTop="8dp"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/chipGroup">
         <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -40,6 +40,52 @@
                     android:lines="8" android:layout_alignParentStart="true" android:layout_marginTop="0dp"/>
         </RelativeLayout>
     </android.support.v7.widget.CardView>
+
+    <android.support.design.chip.ChipGroup
+            android:id="@+id/chipGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:foregroundGravity="center_horizontal"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/cardView" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/submitButton" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+        <android.support.design.chip.Chip
+                android:id="@+id/chipParty"
+                android:checkable="true"
+                android:text="Party"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <android.support.design.chip.Chip
+                android:id="@+id/chipHaldi"
+                android:checkable="true"
+                android:text="Haldi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <android.support.design.chip.Chip
+                android:id="@+id/chipMehendi"
+                android:checkable="true"
+                android:text="Mehendi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <android.support.design.chip.Chip
+                android:id="@+id/chipShaadi"
+                android:checkable="true"
+                android:text="Shaadi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <android.support.design.chip.Chip
+                android:id="@+id/chipReception"
+                android:checkable="true"
+                android:text="Reception"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+    </android.support.design.chip.ChipGroup>
+    
     <android.support.design.button.MaterialButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

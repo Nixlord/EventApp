@@ -3,7 +3,6 @@ package com.example.overlord.eventapp.main
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentStatePagerAdapter
 import android.support.v4.content.ContextCompat
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation
 import com.example.overlord.eventapp.R
@@ -14,7 +13,6 @@ import com.example.overlord.eventapp.main.camera.CameraFragment
 import com.example.overlord.eventapp.main.event.EventFragment
 import com.example.overlord.eventapp.main.guests.GuestFragment
 import com.example.overlord.eventapp.main.wall.WallFragment
-import com.example.overlord.eventapp.utils.SwipeDisabledViewPager
 import kotlinx.android.synthetic.main.activity_main.*
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter
 import com.example.overlord.eventapp.extensions.loadFragment
@@ -23,7 +21,7 @@ import kotlin.RuntimeException
 
 class MainActivity : BaseActivity() {
 
-    fun createWallFragment(inputs: WallFragment.FragmentInputs?) : WallFragment {
+    fun createWallFragment(inputs: WallFragment.FragmentInputs? = null) : WallFragment {
         return WallFragment.newInstance(
             inputs,
             object : WallFragment.FragmentInteractor {
@@ -33,7 +31,7 @@ class MainActivity : BaseActivity() {
             }
         )
     }
-    fun createEventFragment(inputs: EventFragment.FragmentInputs?) : EventFragment {
+    fun createEventFragment(inputs: EventFragment.FragmentInputs? = null) : EventFragment {
         return EventFragment.newInstance(
             inputs,
             object : EventFragment.FragmentInteractor {
@@ -44,18 +42,22 @@ class MainActivity : BaseActivity() {
         )
     }
 
-    fun createCameraFragment(inputs : CameraFragment.FragmentInputs?) : CameraFragment {
+    fun createCameraFragment(inputs : CameraFragment.FragmentInputs? = null) : CameraFragment {
         return CameraFragment.newInstance(
             inputs,
             object : CameraFragment.FragmentInteractor {
                 override fun onImageUploaded(postID : String) {
-
+                    fragments["wall"] = createWallFragment(
+                        WallFragment.FragmentInputs(
+                        postID = postID
+                    ))
+                    bottomNavigation.currentItem = fragmentNames.indexOf("wall")
                 }
             }
         )
     }
 
-    fun createAlbumFragment(inputs : AlbumFragment.FragmentInputs?) : AlbumFragment {
+    fun createAlbumFragment(inputs : AlbumFragment.FragmentInputs? = null) : AlbumFragment {
         return AlbumFragment.newInstance(
             inputs,
             object : AlbumFragment.FragmentInteractor {
@@ -66,7 +68,7 @@ class MainActivity : BaseActivity() {
         )
     }
 
-    fun createGuestsFragment(inputs : GuestFragment.FragmentInputs?) : GuestFragment {
+    fun createGuestsFragment(inputs : GuestFragment.FragmentInputs? = null) : GuestFragment {
         return GuestFragment.newInstance(
             inputs,
             object : GuestFragment.FragmentInteractor {
@@ -101,7 +103,6 @@ class MainActivity : BaseActivity() {
         navigationAdapter.setupWithBottomNavigation(bottomNavigation, applicationContext.resources.getIntArray(colorsID))
     }
 
-
     private val fragments : MutableMap<String, Fragment> = ConcurrentHashMap()
     private val fragmentNames = arrayListOf("wall", "event", "camera", "album", "guest")
 
@@ -109,12 +110,11 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        fragments["wall"] =  createWallFragment(null)
-        fragments["event"] =  createEventFragment(null)
-        fragments["camera"] =  createCameraFragment(null)
-        fragments["album"] =  createAlbumFragment(null)
-        fragments["guest"] =  createGuestsFragment(null)
-
+        fragments["wall"]   =  createWallFragment()
+        fragments["event"]  =  createEventFragment()
+        fragments["camera"] =  createCameraFragment()
+        fragments["album"]  =  createAlbumFragment()
+        fragments["guest"]  =  createGuestsFragment()
 
         setupBottomNavigation(bottomNavigation, R.menu.navigation, R.array.colors)
         bottomNavigation.setOnTabSelectedListener { position, wasSelected ->

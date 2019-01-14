@@ -1,5 +1,6 @@
 package com.example.overlord.eventapp.extensions
 
+import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import com.crashlytics.android.Crashlytics
@@ -21,6 +22,11 @@ fun logError(tag : String = "GlobalLog", exception : Throwable) {
 
 
 fun AppCompatActivity.logDebug(message: String?) { logDebug(getTag(), message) }
+fun Fragment.logDebug(message: String?) {
+    val name = getName()
+    val length = Math.min(name.length - 1, 20)
+    logDebug(name.substring(0..length), message)
+}
 fun logDebug(tag : String = "GlobalLog", message: String?) {
 
     val text = message ?: "NullMessage"

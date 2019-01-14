@@ -16,14 +16,16 @@ import com.example.overlord.eventapp.main.guests.GuestFragment
 import com.example.overlord.eventapp.main.wall.WallFragment
 import com.example.overlord.eventapp.utils.SwipeDisabledViewPager
 import kotlinx.android.synthetic.main.activity_main.*
-import java.lang.RuntimeException
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter
+import com.example.overlord.eventapp.extensions.loadFragment
+import java.util.concurrent.ConcurrentHashMap
+import kotlin.RuntimeException
 
 class MainActivity : BaseActivity() {
 
-    fun createWallFragment() : WallFragment {
+    fun createWallFragment(inputs: WallFragment.FragmentInputs?) : WallFragment {
         return WallFragment.newInstance(
-            WallFragment.FragmentInputs(),
+            inputs,
             object : WallFragment.FragmentInteractor {
                 override fun onButtonPressed(message: String) {
                     logDebug("snackbar pressed")
@@ -31,9 +33,9 @@ class MainActivity : BaseActivity() {
             }
         )
     }
-    fun createEventFragment() : EventFragment {
+    fun createEventFragment(inputs: EventFragment.FragmentInputs?) : EventFragment {
         return EventFragment.newInstance(
-            EventFragment.FragmentInputs(),
+            inputs,
             object : EventFragment.FragmentInteractor {
                 override fun onButtonPressed(message: String) {
                     logDebug("snackbar pressed")
@@ -42,20 +44,20 @@ class MainActivity : BaseActivity() {
         )
     }
 
-    fun createCameraFragment() : CameraFragment {
+    fun createCameraFragment(inputs : CameraFragment.FragmentInputs?) : CameraFragment {
         return CameraFragment.newInstance(
-            CameraFragment.FragmentInputs(),
+            inputs,
             object : CameraFragment.FragmentInteractor {
-                override fun onButtonPressed(message: String) {
-                    logDebug("snackbar pressed")
+                override fun onImageUploaded(postID : String) {
+
                 }
             }
         )
     }
 
-    fun createAlbumFragment() : AlbumFragment {
+    fun createAlbumFragment(inputs : AlbumFragment.FragmentInputs?) : AlbumFragment {
         return AlbumFragment.newInstance(
-            AlbumFragment.FragmentInputs(),
+            inputs,
             object : AlbumFragment.FragmentInteractor {
                 override fun onButtonPressed(message: String) {
                     logDebug("snackbar pressed")
@@ -64,9 +66,9 @@ class MainActivity : BaseActivity() {
         )
     }
 
-    fun createGuestsFragment() : GuestFragment {
+    fun createGuestsFragment(inputs : GuestFragment.FragmentInputs?) : GuestFragment {
         return GuestFragment.newInstance(
-            GuestFragment.FragmentInputs(),
+            inputs,
             object : GuestFragment.FragmentInteractor {
                 override fun onButtonPressed(message: String) {
                     logDebug("snackbar pressed")
@@ -75,31 +77,6 @@ class MainActivity : BaseActivity() {
         )
     }
 
-    private fun setupViewPager(viewPager: SwipeDisabledViewPager) {
-
-        viewPager.apply {
-
-            shouldInterceptTouch = false
-
-            adapter = object : FragmentStatePagerAdapter(supportFragmentManager) {
-                override fun getItem(p0: Int): Fragment = when(p0) {
-
-                    0 -> createWallFragment()
-                    1 -> createEventFragment()
-                    2 -> createCameraFragment()
-                    3 -> createAlbumFragment()
-                    4 -> createGuestsFragment()
-
-                    else -> throw RuntimeException("No Such Fragment")
-                }
-
-                override fun getCount() = 5
-            }
-        }
-    }
-
-    fun getUserColor(id : Int) = ContextCompat.getColor(this, id)
-
     private fun setupBottomNavigation(bottomNavigation : AHBottomNavigation, menuID : Int, colorsID : Int) {
         /*
         Set Bottom Navigation colors. Accent color for active item,
@@ -107,7 +84,7 @@ class MainActivity : BaseActivity() {
 
         Will not be visible if setColored(true) and default current item is set.
          */
-
+        fun getUserColor(id : Int) = ContextCompat.getColor(this, id)
         bottomNavigation.apply {
             defaultBackgroundColor = Color.WHITE
             accentColor = getUserColor(R.color.colorAccent)
@@ -125,45 +102,27 @@ class MainActivity : BaseActivity() {
     }
 
 
+    private val fragments : MutableMap<String, Fragment> = ConcurrentHashMap()
+    private val fragmentNames = arrayListOf("wall", "event", "camera", "album", "guest")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        setupViewPager(viewPager)
+        fragments["wall"] =  createWallFragment(null)
+        fragments["event"] =  createEventFragment(null)
+        fragments["camera"] =  createCameraFragment(null)
+        fragments["album"] =  createAlbumFragment(null)
+        fragments["guest"] =  createGuestsFragment(null)
+
 
         setupBottomNavigation(bottomNavigation, R.menu.navigation, R.array.colors)
         bottomNavigation.setOnTabSelectedListener { position, wasSelected ->
-            if (!wasSelected)
-                viewPager.currentItem = position
+            if ( ! wasSelected )
+                loadFragment(R.id.fragmentContainer,
+                    fragments[fragmentNames[position]] ?: throw RuntimeException("$position not found"))
             true
         }
+        bottomNavigation.currentItem = 2
     }
 }
-
-/*
-
-                /**
-                 * Hello Callback hell
-                 * Get out by learning RxJava
-                 */
-                withPermissions(
-                    Manifest.permission.CAMERA,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-                ).execute({
-                    takePhoto("Upload to Firebase")
-                        .addOnSuccessListener { image ->
-
-                            logDebug("Cache Name: ${image.name}")
-
-                            val imageName = uniqueName()
-
-                            val compressed = compressImage(image, imageName)
-                            storage.pushImage(compressed, imageName)
-                                .addOnSuccessListener {
-                                    logDebug("Uploaded ${image.name}")
-                                }
-
-                        }
-                }, this::logError)
-
- */

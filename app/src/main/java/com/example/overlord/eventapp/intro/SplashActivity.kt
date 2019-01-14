@@ -33,7 +33,7 @@ class SplashActivity : AppCompatActivity() {
                 else
                     IntroActivity::class.java
             )},
-            SPLASH_TIME_OUT
+            0
         )
     }
 }

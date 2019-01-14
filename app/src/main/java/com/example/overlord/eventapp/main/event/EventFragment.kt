@@ -17,25 +17,21 @@ class EventFragment : Fragment() {
         fun onButtonPressed(message: String)
     }
 
-    private lateinit var inputs: FragmentInputs
-    private lateinit var interactor: FragmentInteractor
+    private var inputs: FragmentInputs? = null
+    private var interactor: FragmentInteractor? = null
 
     companion object {
         @JvmStatic
-        fun newInstance(inputs: FragmentInputs, interactor: FragmentInteractor) =
+        fun newInstance(inputs: FragmentInputs?, interactor: FragmentInteractor) =
             EventFragment().apply {
-                arguments = Bundle().apply {
-                    putSerializable("inputs", inputs)
-                    putSerializable("interactor", interactor)
-                }
+                this.interactor = interactor
+                arguments = Bundle().apply { putSerializable("inputs", inputs) }
             }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        inputs = arguments?.getSerializable("inputs") as FragmentInputs
-        interactor = arguments?.getSerializable("interactor") as FragmentInteractor
-
+        inputs = arguments?.getSerializable("inputs") as FragmentInputs?
         //Initialize Heavier things here because onCreateView and onViewCreated are called much more number of times
     }
 }

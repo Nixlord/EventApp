@@ -72,6 +72,7 @@ class PermissionsModule {
                         .map { permission -> permissionResult[permission] ?: false }
                         .reduce { acc, b -> acc && b }
                 if (allGranted) {
+                    logDebug("Coming Here", "onRequestPermissionsResult")
                     action.onGranted()
                 }
                 else {

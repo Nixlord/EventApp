@@ -61,16 +61,9 @@ fun AppCompatActivity.finishAndStart(activity : Class<*>) {
 }
 
 fun AppCompatActivity.loadFragment(containerID : Int, fragment : Fragment) {
-    val currentFragment = supportFragmentManager.findFragmentById(containerID)
-
-    if (currentFragment == null)
-        supportFragmentManager.beginTransaction()
-            .add(containerID, fragment)
-            .commit()
-    else
-        supportFragmentManager.beginTransaction()
-            .replace(containerID, fragment)
-            .commit()
+    supportFragmentManager.beginTransaction()
+        .replace(containerID, fragment)
+        .commit()
 }
 
 

@@ -16,6 +16,4 @@ class Event (
     val message : String? = ""
 )
 
-val events = ArrayList<Event>()
-
 

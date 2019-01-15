@@ -23,9 +23,14 @@ import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import java.util.*
 import kotlin.collections.ArrayList
+import android.support.v4.content.ContextCompat.startActivity
+import android.content.Intent
+import android.net.Uri
+import com.bumptech.glide.load.resource.bitmap.TransformationUtils.centerCrop
+import com.example.overlord.eventapp.base.BaseFragment
 
 
-class EventFragment : Fragment() {
+class EventFragment : BaseFragment() {
 
     //Declare your data here
     class FragmentInputs(val firstName: String = "Diksha", val surname: String = "Agarwal") : Serializable
@@ -120,7 +125,7 @@ class EventFragment : Fragment() {
         return events
     }
 
-    class EventAdapter(val eventList: ArrayList<Event>) : RecyclerView.Adapter<EventAdapter.ViewHolder>() {
+    inner class EventAdapter(val eventList: ArrayList<Event>) : RecyclerView.Adapter<EventAdapter.ViewHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventAdapter.ViewHolder {
             val v = LayoutInflater.from(parent.context).inflate(R.layout.fragment_event_item, parent, false)
@@ -135,21 +140,26 @@ class EventFragment : Fragment() {
             return eventList.size
         }
 
-        class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
             fun bindItems(event : Event) {
                 itemView.event_header.text = event.name
                 Glide.with(itemView).load(event.image).into(itemView.event_image)
-                itemView.event_time.text = event.eventTime.toString()
-                itemView.event_food.text = event.foodTime.toString()
+                itemView.event_time.text = event.eventTime
+                itemView.event_food.text = event.foodTime
                 itemView.event_address.text = event.location
                 itemView.event_message.text = event.message
 
                 val calendar = Calendar.getInstance()
-                calendar.time = event.date
                 itemView.event_year.text = calendar.get(Calendar.YEAR).toString()
                 itemView.event_month.text = calendar.get(Calendar.MONTH).toString()
                 itemView.event_date.text = calendar.get(Calendar.DAY_OF_MONTH).toString()
+
+                itemView.map_icon.setOnClickListener {
+                    val uri = "http://maps.google.co.in/maps?q=${event.location}"
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
+                    startActivity(intent)
+                }
             }
         }
     }

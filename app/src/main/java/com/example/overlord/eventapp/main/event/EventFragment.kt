@@ -26,7 +26,9 @@ import kotlin.collections.ArrayList
 import android.support.v4.content.ContextCompat.startActivity
 import android.content.Intent
 import android.net.Uri
+import android.widget.Toast
 import com.bumptech.glide.load.resource.bitmap.TransformationUtils.centerCrop
+import com.example.overlord.eventapp.R.id.toast_icon
 import com.example.overlord.eventapp.base.BaseFragment
 
 
@@ -151,8 +153,9 @@ class EventFragment : BaseFragment() {
                 itemView.event_message.text = event.message
 
                 val calendar = Calendar.getInstance()
+                calendar.time = event.date
                 itemView.event_year.text = calendar.get(Calendar.YEAR).toString()
-                itemView.event_month.text = calendar.get(Calendar.MONTH).toString()
+                itemView.event_month.text = "Feb"
                 itemView.event_date.text = calendar.get(Calendar.DAY_OF_MONTH).toString()
 
                 itemView.map_icon.setOnClickListener {

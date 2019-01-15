@@ -4,6 +4,7 @@ package com.example.overlord.eventapp.main.event
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,9 +12,17 @@ import android.widget.LinearLayout
 import com.bumptech.glide.Glide
 import java.io.Serializable
 import com.example.overlord.eventapp.R
+import com.example.overlord.eventapp.R.id.event_header
 import com.example.overlord.eventapp.model.Event
 import kotlinx.android.synthetic.main.fragment_event.*
+import kotlinx.android.synthetic.main.fragment_event_item.view.*
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class EventFragment : Fragment() {
@@ -53,8 +62,100 @@ class EventFragment : Fragment() {
 
         event_recycler_view.layoutManager = LinearLayoutManager(context, LinearLayout.VERTICAL, false)
 
-        val event = ArrayList<Event>()
+        val events = createEventList()
+
+        event_recycler_view.adapter = EventAdapter(events)
+    }
+
+    private fun createEventList() : ArrayList<Event> {
+        val events = ArrayList<Event>()
+        events.add(Event("@string/pool_party",
+            LocalDate.parse("2019-02-08"),
+            LocalTime.parse("10:00 AM",
+                DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM)),
+            LocalTime.parse("1:00 PM",
+                DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM)),
+            "Palm Heights Gymkhana, Bhubaneswar",
+            R.drawable.poolparty,
+            "Come in blue and white and enjoy our party with great delight!!")
+        )
+
+        events.add(Event("@string/haldi",
+            LocalDate.parse("2019-02-08"),
+            LocalTime.parse("4:00 PM",
+                DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM)),
+            LocalTime.parse("7:30 PM",
+                DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM)),
+            "Palm Heights Gymkhana, Bhubaneswar",
+            R.drawable.haldi,
+            "Together, lets make yellow an auspicious color for the bride.")
+        )
+
+        events.add(Event("@string/mehendi",
+            LocalDate.parse("2019-02-09"),
+            LocalTime.parse("8:00 AM",
+                DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM)),
+            LocalTime.parse("12:30 PM",
+                DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM)),
+            "Palm Heights Gymkhana, Bhubaneswar",
+            R.drawable.mehendi,
+            "Darker the color, darker is his love. Lets shower our blessings on this dove.")
+        )
+
+        events.add(Event("@string/wedding",
+            LocalDate.parse("2019-02-10"),
+            LocalTime.parse("7:00 AM",
+                DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM)),
+            LocalTime.parse("12:30 PM",
+                DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM)),
+            "Mayfair Convention, Bhubaneswar",
+            R.drawable.wedding,
+            "Shaaadiii Shaadiiiiiiiii")
+        )
 
 
+        events.add(Event("@string/reception",
+            LocalDate.parse("2019-02-14"),
+            LocalTime.parse("7:30 PM",
+                DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM)),
+            LocalTime.parse("7:30 PM",
+                DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM)),
+            "Sri Venkateshwara Swamy Kalyana Mandapam, SriNagar Colony, Hyderabad",
+            R.drawable.reception,
+            "Let's bless the newly married couple for a long and a happy life together forever.")
+        )
+
+        return events
+    }
+
+    class EventAdapter(val eventList: ArrayList<Event>) : RecyclerView.Adapter<EventAdapter.ViewHolder>() {
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventAdapter.ViewHolder {
+            val v = LayoutInflater.from(parent.context).inflate(R.layout.fragment_event_item, parent, false)
+            return ViewHolder(v)
+        }
+
+        override fun onBindViewHolder(holder: EventAdapter.ViewHolder, position: Int) {
+            holder.bindItems(eventList[position])
+        }
+
+        override fun getItemCount(): Int {
+            return eventList.size
+        }
+
+        class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+            fun bindItems(event : Event) {
+                itemView.event_header.text = event.name
+                Glide.with(itemView).load(event.image).into(itemView.event_image)
+                itemView.event_time.text = event.eventTime.toString()
+                itemView.event_food.text = event.foodTime.toString()
+                itemView.event_address.text = event.location
+                itemView.event_message.text = event.message
+                itemView.event_year.text = event.date.year.toString()
+                itemView.event_month.text = event.date.month.toString()
+                itemView.event_date.text = event.date.dayOfMonth.toString()
+            }
+        }
     }
 }

@@ -56,6 +56,6 @@
     <string name="event_year">2019</string>
     <string name="event_month">Feb</string>
     <string name="event_date">10</string>
-    <string name="event_date_text">Calender</string>
+    <string name="event_date_text">Date</string>
 
 </resources>

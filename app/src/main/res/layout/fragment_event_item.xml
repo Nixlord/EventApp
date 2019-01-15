@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
     <android.support.v7.widget.CardView
@@ -42,7 +43,7 @@
                     card_view:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"/>
 
             <LinearLayout
-                    android:layout_width="77dp"
+                    android:layout_width="87dp"
                     android:layout_height="148dp"
                     android:orientation="vertical"
                     android:background="@android:color/darker_gray"
@@ -116,18 +117,6 @@
                     android:layout_marginTop="12dp" card_view:layout_constraintTop_toBottomOf="@+id/event_image"
             />
 
-
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="18dp"
-                    android:id="@+id/event_time_constant"
-                    android:hint="@string/event_time"
-                    android:layout_marginTop="12dp"
-                    card_view:layout_constraintTop_toBottomOf="@+id/event_image"
-                    card_view:layout_constraintStart_toEndOf="@+id/event_time" android:layout_marginStart="8dp"
-                    card_view:layout_constraintBottom_toTopOf="@+id/line_separator_1"
-                    card_view:layout_constraintVertical_bias="0.111"/>
-
             <View
                     android:layout_width="1dp"
                     android:layout_height="25dp"
@@ -137,8 +126,8 @@
                     card_view:layout_constraintTop_toBottomOf="@+id/event_image"
                     card_view:layout_constraintBottom_toTopOf="@+id/line_separator_1"
                     card_view:layout_constraintVertical_bias="0.0"
-                    card_view:layout_constraintStart_toEndOf="@+id/event_time_constant"
-                    android:layout_marginStart="28dp"/>
+                    card_view:layout_constraintStart_toEndOf="@+id/event_time"
+                    android:layout_marginStart="12dp"/>
 
 
             <ImageView
@@ -149,9 +138,9 @@
                     android:layout_marginTop="8dp"
                     card_view:layout_constraintTop_toBottomOf="@+id/event_image"
                     card_view:layout_constraintBottom_toTopOf="@+id/line_separator_1"
-                    card_view:layout_constraintVertical_bias="0.0"
+                    card_view:layout_constraintVertical_bias="0.166"
                     card_view:layout_constraintStart_toEndOf="@+id/separator"
-                    android:layout_marginStart="20dp"/>
+                    android:layout_marginStart="8dp"/>
 
             <TextView
                     android:layout_width="wrap_content"
@@ -162,20 +151,8 @@
                     android:layout_marginStart="12dp" android:layout_marginTop="8dp"
                     card_view:layout_constraintTop_toBottomOf="@+id/event_image"
                     card_view:layout_constraintBottom_toTopOf="@+id/line_separator_1"
-                    card_view:layout_constraintVertical_bias="0.333"/>
-
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/event_food_constant"
-                    android:hint="@string/event_time"
-                    android:layout_marginTop="8dp"
-                    card_view:layout_constraintTop_toBottomOf="@+id/event_image"
-                    card_view:layout_constraintBottom_toTopOf="@+id/line_separator_1"
-                    card_view:layout_constraintVertical_bias="0.333" card_view:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginEnd="8dp"
-                    card_view:layout_constraintStart_toEndOf="@+id/event_food" android:layout_marginStart="8dp"
-                    card_view:layout_constraintHorizontal_bias="0.0"/>
+                    card_view:layout_constraintVertical_bias="0.363" card_view:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="8dp" card_view:layout_constraintHorizontal_bias="0.007"/>
 
             <View
                     android:layout_width="wrap_content"
@@ -207,7 +184,8 @@
                     android:layout_marginTop="12dp"
                     card_view:layout_constraintTop_toBottomOf="@+id/line_separator_1"
                     card_view:layout_constraintStart_toEndOf="@+id/address_icon" android:layout_marginStart="12dp"
-                    card_view:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+                    card_view:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="15dp"
                     card_view:layout_constraintHorizontal_bias="0.0"/>
 
             <View
@@ -253,8 +231,8 @@
                     android:layout_marginEnd="8dp"/>
 
             <TextView
-                    android:layout_width="356dp"
-                    android:layout_height="26dp"
+                    android:layout_width="329dp"
+                    android:layout_height="37dp"
                     android:id="@+id/event_message"
                     android:hint="@string/event_message"
                     android:layout_marginTop="8dp"

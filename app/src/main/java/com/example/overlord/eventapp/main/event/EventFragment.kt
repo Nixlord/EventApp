@@ -69,49 +69,49 @@ class EventFragment : Fragment() {
 
     private fun createEventList() : ArrayList<Event> {
         val events = ArrayList<Event>()
-        val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
+        val format = SimpleDateFormat("yyyy-mm-dd")
 
-        events.add(Event("@string/pool_party",
+        events.add(Event("Pool Party",
             format.parse("2019-02-08"),
-            "10:00 AM",
-            "1:00 PM",
+            "10:00 AM onwards",
+            "Lunch at 1:00 PM",
             "Palm Heights Gymkhana, Bhubaneswar",
             R.drawable.poolparty,
             "Come in blue and white and enjoy our party with great delight!!")
         )
 
-        events.add(Event("@string/haldi",
+        events.add(Event("Haldi",
             format.parse("2019-02-08"),
-            "4:00 PM",
-            "7:30 PM",
+            "4:00 PM onwards",
+            "Dinner at 7:30 PM",
             "Palm Heights Gymkhana, Bhubaneswar",
             R.drawable.haldi,
             "Together, lets make yellow an auspicious color for the bride.")
         )
 
-        events.add(Event("@string/mehendi",
+        events.add(Event("Mehendi",
             format.parse("2019-02-09"),
-            "8:00 AM",
-            "12:30 PM",
+            "8:00 AM onwards",
+            "Lunch at 12:30 PM",
             "Palm Heights Gymkhana, Bhubaneswar",
             R.drawable.mehendi,
             "Darker the color, darker is his love. Lets shower our blessings on this dove.")
         )
 
-        events.add(Event("@string/wedding",
+        events.add(Event("Wedding",
             format.parse("2019-02-10"),
-            "7:00 AM",
-            "12:30 PM",
+            "7:00 AM onwards",
+            "Lunch at 12:30 PM",
             "Mayfair Convention, Bhubaneswar",
             R.drawable.wedding,
             "Shaaadiii Shaadiiiiiiiii")
         )
 
 
-        events.add(Event("@string/reception",
+        events.add(Event("Reception",
             format.parse("2019-02-14"),
-            "7:30 PM",
-            "7:30 PM",
+            "7:30 PM onwards",
+            "Dinner at 7:30 PM",
             "Sri Venkateshwara Swamy Kalyana Mandapam, SriNagar Colony, Hyderabad",
             R.drawable.reception,
             "Let's bless the newly married couple for a long and a happy life together forever.")

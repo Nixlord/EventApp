@@ -69,45 +69,39 @@ class EventFragment : Fragment() {
 
     private fun createEventList() : ArrayList<Event> {
         val events = ArrayList<Event>()
+        val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
+
         events.add(Event("@string/pool_party",
-            LocalDate.parse("2019-02-08"),
-            LocalTime.parse("10:00 AM",
-                DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM)),
-            LocalTime.parse("1:00 PM",
-                DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM)),
+            format.parse("2019-02-08"),
+            "10:00 AM",
+            "1:00 PM",
             "Palm Heights Gymkhana, Bhubaneswar",
             R.drawable.poolparty,
             "Come in blue and white and enjoy our party with great delight!!")
         )
 
         events.add(Event("@string/haldi",
-            LocalDate.parse("2019-02-08"),
-            LocalTime.parse("4:00 PM",
-                DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM)),
-            LocalTime.parse("7:30 PM",
-                DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM)),
+            format.parse("2019-02-08"),
+            "4:00 PM",
+            "7:30 PM",
             "Palm Heights Gymkhana, Bhubaneswar",
             R.drawable.haldi,
             "Together, lets make yellow an auspicious color for the bride.")
         )
 
         events.add(Event("@string/mehendi",
-            LocalDate.parse("2019-02-09"),
-            LocalTime.parse("8:00 AM",
-                DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM)),
-            LocalTime.parse("12:30 PM",
-                DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM)),
+            format.parse("2019-02-09"),
+            "8:00 AM",
+            "12:30 PM",
             "Palm Heights Gymkhana, Bhubaneswar",
             R.drawable.mehendi,
             "Darker the color, darker is his love. Lets shower our blessings on this dove.")
         )
 
         events.add(Event("@string/wedding",
-            LocalDate.parse("2019-02-10"),
-            LocalTime.parse("7:00 AM",
-                DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM)),
-            LocalTime.parse("12:30 PM",
-                DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM)),
+            format.parse("2019-02-10"),
+            "7:00 AM",
+            "12:30 PM",
             "Mayfair Convention, Bhubaneswar",
             R.drawable.wedding,
             "Shaaadiii Shaadiiiiiiiii")
@@ -115,11 +109,9 @@ class EventFragment : Fragment() {
 
 
         events.add(Event("@string/reception",
-            LocalDate.parse("2019-02-14"),
-            LocalTime.parse("7:30 PM",
-                DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM)),
-            LocalTime.parse("7:30 PM",
-                DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM)),
+            format.parse("2019-02-14"),
+            "7:30 PM",
+            "7:30 PM",
             "Sri Venkateshwara Swamy Kalyana Mandapam, SriNagar Colony, Hyderabad",
             R.drawable.reception,
             "Let's bless the newly married couple for a long and a happy life together forever.")
@@ -152,9 +144,12 @@ class EventFragment : Fragment() {
                 itemView.event_food.text = event.foodTime.toString()
                 itemView.event_address.text = event.location
                 itemView.event_message.text = event.message
-                itemView.event_year.text = event.date.year.toString()
-                itemView.event_month.text = event.date.month.toString()
-                itemView.event_date.text = event.date.dayOfMonth.toString()
+
+                val calendar = Calendar.getInstance()
+                calendar.time = event.date
+                itemView.event_year.text = calendar.get(Calendar.YEAR).toString()
+                itemView.event_month.text = calendar.get(Calendar.MONTH).toString()
+                itemView.event_date.text = calendar.get(Calendar.DAY_OF_MONTH).toString()
             }
         }
     }

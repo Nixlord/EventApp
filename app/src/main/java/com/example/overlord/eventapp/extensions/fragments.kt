@@ -6,6 +6,6 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import es.dmoral.toasty.Toasty
 
-fun Fragment.getName() : String {
+fun Fragment.getSimpleName() : String {
     return this.javaClass.simpleName
 }

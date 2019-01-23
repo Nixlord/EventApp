@@ -20,7 +20,7 @@
                 android:layout_height="match_parent">
 
             <TextView
-                    android:id="@+id/event_header"
+                    android:id="@+id/postHeader"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/event_title"
@@ -39,7 +39,7 @@
             <ImageView
                     android:layout_width="248dp"
                     android:layout_height="150dp"
-                    android:id="@+id/eventImageView"
+                    android:id="@+id/postImageView"
                     android:src="@drawable/placeholder"
                     android:layout_marginTop="8dp"
                     android:background="#EA5C46"
@@ -47,7 +47,7 @@
                     android:adjustViewBounds="true"
                     android:scaleType="centerCrop"
                     android:layout_marginBottom="20dp"
-                    card_view:layout_constraintTop_toBottomOf="@+id/event_header"
+                    card_view:layout_constraintTop_toBottomOf="@+id/postHeader"
                     card_view:layout_constraintStart_toStartOf="parent"
                     android:layout_marginStart="8dp"/>
 
@@ -58,8 +58,8 @@
                     card_view:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginEnd="8dp"
                     android:layout_marginTop="8dp"
-                    card_view:layout_constraintTop_toBottomOf="@+id/event_header"
-                    card_view:layout_constraintStart_toEndOf="@+id/eventImageView" android:layout_marginStart="8dp"
+                    card_view:layout_constraintTop_toBottomOf="@+id/postHeader"
+                    card_view:layout_constraintStart_toEndOf="@+id/postImageView" android:layout_marginStart="8dp"
                     android:id="@+id/linearLayout2">
 
                 <TextView
@@ -111,7 +111,7 @@
                     android:src="@drawable/event_time"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    card_view:layout_constraintTop_toBottomOf="@+id/eventImageView"
+                    card_view:layout_constraintTop_toBottomOf="@+id/postImageView"
                     card_view:layout_constraintStart_toStartOf="parent"
                     android:layout_marginStart="8dp"
                     card_view:layout_constraintBottom_toTopOf="@+id/line_separator_1"
@@ -123,7 +123,7 @@
                     android:id="@+id/event_time"
                     android:hint="--:--"
                     card_view:layout_constraintStart_toEndOf="@+id/time_icon" android:layout_marginStart="12dp"
-                    android:layout_marginTop="12dp" card_view:layout_constraintTop_toBottomOf="@+id/eventImageView"
+                    android:layout_marginTop="12dp" card_view:layout_constraintTop_toBottomOf="@+id/postImageView"
             />
 
             <View
@@ -132,7 +132,7 @@
                     android:id="@+id/separator"
                     android:background="@android:color/darker_gray"
                     android:layout_marginTop="8dp"
-                    card_view:layout_constraintTop_toBottomOf="@+id/eventImageView"
+                    card_view:layout_constraintTop_toBottomOf="@+id/postImageView"
                     card_view:layout_constraintBottom_toTopOf="@+id/line_separator_1"
                     card_view:layout_constraintVertical_bias="0.0"
                     card_view:layout_constraintStart_toEndOf="@+id/event_time"
@@ -145,7 +145,7 @@
                     android:src="@drawable/event_food"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    card_view:layout_constraintTop_toBottomOf="@+id/eventImageView"
+                    card_view:layout_constraintTop_toBottomOf="@+id/postImageView"
                     card_view:layout_constraintBottom_toTopOf="@+id/line_separator_1"
                     card_view:layout_constraintVertical_bias="0.166"
                     card_view:layout_constraintStart_toEndOf="@+id/separator"

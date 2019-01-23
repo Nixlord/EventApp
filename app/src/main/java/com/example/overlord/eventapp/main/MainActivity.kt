@@ -123,6 +123,8 @@ class MainActivity : BaseActivity() {
                     fragments[fragmentNames[position]] ?: throw RuntimeException("$position not found"))
             true
         }
+
         bottomNavigation.currentItem = 1
+
     }
 }

@@ -75,7 +75,7 @@ class Human {
     public void setName(String name)
     public void setMarried(boolean isMarried)
     public boolean isMarried()
-    public String getName()
+    public String getSimpleName()
 }
 Neat conventions.
 

@@ -2,7 +2,6 @@ package com.example.overlord.eventapp.main.event
 
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -12,23 +11,14 @@ import android.widget.LinearLayout
 import com.bumptech.glide.Glide
 import java.io.Serializable
 import com.example.overlord.eventapp.R
-import com.example.overlord.eventapp.R.id.event_header
 import com.example.overlord.eventapp.model.Event
 import kotlinx.android.synthetic.main.fragment_event.*
 import kotlinx.android.synthetic.main.fragment_event_item.view.*
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.LocalTime
-import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
 import java.util.*
 import kotlin.collections.ArrayList
-import android.support.v4.content.ContextCompat.startActivity
 import android.content.Intent
 import android.net.Uri
-import android.widget.Toast
-import com.bumptech.glide.load.resource.bitmap.TransformationUtils.centerCrop
-import com.example.overlord.eventapp.R.id.toast_icon
 import com.example.overlord.eventapp.base.BaseFragment
 
 
@@ -67,16 +57,16 @@ class EventFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        event_recycler_view.layoutManager = LinearLayoutManager(context, LinearLayout.VERTICAL, false)
+        eventRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayout.VERTICAL, false)
 
         val events = createEventList()
 
-        event_recycler_view.adapter = EventAdapter(events)
+        eventRecyclerView.adapter = EventAdapter(events)
     }
 
     private fun createEventList() : ArrayList<Event> {
         val events = ArrayList<Event>()
-        val format = SimpleDateFormat("yyyy-mm-dd")
+        val format = SimpleDateFormat("yyyy-mm-dd", Locale.UK)
 
         events.add(Event("Pool Party",
             format.parse("2019-02-08"),
@@ -146,7 +136,7 @@ class EventFragment : BaseFragment() {
 
             fun bindItems(event : Event) {
                 itemView.event_header.text = event.name
-                Glide.with(itemView).load(event.image).into(itemView.event_image)
+                Glide.with(itemView).load(event.image).into(itemView.eventImageView)
                 itemView.event_time.text = event.eventTime
                 itemView.event_food.text = event.foodTime
                 itemView.event_address.text = event.location

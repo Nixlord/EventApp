@@ -4,7 +4,6 @@ import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import com.crashlytics.android.Crashlytics
-import java.lang.Exception
 
 
 //Using Base Class Throwable instead of granular usage. Less resilient
@@ -23,7 +22,7 @@ fun logError(tag : String = "GlobalLog", exception : Throwable) {
 
 fun AppCompatActivity.logDebug(message: String?) { logDebug(getTag(), message) }
 fun Fragment.logDebug(message: String?) {
-    val name = getName()
+    val name = getSimpleName()
     val length = Math.min(name.length - 1, 20)
     logDebug(name.substring(0..length), message)
 }

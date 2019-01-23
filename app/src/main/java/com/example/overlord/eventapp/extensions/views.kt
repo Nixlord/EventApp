@@ -1,8 +1,12 @@
 @file:JvmName("ViewUtils")
 package com.example.overlord.eventapp.extensions
 
+import android.support.annotation.LayoutRes
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.EditText
 
 fun EditText.onTextChange(onTextChange: (input : String) -> Unit ) {
@@ -20,3 +24,9 @@ fun EditText.onTextChange(onTextChange: (input : String) -> Unit ) {
         }
     })
 }
+
+fun ViewGroup.inflate(@LayoutRes layoutResourceID : Int) : View {
+    return LayoutInflater.from(this.context)
+        .inflate(layoutResourceID, this, false)
+}
+

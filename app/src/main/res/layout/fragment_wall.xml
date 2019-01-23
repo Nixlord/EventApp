@@ -5,14 +5,10 @@
              android:layout_height="match_parent"
              tools:context=".main.wall.WallFragment">
 
-    <android.support.design.card.MaterialCardView
-            android:layout_margin="8dp"
-            android:padding="8dp"
+    <android.support.v7.widget.RecyclerView
+            android:id="@+id/wallRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-        <com.github.chrisbanes.photoview.PhotoView
-                android:id="@+id/photoView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-    </android.support.design.card.MaterialCardView>
+
+    </android.support.v7.widget.RecyclerView>
 </FrameLayout>

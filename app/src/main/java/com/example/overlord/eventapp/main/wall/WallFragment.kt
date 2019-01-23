@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.GlideException
 
 import com.example.overlord.eventapp.R
 import com.example.overlord.eventapp.base.BaseFragment
@@ -18,13 +17,10 @@ import com.example.overlord.eventapp.extensions.Firebase.storage
 import com.example.overlord.eventapp.extensions.inflate
 import com.example.overlord.eventapp.extensions.logError
 import com.example.overlord.eventapp.extensions.addSnapshotListener
-import com.example.overlord.eventapp.extensions.getSimpleName
-import com.example.overlord.eventapp.model.Constants
 import com.example.overlord.eventapp.model.Post
 import com.example.overlord.eventapp.model.User
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
-import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.fragment_wall.*
 import kotlinx.android.synthetic.main.fragment_wall_item.view.*
 import java.io.Serializable
@@ -65,15 +61,6 @@ class WallFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        inputs?.postID?.apply {
-//
-//            val imageRef = storage.child(Constants.remoteCompressedImages).child(this)
-//            Glide.with(base).load(imageRef).into(photoView)
-//            base.toastSuccess("HeHeHe")
-//
-//        } ?: logError(Error("PostID null"))
-
-
         val firestoreQuery = firestore.collection("posts").orderBy("date")
         val firestoreOptions = FirestoreRecyclerOptions.Builder<Post>()
             .setLifecycleOwner(this)
@@ -112,8 +99,13 @@ class WallFragment : BaseFragment() {
                     .document(post.userID)
                     .addSnapshotListener { snapshot ->
                         val user = snapshot.toObject(User::class.java)
-                        if (user != null)
-                            postHeader.text = user.name
+                        if (user != null) {
+                            postAuthorView.text = user.name
+                            //todo These photos appear weird. Have to correct
+                            val storageReference = storage.child("images").child(user.profile_photo)
+                            Glide.with(base).load(storageReference).into(postAuthorProfileView)
+                            postCaptionView.text = post.content
+                        }
                         else
                             logError(Error("No User Object"))
                     }

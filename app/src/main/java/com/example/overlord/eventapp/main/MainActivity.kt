@@ -15,7 +15,7 @@ import com.example.overlord.eventapp.main.guests.GuestFragment
 import com.example.overlord.eventapp.main.wall.WallFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter
-import com.example.overlord.eventapp.extensions.loadFragment
+import com.example.overlord.eventapp.extensions.replaceFragment
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.RuntimeException
 
@@ -119,7 +119,7 @@ class MainActivity : BaseActivity() {
         setupBottomNavigation(bottomNavigation, R.menu.navigation, R.array.colors)
         bottomNavigation.setOnTabSelectedListener { position, wasSelected ->
             if ( ! wasSelected )
-                loadFragment(R.id.fragmentContainer,
+                replaceFragment(R.id.fragmentContainer,
                     fragments[fragmentNames[position]] ?: throw RuntimeException("$position not found"))
             true
         }

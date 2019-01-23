@@ -1,6 +1,7 @@
 package com.example.overlord.eventapp.main.wall
 
 
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -17,6 +18,7 @@ import com.example.overlord.eventapp.extensions.Firebase.storage
 import com.example.overlord.eventapp.extensions.inflate
 import com.example.overlord.eventapp.extensions.logError
 import com.example.overlord.eventapp.extensions.addSnapshotListener
+import com.example.overlord.eventapp.extensions.loadImage
 import com.example.overlord.eventapp.model.Post
 import com.example.overlord.eventapp.model.User
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
@@ -88,26 +90,31 @@ class WallFragment : BaseFragment() {
         fun bindItems(post : Post) {
             itemView.apply {
 
+                postLikeButton.setOnClickListener {
+
+                }
+
                 post.imageID?.apply {
-
-                    val storageReference = storage.child("images").child(this)
-                    Glide.with(base).load(storageReference).into(postImageView)
-
+                    base.loadImage(postImageView, this)
                 } ?: logError(Error("No Image ID"))
 
                 firestore.collection("users")
                     .document(post.userID)
                     .addSnapshotListener { snapshot ->
+
                         val user = snapshot.toObject(User::class.java)
+
                         if (user != null) {
-                            postAuthorView.text = user.name
                             //todo These photos appear weird. Have to correct
-                            val storageReference = storage.child("images").child(user.profile_photo)
-                            Glide.with(base).load(storageReference).into(postAuthorProfileView)
+
+                            postAuthorView.text = user.name
+                            base.loadImage(postAuthorProfileView, user.profile_photo)
                             postCaptionView.text = post.content
                         }
+
                         else
                             logError(Error("No User Object"))
+
                     }
             }
         }

@@ -107,7 +107,7 @@ class CameraFragment : BaseFragment() {
                             compressedImage = compressImage(image, imageName)
                             post.imageID = imageName
 
-                            Glide.with(this).load(compressedImage).into(photoView)
+                            loadImage(photoView, compressedImage!!)
                         }
                 }, this::logError)
             }

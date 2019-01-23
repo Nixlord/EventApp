@@ -1,7 +1,11 @@
 package com.example.overlord.eventapp.extensions
 
+import android.widget.ImageView
+import com.bumptech.glide.Glide
+import com.example.overlord.eventapp.base.BaseActivity
 import com.example.overlord.eventapp.extensions.Firebase.auth
 import com.example.overlord.eventapp.extensions.Firebase.firestore
+import com.example.overlord.eventapp.extensions.Firebase.storage
 import com.example.overlord.eventapp.model.Constants
 import com.example.overlord.eventapp.utils.uniqueName
 import com.github.chrisbanes.photoview.PhotoView
@@ -34,7 +38,7 @@ object Firebase {
 
 
 fun StorageReference.pushImage(compressedImage : File, imageName: String) : UploadTask {
-    val imageStorage = this.child(Constants.remoteCompressedImages).child(imageName)
+    val imageStorage = this.child("images").child(imageName)
 
     return imageStorage.putStream(
             FileInputStream(
@@ -42,6 +46,7 @@ fun StorageReference.pushImage(compressedImage : File, imageName: String) : Uplo
             )
         )
 }
+
 
 fun DocumentReference.addSnapshotListener(
     snapshotListener : (snapshot : DocumentSnapshot) -> Unit
@@ -59,8 +64,4 @@ fun DocumentReference.addSnapshotListener(
             snapshotListener.invoke(documentSnapshot)
 
     }
-}
-
-fun StorageReference.loadImage() {
-
 }

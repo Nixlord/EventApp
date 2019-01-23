@@ -5,8 +5,11 @@ import android.content.Intent
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import android.widget.ImageView
 import android.widget.Toast
+import com.example.overlord.eventapp.base.BaseActivity
 import es.dmoral.toasty.Toasty
+import java.io.File
 
 fun AppCompatActivity.snackbar(message : String) {
     // android.R.id.content Points to the layout file
@@ -37,9 +40,15 @@ fun AppCompatActivity.finishAndStart(activity : Class<*>) {
     finish()
 }
 
-fun AppCompatActivity.loadFragment(containerID : Int, fragment : Fragment) {
+fun AppCompatActivity.replaceFragment(containerID : Int, fragment : Fragment) {
     supportFragmentManager.beginTransaction()
         .replace(containerID, fragment)
+        .commit()
+}
+
+fun AppCompatActivity.addFragment(containerID : Int, fragment : Fragment) {
+    supportFragmentManager.beginTransaction()
+        .add(containerID, fragment)
         .commit()
 }
 

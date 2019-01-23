@@ -23,8 +23,6 @@ class Post(
     var imageID : String? = null,
     var tags : ArrayList<String> = arrayListOf(),
     var date: Date = Date(),
-    var likes : Int = 0,
     var likedByUIDs: ArrayList<String> = arrayListOf(),
-    var shares : Int = 0,
     var commentID : String = ""
 )

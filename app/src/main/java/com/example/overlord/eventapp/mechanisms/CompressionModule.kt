@@ -1,16 +1,9 @@
 package com.example.overlord.eventapp.mechanisms
 
-import android.graphics.Bitmap
 import android.os.Environment
 import android.support.v7.app.AppCompatActivity
-import com.example.overlord.eventapp.base.BaseActivity
-import com.example.overlord.eventapp.extensions.logDebug
-import com.example.overlord.eventapp.extensions.logError
 import com.example.overlord.eventapp.model.Constants
-import com.example.overlord.eventapp.utils.timeStamp
 import id.zelory.compressor.Compressor
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import java.io.File
 
 fun AppCompatActivity.compressImage(image : File, name : String) : File {

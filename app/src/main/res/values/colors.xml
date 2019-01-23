@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#512da8</color>
     <color name="colorPrimaryDark">#4a148c</color>
-    <color name="colorAccent">#f8bbd0</color>
+    <color name="colorAccent">#ec407a</color>
 
     <color name="wall_tab">@color/colorPrimary</color>
     <color name="event_tab">@color/colorAccent</color>

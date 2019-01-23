@@ -48,7 +48,6 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/postImageView"
                     android:src="@drawable/placeholder"
-                    android:background="#EA5C46"
                     android:layout_gravity="center_horizontal"
                     android:adjustViewBounds="true"
                     android:scaleType="centerCrop"
@@ -64,7 +63,8 @@
                     android:layout_height="100dp" tools:srcCompat="@tools:sample/avatars"
                     android:id="@+id/postAuthorProfileView" card_view:layout_constraintStart_toStartOf="parent"
                     android:layout_marginStart="16dp"
-                    card_view:layout_constraintTop_toTopOf="parent" android:layout_marginTop="16dp"/>
+                    card_view:layout_constraintTop_toTopOf="parent" android:layout_marginTop="16dp"
+                    android:scaleType="centerCrop"/>
             <View
                     android:layout_width="wrap_content"
                     android:layout_height="1dp"
@@ -91,7 +91,7 @@
                     card_view:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
                     card_view:layout_constraintTop_toBottomOf="@+id/postCaptionView" android:visibility="invisible"
                     android:layout_marginTop="8dp"/>
-            <Button
+            <com.example.overlord.eventapp.utils.LikeButton
                     android:text="Like"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -101,7 +101,7 @@
                     android:layout_marginBottom="8dp" card_view:layout_constraintBottom_toBottomOf="parent"
                     android:layout_marginTop="8dp" card_view:layout_constraintTop_toBottomOf="@+id/line_separator_3"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
-            <Button
+            <android.support.design.button.MaterialButton
                     android:text="Comment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -111,7 +111,7 @@
                     android:layout_marginBottom="8dp" card_view:layout_constraintBottom_toBottomOf="parent"
                     android:layout_marginTop="8dp" card_view:layout_constraintTop_toBottomOf="@+id/line_separator_3"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
-            <Button
+            <android.support.design.button.MaterialButton
                     android:text="Share"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

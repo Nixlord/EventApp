@@ -31,6 +31,7 @@ class CameraFragment : BaseFragment() {
 
     interface FragmentInteractor : Serializable {
         fun onImageUploaded(postID : String)
+        fun onEditButtonClicked()
     }
 
     private var inputs: FragmentInputs? = null
@@ -107,7 +108,7 @@ class CameraFragment : BaseFragment() {
                             compressedImage = compressImage(image, imageName)
                             post.imageID = imageName
 
-                            loadImage(photoView, compressedImage!!)
+                            loadImage(photoView, image)
                         }
                 }, this::logError)
             }

@@ -148,7 +148,7 @@ class EventFragment : BaseFragment() {
                 itemView.event_month.text = "Feb"
                 itemView.event_date.text = calendar.get(Calendar.DAY_OF_MONTH).toString()
 
-                itemView.map_icon.setOnClickListener {
+                itemView.address_icon.setOnClickListener {
                     val uri = "http://maps.google.co.in/maps?q=${event.location}"
                     val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
                     startActivity(intent)

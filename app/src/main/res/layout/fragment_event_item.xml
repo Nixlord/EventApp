@@ -207,45 +207,13 @@
                     card_view:layout_constraintStart_toStartOf="parent" card_view:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginEnd="8dp"/>
 
-            <ImageView
-                    android:id="@+id/map_icon"
-                    android:layout_width="wrap_content"
-                    android:src="@drawable/event_location_map"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    card_view:layout_constraintTop_toBottomOf="@+id/line_separator_2"
-                    card_view:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
-                    card_view:layout_constraintBottom_toTopOf="@+id/line_separator_3"
-                    card_view:layout_constraintVertical_bias="0.0"/>
-
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/event_location_map"
-                    android:hint="@string/event_map"
-                    android:layout_marginTop="12dp"
-                    card_view:layout_constraintTop_toBottomOf="@+id/line_separator_2"
-                    card_view:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
-                    card_view:layout_constraintStart_toEndOf="@+id/map_icon" android:layout_marginStart="8dp"
-                    card_view:layout_constraintHorizontal_bias="0.015"/>
-
-            <View
-                    android:layout_width="wrap_content"
-                    android:layout_height="1dp"
-                    android:id="@+id/line_separator_3"
-                    android:background="@android:color/darker_gray"
-                    android:layout_marginTop="8dp"
-                    card_view:layout_constraintTop_toBottomOf="@+id/event_location_map"
-                    card_view:layout_constraintStart_toStartOf="parent" card_view:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginEnd="8dp"/>
-
             <TextView
                     android:layout_width="329dp"
                     android:layout_height="37dp"
                     android:id="@+id/event_message"
                     android:hint="@string/event_message"
                     android:layout_marginTop="8dp"
-                    card_view:layout_constraintTop_toBottomOf="@+id/line_separator_3"
+                    card_view:layout_constraintTop_toBottomOf="@+id/line_separator_2"
                     card_view:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
                     card_view:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
                     android:layout_marginBottom="8dp" card_view:layout_constraintBottom_toBottomOf="parent"

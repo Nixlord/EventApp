@@ -73,6 +73,7 @@ class LoginActivity : BaseActivity() {
                         user.phoneno = auth.currentUser!!.phoneNumber.toString()
                         user.ID = auth.currentUser!!.uid
                         compressedImage?.let {image ->
+                            //ToDo create saveUser like savePost in firebase extensions
 
                             storage.pushImage(image, user.profile_photo)
                                 .addOnSuccessListener {

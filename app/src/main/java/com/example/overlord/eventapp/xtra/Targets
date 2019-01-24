@@ -122,9 +122,13 @@ ToDo
 Broadcast Reciever to allow external share
 Share Button
 Comments Fragment with PhotoView
-Notifications
+Notifications for (Download, User Actions likes/comments)
 Download by Query Functionality
-UI Change
+UI Improvements
+Code Improvements
 Filter Fragment
 SearchView
 Background Jobs ( WorkManager or Firebase Job Dispatcher )
+Progress Indicators in many places (example while photo upload)
+
+Todo @Diksha add tasks here

@@ -20,6 +20,10 @@ import kotlin.collections.ArrayList
 import android.content.Intent
 import android.net.Uri
 import com.example.overlord.eventapp.base.BaseFragment
+import android.provider.CalendarContract.Events
+import android.provider.CalendarContract
+
+
 
 
 class EventFragment : BaseFragment() {
@@ -66,10 +70,10 @@ class EventFragment : BaseFragment() {
 
     private fun createEventList() : ArrayList<Event> {
         val events = ArrayList<Event>()
-        val format = SimpleDateFormat("yyyy-mm-dd", Locale.UK)
+        val format = SimpleDateFormat("yyyy-mm-dd'T'HH:mm aaa", Locale.UK)
 
         events.add(Event("Pool Party",
-            format.parse("2019-02-08"),
+            format.parse("2019-02-08T10:00 AM"),
             "10:00 AM onwards",
             "Lunch at 1:00 PM",
             "Palm Heights Gymkhana, Bhubaneswar",
@@ -78,7 +82,7 @@ class EventFragment : BaseFragment() {
         )
 
         events.add(Event("Haldi",
-            format.parse("2019-02-08"),
+            format.parse("2019-02-08T04:00 PM"),
             "4:00 PM onwards",
             "Dinner at 7:30 PM",
             "Palm Heights Gymkhana, Bhubaneswar",
@@ -87,7 +91,7 @@ class EventFragment : BaseFragment() {
         )
 
         events.add(Event("Mehendi",
-            format.parse("2019-02-09"),
+            format.parse("2019-02-09T08:00 AM"),
             "8:00 AM onwards",
             "Lunch at 12:30 PM",
             "Palm Heights Gymkhana, Bhubaneswar",
@@ -96,7 +100,7 @@ class EventFragment : BaseFragment() {
         )
 
         events.add(Event("Wedding",
-            format.parse("2019-02-10"),
+            format.parse("2019-02-10T07:00 AM"),
             "7:00 AM onwards",
             "Lunch at 12:30 PM",
             "Mayfair Convention, Bhubaneswar",
@@ -106,7 +110,7 @@ class EventFragment : BaseFragment() {
 
 
         events.add(Event("Reception",
-            format.parse("2019-02-14"),
+            format.parse("2019-02-14T07:30 PM"),
             "7:30 PM onwards",
             "Dinner at 7:30 PM",
             "Sri Venkateshwara Swamy Kalyana Mandapam, SriNagar Colony, Hyderabad",
@@ -158,7 +162,39 @@ class EventFragment : BaseFragment() {
                         startActivity(intent)
                     }
                 }
+
+                itemView.set_date.setOnClickListener { setEventInCalender(event) }
             }
         }
+    }
+
+    fun setEventInCalender(event : Event) {
+        val calendar = Calendar.getInstance()
+        calendar.time = event.date
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+        val hour = calendar.get(Calendar.HOUR_OF_DAY)
+        val minute = calendar.get(Calendar.MINUTE)
+
+        val startTime: Long = Calendar.getInstance().run {
+            set(year, month, day, hour-1, minute)
+            timeInMillis
+        }
+        val endTime: Long = Calendar.getInstance().run {
+            set(year, month, day, hour+3, minute)
+            timeInMillis
+        }
+
+        val intent = Intent(Intent.ACTION_INSERT)
+                    .setData(CalendarContract.CONTENT_URI)
+                    .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, startTime)
+                    .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime)
+                    .putExtra(Events.TITLE, event.name)
+                    .putExtra(Events.DESCRIPTION, event.message)
+                    .putExtra(Events.EVENT_LOCATION, event.location)
+                    .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY)
+
+        startActivity(intent)
     }
 }

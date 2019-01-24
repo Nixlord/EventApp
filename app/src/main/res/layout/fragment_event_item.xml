@@ -98,7 +98,7 @@
                 <ImageButton
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/event_date_text"
+                        android:id="@+id/set_date"
                         android:src="@drawable/alarm"
                         android:textAlignment="center"
                         android:textColor="#66000000"

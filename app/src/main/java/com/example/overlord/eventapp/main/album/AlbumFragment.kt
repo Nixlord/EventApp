@@ -4,14 +4,18 @@ import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.content.res.ResourcesCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
 import com.example.overlord.eventapp.R
+import com.example.overlord.eventapp.base.BaseFragment
+import ja.burhanrashid52.photoeditor.PhotoEditor
+import kotlinx.android.synthetic.main.fragment_album.*
 import java.io.Serializable
 
-class AlbumFragment : Fragment() {
+class AlbumFragment : BaseFragment() {
 
     //Declare your data here
     class FragmentInputs(val firstName: String = "Diksha", val surname: String = "Agarwal") : Serializable
@@ -37,5 +41,13 @@ class AlbumFragment : Fragment() {
         super.onCreate(savedInstanceState)
         inputs = arguments?.getSerializable("inputs") as FragmentInputs?
         //Initialize Heavier things here because onCreateView and onViewCreated are called much more number of times
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_album, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        placeholderView.text = "SHIBASIS"
     }
 }

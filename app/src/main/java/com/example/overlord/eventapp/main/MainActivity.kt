@@ -1,5 +1,6 @@
 package com.example.overlord.eventapp.main
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -15,8 +16,10 @@ import com.example.overlord.eventapp.main.guests.GuestFragment
 import com.example.overlord.eventapp.main.wall.WallFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter
+
 import com.example.overlord.eventapp.extensions.replaceFragment
 import com.example.overlord.eventapp.extensions.toastSuccess
+import com.example.overlord.eventapp.mechanisms.filters.FilterActivity
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.RuntimeException
 
@@ -57,6 +60,7 @@ class MainActivity : BaseActivity() {
 
                 override fun onEditButtonClicked() {
                     toastSuccess("Edit Button Clicked")
+                    startActivity(Intent(this@MainActivity, FilterActivity::class.java))
                 }
             }
         )

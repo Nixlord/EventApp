@@ -1,6 +1,7 @@
 package com.example.overlord.eventapp.main.camera
 
 import android.Manifest
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.chip.Chip
 import android.view.LayoutInflater
@@ -123,6 +124,10 @@ class CameraFragment : BaseFragment() {
         setupChipLayout()
         setupCamera()
         setupEditText()
+
+        editButton.setOnClickListener {
+            interactor?.onEditButtonClicked()
+        }
 
         submitButton.setOnClickListener {
 

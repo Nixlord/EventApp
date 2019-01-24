@@ -1,6 +1,7 @@
 package com.example.overlord.eventapp.main.event
 
 
+import android.Manifest
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -22,8 +23,7 @@ import android.net.Uri
 import com.example.overlord.eventapp.base.BaseFragment
 import android.provider.CalendarContract.Events
 import android.provider.CalendarContract
-
-
+import com.example.overlord.eventapp.extensions.logError
 
 
 class EventFragment : BaseFragment() {
@@ -195,6 +195,12 @@ class EventFragment : BaseFragment() {
                     .putExtra(Events.EVENT_LOCATION, event.location)
                     .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY)
 
-        startActivity(intent)
+        base.withPermissions(
+            Manifest.permission.READ_CALENDAR,
+            Manifest.permission.WRITE_CALENDAR
+        ).execute({
+            startActivity(intent)
+        }, base::logError)
+
     }
 }

@@ -100,7 +100,7 @@
                     android:clickable="true"
                     android:text="Edit"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:id="@+id/filterAndCropButton"
+                    android:id="@+id/editButton"
                     app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="8dp"
                     android:layout_marginEnd="8dp" app:layout_constraintEnd_toStartOf="@+id/submitButton"
                     android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/chipGroup"/>

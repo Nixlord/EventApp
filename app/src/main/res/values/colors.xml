@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#4a148c</color>
     <color name="colorAccent">#ec407a</color>
 
+    <color name="thumb_background_color">#000000</color>
+
     <color name="wall_tab">@color/colorPrimary</color>
     <color name="event_tab">@color/colorAccent</color>
     <color name="camera_tab">@color/colorPrimaryDark</color>

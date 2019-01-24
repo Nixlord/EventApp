@@ -182,12 +182,12 @@ class EventFragment : BaseFragment() {
             timeInMillis
         }
         val endTime: Long = Calendar.getInstance().run {
-            set(year, month, day, hour+3, minute)
+            set(year, month, day, hour+4, minute)
             timeInMillis
         }
 
-        val intent = Intent(Intent.ACTION_INSERT)
-                    .setData(CalendarContract.CONTENT_URI)
+        val intent = Intent(Intent.ACTION_EDIT)
+                    .setType("vnd.android.cursor.item/event")
                     .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, startTime)
                     .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime)
                     .putExtra(Events.TITLE, event.name)

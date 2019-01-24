@@ -1,17 +1,12 @@
 package com.example.overlord.eventapp.main.camera
 
 import android.Manifest
-import android.content.res.ColorStateList
 import android.os.Bundle
 import android.support.design.chip.Chip
-import android.support.design.chip.ChipGroup
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.bumptech.glide.Glide
 import com.example.overlord.eventapp.R
-import com.example.overlord.eventapp.base.BaseActivity
 import com.example.overlord.eventapp.base.BaseFragment
 import com.example.overlord.eventapp.extensions.*
 import com.example.overlord.eventapp.extensions.Firebase.auth
@@ -20,7 +15,8 @@ import com.example.overlord.eventapp.extensions.Firebase.storage
 import com.example.overlord.eventapp.mechanisms.compressImage
 import com.example.overlord.eventapp.model.Post
 import com.example.overlord.eventapp.utils.uniqueName
-import com.example.overlord.eventapp.xtra.Color
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.UploadTask
 import kotlinx.android.synthetic.main.fragment_camera.*
 import java.io.File
 import java.io.Serializable
@@ -61,22 +57,18 @@ class CameraFragment : BaseFragment() {
     }
 
     private var post = Post()
-    private var selectedTags : MutableMap<String, Boolean>? = null
     private var compressedImage : File? = null
     private var chips : ArrayList<Chip>? = null
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    private var selectedTags : MutableMap<String, Boolean> = mutableMapOf(
+        Pair("Party", false),
+        Pair("Haldi", false),
+        Pair("Mehendi", false),
+        Pair("Shaadi", false),
+        Pair("Reception", false)
+    )
 
-        post.userID = auth.uid ?: "NULL UID"
-
-        selectedTags = mutableMapOf(
-            Pair("Party", false),
-            Pair("Haldi", false),
-            Pair("Mehendi", false),
-            Pair("Shaadi", false),
-            Pair("Reception", false)
-        )
+    fun setupChipLayout(){
 
         chips = arrayListOf(
             chipHaldi,
@@ -87,12 +79,17 @@ class CameraFragment : BaseFragment() {
         )
 
         chips!!.map { chip ->
-            chip.setOnCheckedChangeListener { buttonView, isChecked ->
-                selectedTags!![chip.text.toString()] = isChecked
+            chip.setOnCheckedChangeListener { _, isChecked ->
+                selectedTags[chip.text.toString()] = isChecked
                 logDebug("CurrentlySelected: ", selectedTags.toString())
             }
         }
+    }
 
+    fun getSelectedChips() = selectedTags.filter { it.value }.keys.toCollection(ArrayList())
+
+
+    fun setupCamera() {
         photoView.setOnClickListener {
             base.apply {
                 withPermissions(
@@ -101,6 +98,7 @@ class CameraFragment : BaseFragment() {
                 ).execute ({
                     takePhoto("Upload Photos")
                         .addOnSuccessListener { image ->
+
                             logDebug("Cache File ${image.name}")
 
                             val imageName = uniqueName()
@@ -113,31 +111,33 @@ class CameraFragment : BaseFragment() {
                 }, this::logError)
             }
         }
+    }
 
+    fun setupEditText() {
         contentView.onTextChange { content -> post.content = content }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setupChipLayout()
+        setupCamera()
+        setupEditText()
 
         submitButton.setOnClickListener {
-            compressedImage?.let { image ->
-                val newPostID = uniqueName()
-                post.postID = newPostID
 
-                for ( (event, checked) in selectedTags!!)
-                    if (checked) post.tags.add(event)
+            compressedImage?.apply {
 
-                firestore.collection("posts")
-                    .document(newPostID)
-                    .set(post)
-                    .addOnSuccessListener {
-                        storage.pushImage(compressedImage!!, post.imageID!!)
-                            .addOnSuccessListener {
-                                val success = "Uploaded : $newPostID"
-                                logDebug(success)
-                                base.toastSuccess(success)
-                                resetViews()
-                            }
-                            .addOnFailureListener { error -> logError(error) }
-                    }
-                    .addOnFailureListener { error -> logError(error) }
+                post.userID = auth.uid ?: "NULL UID"
+                post.postID = uniqueName()
+                post.tags = getSelectedChips()
+
+                firestore.savePost(post, this) {
+                    val success = "Uploaded : ${post.postID}"
+                    logDebug(success)
+                    base.toastSuccess(success)
+                    resetViews()
+                }
             }
         }
     }

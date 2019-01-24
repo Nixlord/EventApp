@@ -16,6 +16,7 @@ import com.example.overlord.eventapp.main.wall.WallFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter
 import com.example.overlord.eventapp.extensions.replaceFragment
+import com.example.overlord.eventapp.extensions.toastSuccess
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.RuntimeException
 
@@ -52,6 +53,10 @@ class MainActivity : BaseActivity() {
                         postID = postID
                     ))
                     bottomNavigation.currentItem = fragmentNames.indexOf("wall")
+                }
+
+                override fun onEditButtonClicked() {
+                    toastSuccess("Edit Button Clicked")
                 }
             }
         )

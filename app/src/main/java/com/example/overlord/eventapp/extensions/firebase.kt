@@ -7,6 +7,7 @@ import com.example.overlord.eventapp.extensions.Firebase.auth
 import com.example.overlord.eventapp.extensions.Firebase.firestore
 import com.example.overlord.eventapp.extensions.Firebase.storage
 import com.example.overlord.eventapp.model.Constants
+import com.example.overlord.eventapp.model.Post
 import com.example.overlord.eventapp.utils.uniqueName
 import com.github.chrisbanes.photoview.PhotoView
 import com.google.firebase.auth.FirebaseAuth
@@ -47,6 +48,25 @@ fun StorageReference.pushImage(compressedImage : File, imageName: String) : Uplo
         )
 }
 
+
+fun FirebaseFirestore.savePost(post: Post, image: File, onSuccess : (task: UploadTask.TaskSnapshot) -> Unit) {
+
+    val postDocument = this.collection("posts").document(post.postID)
+
+    postDocument.set(post)
+        .addOnSuccessListener {
+
+            post.imageID?.apply {
+
+                storage.pushImage(image, this)
+                    .addOnSuccessListener(onSuccess)
+                    .addOnFailureListener(::logError)
+
+            } ?: logError(Error("Null Image ID"))
+
+        }
+        .addOnFailureListener(::logError)
+}
 
 fun DocumentReference.addSnapshotListener(
     snapshotListener : (snapshot : DocumentSnapshot) -> Unit

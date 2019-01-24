@@ -133,7 +133,7 @@ class WallFragment : BaseFragment() {
                         else
                             logError(Error("No User Object"))
 
-                    }
+                }
             }
         }
     }

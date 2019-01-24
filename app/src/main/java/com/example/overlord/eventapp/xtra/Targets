@@ -117,3 +117,14 @@ GuestList - Fragment
         FirestoreRecyclerView to keep Guests
         GuestViewHolder ( Name, Relation, Phone )
         WhatsApp / Call Intent Functionality
+/
+ToDo
+Broadcast Reciever to allow external share
+Share Button
+Comments Fragment with PhotoView
+Notifications
+Download by Query Functionality
+UI Change
+Filter Fragment
+SearchView
+Background Jobs ( WorkManager or Firebase Job Dispatcher )

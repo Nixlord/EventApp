@@ -132,3 +132,4 @@ Background Jobs ( WorkManager or Firebase Job Dispatcher )
 Progress Indicators in many places (example while photo upload)
 
 Todo @Diksha add tasks here
+Open messaging app on clicking the message icon in contacts list

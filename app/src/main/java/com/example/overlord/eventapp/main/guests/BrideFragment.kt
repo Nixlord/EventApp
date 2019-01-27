@@ -97,17 +97,25 @@ class BrideFragment : BaseFragment() {
                     bride_groom_image.visibility = View.VISIBLE
                     Glide.with(this).load(R.drawable.crown).into(bride_groom_image)
                 }
+
                 call_button.setOnClickListener {
                     base.withPermissions(
                         Manifest.permission.CALL_PHONE
                     ).execute({
-                        startActivity( Intent(Intent.ACTION_CALL).setData(Uri.parse(guest.phoneno)) )
+                        val phoneno : String = guest.phoneno
+                        val intent = Intent(Intent.ACTION_DIAL).apply {
+                            data = Uri.parse("tel:$phoneno")
+                        }
+                        startActivity(intent)
                     }, base::logError)
                 }
+
                 message_button.setOnClickListener {
-                    startActivity( Intent(Intent.ACTION_VIEW)
-                        .setType("vnd.android-dir/mms-sms")
-                        .putExtra("Phone Number", guest.phoneno) )
+                    /*val intent = Intent(Intent.ACTION_SEND).apply {
+                        val phoneno : String = guest.phoneno
+                        data = Uri.parse("smsto:$phoneno")  // This ensures only SMS apps respond
+                    }
+                    startActivity(intent)*/
                 }
 
             }

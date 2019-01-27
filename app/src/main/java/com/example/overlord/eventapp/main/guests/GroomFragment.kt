@@ -100,13 +100,18 @@ class GroomFragment : BaseFragment() {
                         base.withPermissions(
                             Manifest.permission.CALL_PHONE
                         ).execute({
-                            startActivity( Intent(Intent.ACTION_CALL).setData(Uri.parse(guest.phoneno)) )
+                            val phoneno : String = guest.phoneno
+                            val intent = Intent(Intent.ACTION_DIAL).apply {
+                                data = Uri.parse("tel:$phoneno")
+                            }
+                            startActivity(intent)
                         }, base::logError)
                     }
+
                     message_button.setOnClickListener {
-                        startActivity( Intent(Intent.ACTION_VIEW)
+                        /*startActivity( Intent(Intent.ACTION_VIEW)
                             .setType("vnd.android-dir/mms-sms")
-                            .putExtra("Phone Number", guest.phoneno) )
+                            .putExtra("Phone Number", guest.phoneno) )*/
                     }
 
                 }

@@ -13,8 +13,15 @@ import android.widget.LinearLayout
 import com.bumptech.glide.Glide
 import com.example.overlord.eventapp.R
 import com.example.overlord.eventapp.base.BaseFragment
+import com.example.overlord.eventapp.extensions.Firebase
+import com.example.overlord.eventapp.extensions.inflate
+import com.example.overlord.eventapp.extensions.loadImage
 import com.example.overlord.eventapp.extensions.logError
 import com.example.overlord.eventapp.model.User
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter
+import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import com.google.firebase.firestore.Query
+import kotlinx.android.synthetic.main.fragment_bride.*
 import kotlinx.android.synthetic.main.fragment_groom.*
 import kotlinx.android.synthetic.main.fragment_guest_item.view.*
 import java.io.Serializable
@@ -53,53 +60,56 @@ class GroomFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        groom_guest_recycler_view.layoutManager = LinearLayoutManager(context, LinearLayout.VERTICAL, false)
-
-        groom_guest_recycler_view.adapter = GroomGuestAdapter()
+        val firestoreQuery = Firebase.firestore.collection("users").whereEqualTo("wedding_side", "Groom")
+        setupFirestoreRecyclerView(firestoreQuery)
     }
 
-    inner class GroomGuestAdapter(val guestList: ArrayList<User>) : RecyclerView.Adapter<GroomGuestAdapter.ViewHolder>() {
+    private fun setupFirestoreRecyclerView (query : Query) {
+        val firestoreOptions = FirestoreRecyclerOptions.Builder<User>()
+            .setLifecycleOwner(this)
+            .setQuery(query, User::class.java)
+            .build()
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GroomGuestAdapter.ViewHolder {
-            val v = LayoutInflater.from(parent.context).inflate(R.layout.fragment_guest_item, parent, false)
-            return ViewHolder(v)
+        val firestoreRecyclerAdapter = object : FirestoreRecyclerAdapter<User, GroomFragment.GroomGuestHolder>(firestoreOptions) {
+            override fun onCreateViewHolder(p0: ViewGroup, p1: Int): GroomFragment.GroomGuestHolder {
+                return GroomGuestHolder(
+                    p0.inflate(R.layout.fragment_guest_item)
+                )
+            }
+            override fun onBindViewHolder(holder: GroomFragment.GroomGuestHolder, position: Int, guest: User) {
+                holder.bindItems(guest)
+            }
         }
+        groom_guest_recycler_view.layoutManager = LinearLayoutManager(context, LinearLayout.VERTICAL, false)
+        groom_guest_recycler_view.adapter = firestoreRecyclerAdapter
+    }
 
-        override fun onBindViewHolder(holder: GroomGuestAdapter.ViewHolder, position: Int) {
-            holder.bindItems(guestList[position])
-        }
+    inner class GroomGuestHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        fun bindItems(guest: User) {
+            itemView.apply {
+                itemView.apply {
 
-        override fun getItemCount(): Int {
-            return guestList.size
-        }
+                    base.loadImage(guest_profile_image, guest.profile_photo)
+                    guest_name.text = guest.name
+                    guest_relation.text = guest.relation
+                    if(guest.relation == "Groom") {
+                        bride_groom_image.visibility = View.VISIBLE
+                        Glide.with(this).load(R.drawable.tie).into(bride_groom_image)
+                    }
+                    call_button.setOnClickListener {
+                        base.withPermissions(
+                            Manifest.permission.CALL_PHONE
+                        ).execute({
+                            startActivity( Intent(Intent.ACTION_CALL).setData(Uri.parse(guest.phoneno)) )
+                        }, base::logError)
+                    }
+                    message_button.setOnClickListener {
+                        startActivity( Intent(Intent.ACTION_VIEW)
+                            .setType("vnd.android-dir/mms-sms")
+                            .putExtra("Phone Number", guest.phoneno) )
+                    }
 
-        inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-            fun bindItems(guest : User) {
-
-                Glide.with(itemView).load(guest.profile_photo).into(itemView.guest_profile_image)
-                itemView.guest_name.text = guest.name
-                itemView.guest_relation.text = guest.relation
-
-                if(guest.relation == "Groom") {
-                    itemView.bride_groom_image.visibility = View.VISIBLE
-                    Glide.with(itemView).load(R.drawable.tie).into(itemView.bride_groom_image)
                 }
-
-                itemView.call_button.setOnClickListener {
-                    base.withPermissions(
-                        Manifest.permission.CALL_PHONE
-                    ).execute({
-                        startActivity( Intent(Intent.ACTION_CALL).setData(Uri.parse(guest.phoneno)) )
-                    }, base::logError)
-                }
-
-                itemView.message_button.setOnClickListener {
-                    startActivity( Intent(Intent.ACTION_VIEW)
-                        .setType("vnd.android-dir/mms-sms")
-                        .putExtra("Phone Number", guest.phoneno) )
-                }
-
             }
         }
     }

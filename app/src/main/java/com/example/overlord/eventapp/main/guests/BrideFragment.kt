@@ -15,10 +15,18 @@ import android.view.View
 import android.widget.LinearLayout
 import com.bumptech.glide.Glide
 import com.example.overlord.eventapp.base.BaseFragment
-import com.example.overlord.eventapp.extensions.logError
+import com.example.overlord.eventapp.extensions.*
+import com.example.overlord.eventapp.main.wall.WallFragment
+import com.example.overlord.eventapp.model.Post
 import com.example.overlord.eventapp.model.User
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter
+import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import com.google.firebase.firestore.Query
 import kotlinx.android.synthetic.main.fragment_bride.*
 import kotlinx.android.synthetic.main.fragment_guest_item.view.*
+import kotlinx.android.synthetic.main.fragment_wall.*
+import kotlinx.android.synthetic.main.fragment_wall_item.view.*
+import java.lang.Error
 import java.util.*
 
 class BrideFragment : BaseFragment() {
@@ -54,48 +62,49 @@ class BrideFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        bride_guest_recycler_view.layoutManager = LinearLayoutManager(context, LinearLayout.VERTICAL, false)
-
-        bride_guest_recycler_view.adapter = BrideGuestAdapter()
+        val firestoreQuery = Firebase.firestore.collection("users").whereEqualTo("wedding_side", "Bride")
+        setupFirestoreRecyclerView(firestoreQuery)
     }
 
-    inner class BrideGuestAdapter(val guestList: ArrayList<User>) : RecyclerView.Adapter<BrideGuestAdapter.ViewHolder>() {
+    private fun setupFirestoreRecyclerView (query : Query) {
+        val firestoreOptions = FirestoreRecyclerOptions.Builder<User>()
+            .setLifecycleOwner(this)
+            .setQuery(query, User::class.java)
+            .build()
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BrideGuestAdapter.ViewHolder {
-            val v = LayoutInflater.from(parent.context).inflate(R.layout.fragment_guest_item, parent, false)
-            return ViewHolder(v)
+        val firestoreRecyclerAdapter = object : FirestoreRecyclerAdapter<User, BrideFragment.BrideGuestHolder>(firestoreOptions) {
+            override fun onCreateViewHolder(p0: ViewGroup, p1: Int): BrideFragment.BrideGuestHolder {
+                return BrideGuestHolder(
+                    p0.inflate(R.layout.fragment_guest_item)
+                )
+            }
+            override fun onBindViewHolder(holder: BrideFragment.BrideGuestHolder, position: Int, guest: User) {
+                holder.bindItems(guest)
+            }
         }
+        bride_guest_recycler_view.layoutManager = LinearLayoutManager(context, LinearLayout.VERTICAL, false)
+        bride_guest_recycler_view.adapter = firestoreRecyclerAdapter
+    }
 
-        override fun onBindViewHolder(holder: BrideGuestAdapter.ViewHolder, position: Int) {
-            holder.bindItems(guestList[position])
-        }
+    inner class BrideGuestHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        fun bindItems(guest: User) {
+            itemView.apply {
 
-        override fun getItemCount(): Int {
-            return guestList.size
-        }
-
-        inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-            fun bindItems(guest : User) {
-
-                Glide.with(itemView).load(guest.profile_photo).into(itemView.guest_profile_image)
-                itemView.guest_name.text = guest.name
-                itemView.guest_relation.text = guest.relation
-
+                base.loadImage(guest_profile_image, guest.profile_photo)
+                guest_name.text = guest.name
+                guest_relation.text = guest.relation
                 if(guest.relation == "Bride") {
-                    itemView.bride_groom_image.visibility = View.VISIBLE
-                    Glide.with(itemView).load(R.drawable.crown).into(itemView.bride_groom_image)
+                    bride_groom_image.visibility = View.VISIBLE
+                    Glide.with(this).load(R.drawable.crown).into(bride_groom_image)
                 }
-
-                itemView.call_button.setOnClickListener {
+                call_button.setOnClickListener {
                     base.withPermissions(
                         Manifest.permission.CALL_PHONE
                     ).execute({
                         startActivity( Intent(Intent.ACTION_CALL).setData(Uri.parse(guest.phoneno)) )
                     }, base::logError)
                 }
-
-                itemView.message_button.setOnClickListener {
+                message_button.setOnClickListener {
                     startActivity( Intent(Intent.ACTION_VIEW)
                         .setType("vnd.android-dir/mms-sms")
                         .putExtra("Phone Number", guest.phoneno) )

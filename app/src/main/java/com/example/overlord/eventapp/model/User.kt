@@ -10,7 +10,7 @@ class User(
         var phoneno : String = "",
         var wedding_side : String = "Bride",
         var relation : String = "Friend",
-        var key_contact : Boolean = false,
+        var key_contact : String = "false",
         var profile_photo : String = ""
 )
 

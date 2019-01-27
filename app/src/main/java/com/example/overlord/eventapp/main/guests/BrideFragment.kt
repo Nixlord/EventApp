@@ -62,7 +62,9 @@ class BrideFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val firestoreQuery = Firebase.firestore.collection("users").whereEqualTo("wedding_side", "Bride")
+        val firestoreQuery = Firebase.firestore.collection("users")
+            .whereEqualTo("wedding_side", "Bride")
+            .whereEqualTo("key_contact", "true")
         setupFirestoreRecyclerView(firestoreQuery)
     }
 

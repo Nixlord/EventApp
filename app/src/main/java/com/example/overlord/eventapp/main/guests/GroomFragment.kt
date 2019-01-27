@@ -13,10 +13,7 @@ import android.widget.LinearLayout
 import com.bumptech.glide.Glide
 import com.example.overlord.eventapp.R
 import com.example.overlord.eventapp.base.BaseFragment
-import com.example.overlord.eventapp.extensions.Firebase
-import com.example.overlord.eventapp.extensions.inflate
-import com.example.overlord.eventapp.extensions.loadImage
-import com.example.overlord.eventapp.extensions.logError
+import com.example.overlord.eventapp.extensions.*
 import com.example.overlord.eventapp.model.User
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
@@ -60,7 +57,9 @@ class GroomFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val firestoreQuery = Firebase.firestore.collection("users").whereEqualTo("wedding_side", "Groom")
+        val firestoreQuery = Firebase.firestore.collection("users")
+            .whereEqualTo("wedding_side", "Groom")
+            .whereEqualTo("key_contact", "true")
         setupFirestoreRecyclerView(firestoreQuery)
     }
 
@@ -87,33 +86,30 @@ class GroomFragment : BaseFragment() {
     inner class GroomGuestHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bindItems(guest: User) {
             itemView.apply {
-                itemView.apply {
 
-                    base.loadImage(guest_profile_image, guest.profile_photo)
-                    guest_name.text = guest.name
-                    guest_relation.text = guest.relation
-                    if(guest.relation == "Groom") {
-                        bride_groom_image.visibility = View.VISIBLE
-                        Glide.with(this).load(R.drawable.tie).into(bride_groom_image)
-                    }
-                    call_button.setOnClickListener {
-                        base.withPermissions(
-                            Manifest.permission.CALL_PHONE
-                        ).execute({
-                            val phoneno : String = guest.phoneno
-                            val intent = Intent(Intent.ACTION_DIAL).apply {
-                                data = Uri.parse("tel:$phoneno")
-                            }
-                            startActivity(intent)
-                        }, base::logError)
-                    }
+                base.loadImage(guest_profile_image, guest.profile_photo)
+                guest_name.text = guest.name
+                guest_relation.text = guest.relation
+                if(guest.relation == "Groom") {
+                    bride_groom_image.visibility = View.VISIBLE
+                    Glide.with(this).load(R.drawable.tie).into(bride_groom_image)
+                }
+                call_button.setOnClickListener {
+                    base.withPermissions(
+                        Manifest.permission.CALL_PHONE
+                    ).execute({
+                        val phoneno : String = guest.phoneno
+                        val intent = Intent(Intent.ACTION_DIAL).apply {
+                            data = Uri.parse("tel:$phoneno")
+                        }
+                        startActivity(intent)
+                    }, base::logError)
+                }
 
-                    message_button.setOnClickListener {
-                        /*startActivity( Intent(Intent.ACTION_VIEW)
-                            .setType("vnd.android-dir/mms-sms")
-                            .putExtra("Phone Number", guest.phoneno) )*/
-                    }
-
+                message_button.setOnClickListener {
+                    /*startActivity( Intent(Intent.ACTION_VIEW)
+                           .setType("vnd.android-dir/mms-sms")
+                           .putExtra("Phone Number", guest.phoneno) )*/
                 }
             }
         }

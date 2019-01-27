@@ -61,6 +61,6 @@
     <!--Guest Activity String -->
     <string name="guest_name">Name</string>
     <string name="guest_relation">Relation</string>
-    <string name="guest_search_name">Enter the name of the guest</string>
+    <string name="guest_search_name">Full name of the guest?</string>
 
 </resources>

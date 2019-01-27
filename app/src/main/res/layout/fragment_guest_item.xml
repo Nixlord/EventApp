@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
+        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
         android:layout_height="wrap_content"
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -25,6 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/guest_name"
+            android:textStyle="bold"
             android:hint="@string/guest_name"
             android:layout_marginTop="16dp"
             app:layout_constraintTop_toTopOf="parent"
@@ -43,15 +44,16 @@
 
     <ImageView
             android:id="@+id/bride_groom_image"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="27dp"
+            android:layout_height="22dp"
             android:layout_marginTop="8dp"
             android:src="@drawable/placeholder"
+            android:visibility="invisible"
             app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toStartOf="@+id/message_button"
-            android:layout_marginEnd="8dp" app:layout_constraintStart_toEndOf="@+id/guest_relation"
-            android:layout_marginStart="8dp" app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintVertical_bias="0.521"/>
+            android:layout_marginEnd="8dp"
+            app:layout_constraintVertical_bias="0.175" app:layout_constraintStart_toEndOf="@+id/guest_name"
+            android:layout_marginStart="8dp" app:layout_constraintHorizontal_bias="0.093"/>
 
     <ImageButton
             android:id="@+id/call_button"

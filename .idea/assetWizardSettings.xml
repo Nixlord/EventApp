@@ -23,7 +23,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/android-studio/plugins/android/lib/android.jar!/images/material_design_icons/image/ic_photo_camera_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/communication/ic_call_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -33,12 +33,10 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="color" value="ff74f5" />
-                            <entry key="height" value="100" />
-                            <entry key="outputName" value="camera_icon_large" />
+                            <entry key="color" value="5f93fc" />
+                            <entry key="outputName" value="call_icon" />
                             <entry key="overrideSize" value="true" />
                             <entry key="sourceFile" value="C:\Users\overlord" />
-                            <entry key="width" value="100" />
                           </map>
                         </option>
                       </PersistentState>

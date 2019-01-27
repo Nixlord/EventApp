@@ -58,4 +58,9 @@
     <string name="event_date">10</string>
     <string name="event_date_text">Date</string>
 
+    <!--Guest Activity String -->
+    <string name="guest_name">Name</string>
+    <string name="guest_relation">Relation</string>
+    <string name="guest_search_name">Enter the name of the guest</string>
+
 </resources>

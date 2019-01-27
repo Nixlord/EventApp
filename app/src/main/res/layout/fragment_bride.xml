@@ -28,7 +28,7 @@
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
-            android:id="@+id/search_button_view"
+            android:id="@+id/bride_search_button_view"
             android:layout_width="32dp"
             android:layout_height="33dp"
             app:cardElevation="10dp"
@@ -42,7 +42,7 @@
             android:background="@color/colorBottomNavigationInactiveColored">
 
         <ImageButton
-                android:id="@+id/search_button"
+                android:id="@+id/bride_search_button"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/search_icon"
@@ -52,7 +52,7 @@
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.RecyclerView
-            android:id="@+id/bride_guest_list"
+            android:id="@+id/bride_guest_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"

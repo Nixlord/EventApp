@@ -5,6 +5,11 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import com.example.overlord.eventapp.R
+import kotlinx.android.synthetic.main.fragment_guests.*
 
 import java.io.Serializable
 
@@ -36,7 +41,20 @@ class GuestFragment : Fragment() {
         //Initialize Heavier things here because onCreateView and onViewCreated are called much more number of times
     }
 
-    inner class ViewPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_guests, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val viewPagerAdapter = ViewPagerAdapter(fragmentManager)
+        guest_side_view_pager.adapter = viewPagerAdapter
+        guest_side_tab.setupWithViewPager(guest_side_view_pager)
+
+    }
+
+    inner class ViewPagerAdapter(fm: FragmentManager?) : FragmentPagerAdapter(fm) {
 
         override fun getItem(position: Int): Fragment? {
             var fragment: Fragment? = null

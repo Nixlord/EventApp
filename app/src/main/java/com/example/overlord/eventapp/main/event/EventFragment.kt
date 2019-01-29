@@ -139,6 +139,7 @@ class EventFragment : BaseFragment() {
         inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
             fun bindItems(event : Event) {
+
                 itemView.event_header.text = event.name
                 Glide.with(itemView).load(event.image).into(itemView.eventImageView)
                 itemView.event_time.text = event.eventTime
@@ -198,9 +199,9 @@ class EventFragment : BaseFragment() {
         base.withPermissions(
             Manifest.permission.READ_CALENDAR,
             Manifest.permission.WRITE_CALENDAR
-        ).execute({
+        ).execute {
             startActivity(intent)
-        }, base::logError)
+        }
 
     }
 }

@@ -1,5 +1,6 @@
 package com.example.overlord.eventapp.model
 
+import android.support.annotation.DrawableRes
 import java.util.*
 
 class Event (
@@ -8,7 +9,7 @@ class Event (
     val eventTime : String,
     val foodTime : String,
     val location : String = "",
-    val image : Int,
+    @DrawableRes val image : Int,
     val message : String? = ""
 )
 

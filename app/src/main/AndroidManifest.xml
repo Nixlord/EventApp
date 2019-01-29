@@ -23,6 +23,16 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
 
+        <provider
+                android:name=".utils.StupidAndroidFrameworkFileProvider"
+                android:authorities="com.overlord.fileprovider"
+                android:exported="false"
+                android:grantUriPermissions="true">
+            <meta-data
+                    android:name="android.support.FILE_PROVIDER_PATHS"
+                    android:resource="@xml/file_paths" />
+        </provider>
+
         <activity android:name=".intro.SplashActivity"
                   android:screenOrientation="portrait"
                   android:configChanges="orientation|keyboardHidden|screenLayout|screenSize"

@@ -2,6 +2,7 @@
 package com.example.overlord.eventapp.extensions
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
@@ -52,5 +53,10 @@ fun AppCompatActivity.addFragment(containerID : Int, fragment : Fragment) {
         .commit()
 }
 
+fun AppCompatActivity.safeIntentDispatch(intent : Intent) {
+    intent.resolveActivity(packageManager)?.let {
+        startActivity(intent)
+    }
+}
 
-
+fun PackageManager.intentHandlerExists(intent : Intent) = intent.resolveActivity(this) != null

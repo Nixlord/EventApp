@@ -59,8 +59,8 @@
 
 
             <ImageView
-                    android:layout_width="100dp"
-                    android:layout_height="100dp" tools:srcCompat="@tools:sample/avatars"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp" tools:srcCompat="@tools:sample/avatars"
                     android:id="@+id/postAuthorProfileView" card_view:layout_constraintStart_toStartOf="parent"
                     android:layout_marginStart="16dp"
                     card_view:layout_constraintTop_toTopOf="parent" android:layout_marginTop="16dp"

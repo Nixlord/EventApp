@@ -57,13 +57,22 @@ class GuestFragment : Fragment() {
     inner class ViewPagerAdapter(fm: FragmentManager?) : FragmentPagerAdapter(fm) {
 
         override fun getItem(position: Int): Fragment? {
+            /*
             var fragment: Fragment? = null
             if (position == 0) {
                 fragment = BrideFragment()
             } else if (position == 1) {
                 fragment = GroomFragment()
             }
-            return fragment
+            return null
+
+            Can be written in Kotlin as shown below
+            */
+            return when(position) {
+                0 -> BrideFragment()
+                1 -> GroomFragment()
+                else -> null
+            }
         }
 
         override fun getCount(): Int {
@@ -78,6 +87,7 @@ class GuestFragment : Fragment() {
                 title = "Groom"
             }
             return title
+            //ToDo write like shown in getItem
         }
     }
 }

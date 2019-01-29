@@ -1,18 +1,10 @@
 package com.example.overlord.eventapp.extensions
 
-import android.widget.ImageView
-import com.bumptech.glide.Glide
-import com.example.overlord.eventapp.base.BaseActivity
-import com.example.overlord.eventapp.extensions.Firebase.auth
-import com.example.overlord.eventapp.extensions.Firebase.firestore
 import com.example.overlord.eventapp.extensions.Firebase.storage
-import com.example.overlord.eventapp.model.Constants
 import com.example.overlord.eventapp.model.Post
-import com.example.overlord.eventapp.utils.uniqueName
-import com.github.chrisbanes.photoview.PhotoView
+import com.firebase.ui.firestore.ClassSnapshotParser
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
-import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -68,8 +60,9 @@ fun FirebaseFirestore.savePost(post: Post, image: File, onSuccess : (task: Uploa
         .addOnFailureListener(::logError)
 }
 
-fun DocumentReference.addSnapshotListener(
-    snapshotListener : (snapshot : DocumentSnapshot) -> Unit
+fun<T> DocumentReference.addSnapshotListener(
+    valueType: Class<T>,
+    objectListener : (snapshot : T) -> Unit
 ) {
     this.addSnapshotListener { documentSnapshot, firebaseFirestoreException ->
         if (firebaseFirestoreException != null) {
@@ -80,8 +73,10 @@ fun DocumentReference.addSnapshotListener(
             logError(Error("No Such Document"))
         }
 
-        else
-            snapshotListener.invoke(documentSnapshot)
+        else {
+            val obj = documentSnapshot.toObject(valueType)
+            obj?.apply(objectListener) ?: logError(Error("Null Object"))
+        }
 
     }
 }

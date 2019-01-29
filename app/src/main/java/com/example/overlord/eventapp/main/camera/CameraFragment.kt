@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.chip.Chip
+import android.support.v4.widget.CircularProgressDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ import com.example.overlord.eventapp.extensions.Firebase.auth
 import com.example.overlord.eventapp.extensions.Firebase.firestore
 import com.example.overlord.eventapp.extensions.Firebase.storage
 import com.example.overlord.eventapp.mechanisms.compressImage
+import com.example.overlord.eventapp.mechanisms.filters.FilterActivity
 import com.example.overlord.eventapp.model.Post
 import com.example.overlord.eventapp.utils.uniqueName
 import com.google.firebase.firestore.FirebaseFirestore
@@ -96,7 +98,7 @@ class CameraFragment : BaseFragment() {
                 withPermissions(
                     Manifest.permission.WRITE_EXTERNAL_STORAGE,
                     Manifest.permission.CAMERA
-                ).execute ({
+                ).execute {
                     takePhoto("Upload Photos")
                         .addOnSuccessListener { image ->
 
@@ -109,7 +111,7 @@ class CameraFragment : BaseFragment() {
 
                             loadImage(photoView, image)
                         }
-                }, this::logError)
+                }
             }
         }
     }
@@ -126,7 +128,14 @@ class CameraFragment : BaseFragment() {
         setupEditText()
 
         editButton.setOnClickListener {
-            interactor?.onEditButtonClicked()
+            base.apply {
+                startActivityGetResult(
+                    Intent(this, FilterActivity::class.java)
+                ).addOnSuccessListener {
+
+
+                }.addOnFailureListener { error, _ -> logError(error) }
+            }
         }
 
         submitButton.setOnClickListener {
@@ -137,7 +146,9 @@ class CameraFragment : BaseFragment() {
                 post.postID = uniqueName()
                 post.tags = getSelectedChips()
 
+
                 firestore.savePost(post, this) {
+                    //ToDo create notification here to signal completion
                     val success = "Uploaded : ${post.postID}"
                     logDebug(success)
                     base.toastSuccess(success)

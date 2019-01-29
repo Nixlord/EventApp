@@ -1,6 +1,7 @@
 package com.example.overlord.eventapp.main.wall
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -14,6 +15,7 @@ import com.example.overlord.eventapp.base.BaseFragment
 import com.example.overlord.eventapp.extensions.*
 import com.example.overlord.eventapp.extensions.Firebase.auth
 import com.example.overlord.eventapp.extensions.Firebase.firestore
+
 import com.example.overlord.eventapp.model.Post
 import com.example.overlord.eventapp.model.User
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
@@ -114,25 +116,32 @@ class WallFragment : BaseFragment() {
                         .addOnFailureListener(base::logError)
                 }
 
+
                 post.imageID?.apply {
-                    base.loadImage(postImageView, this)
+                    base.apply {
+
+                        downloadImage(post.imageID!!) { file ->
+
+                            loadImage(postImageView, file)
+
+                            postShareButton.setOnClickListener {
+                                safeIntentDispatch(
+                                    Intent(Intent.ACTION_SEND).apply {
+                                        putExtra(Intent.EXTRA_STREAM, getExternallyAccessibleURI(file))
+                                        type = "image/jpeg"
+                                    }
+                                )
+                            }
+                        }
+                    }
                 } ?: logError(Error("No Image ID"))
 
-                userDocument.addSnapshotListener { snapshot ->
 
-                        val user = snapshot.toObject(User::class.java)
-
-                        if (user != null) {
-                            //todo These photos appear weird. Have to correct
-
-                            postAuthorView.text = user.name
-                            base.loadImage(postAuthorProfileView, user.profile_photo)
-                            postCaptionView.text = post.content
-                        }
-
-                        else
-                            logError(Error("No User Object"))
-
+                userDocument.addSnapshotListener(User::class.java) { user ->
+                    postAuthorView.text = user.name
+                    //ToDo this image can be made by applying Transform on glide.
+                    base.loadImage(postAuthorProfileView, user.profile_photo)
+                    postCaptionView.text = post.content
                 }
             }
         }

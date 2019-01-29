@@ -26,30 +26,6 @@ import java.util.ArrayList
 
 class GroomFragment : BaseFragment() {
 
-    class FragmentInputs(val firstName: String = "Diksha", val surname: String = "Agarwal") : Serializable
-
-    interface FragmentInteractor : Serializable {
-        //Implement your methods here
-        fun onButtonPressed(message: String)
-    }
-
-    private var inputs: GroomFragment.FragmentInputs? = null
-    private var interactor: FragmentInteractor? = null
-
-    companion object {
-        @JvmStatic
-        fun newInstance(inputs: GroomFragment.FragmentInputs?, interactor: FragmentInteractor) =
-            GroomFragment().apply {this.interactor = interactor
-                arguments = Bundle().apply { putSerializable("inputs", inputs) }
-            }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        inputs = arguments?.getSerializable("inputs") as GroomFragment.FragmentInputs?
-        //Initialize Heavier things here because onCreateView and onViewCreated are called much more number of times
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_groom, container, false)
     }
@@ -97,19 +73,17 @@ class GroomFragment : BaseFragment() {
                 call_button.setOnClickListener {
                     base.withPermissions(
                         Manifest.permission.CALL_PHONE
-                    ).execute({
+                    ).execute {
                         val phoneno : String = guest.phoneno
                         val intent = Intent(Intent.ACTION_DIAL).apply {
                             data = Uri.parse("tel:$phoneno")
                         }
                         startActivity(intent)
-                    }, base::logError)
+                    }
                 }
 
                 message_button.setOnClickListener {
-                    /*startActivity( Intent(Intent.ACTION_VIEW)
-                           .setType("vnd.android-dir/mms-sms")
-                           .putExtra("Phone Number", guest.phoneno) )*/
+
                 }
             }
         }

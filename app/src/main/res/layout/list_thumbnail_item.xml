@@ -5,7 +5,7 @@
               android:background="@color/thumb_background_color">
 
     <ImageView
-        android:id="@+id/thumbnail"
+        android:id="@+id/thumbnailView"
         android:layout_width="@dimen/thumbnail_size"
         android:layout_height="@dimen/thumbnail_size"
         android:paddingLeft="@dimen/thumbnail_horizontal_padding"

@@ -4,17 +4,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/thumb_background_color"
-                tools:context="com.example.filters.FilterActivity">
+                tools:context="com.example.overlord.eventapp.mechanisms.filters.FilterActivity">
 
 
     <ImageView
-        android:id="@+id/filterImageView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:background="@color/colorPrimaryDark"
-        android:scaleType="fitStart"
-        />
+            android:id="@+id/filterImageView"
+            android:src="@drawable/photo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:scaleType="fitStart"
+    />
+
+    <android.support.design.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonTestResult"
+            android:layout_below="@id/filterImageView"
+            android:layout_centerHorizontal="true" android:layout_marginTop="-141dp"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -22,7 +29,6 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:background="@color/thumb_background_color">
-
         <android.support.v7.widget.RecyclerView
             android:id="@+id/thumbnailRecyclerView"
             android:layout_width="wrap_content"
@@ -30,7 +36,6 @@
             android:layout_marginBottom="@dimen/thumbnail_vertical_padding"
             android:layout_marginTop="@dimen/thumbnail_vertical_padding"
             android:clipToPadding="false"/>
-
     </RelativeLayout>
 
 </RelativeLayout>

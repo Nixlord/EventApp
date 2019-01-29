@@ -13,6 +13,7 @@
         <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
             <ImageView
                     android:id="@+id/photoView"
                     android:src="@drawable/camera_icon_large"

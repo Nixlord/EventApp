@@ -159,7 +159,7 @@ class LoginActivity : BaseActivity() {
             withPermissions(
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 Manifest.permission.CAMERA
-            ).execute({
+            ).execute {
                 takePhoto("Add Profile Photo")
                     .addOnSuccessListener { image ->
                         logDebug("Profile photo name: ${image.name}")
@@ -170,7 +170,7 @@ class LoginActivity : BaseActivity() {
 
                         Glide.with(this).load(image).into(userProfilePhoto)
                     }
-            }, this::logError)
+            }
         }
 
     }

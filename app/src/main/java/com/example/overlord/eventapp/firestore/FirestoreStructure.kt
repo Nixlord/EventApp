@@ -7,7 +7,7 @@ package com.example.overlord.eventapp.firestore
 Classes that will be needed -
 1. User - when a person logs in the app for first time
 
-2. Comment - stores comment on basis of comment_id. Each comment_id
+2. Comment - stores commentInput on basis of comment_id. Each comment_id
             refers to a particular image or blog and all the comments are
             added inside that id
 
@@ -27,7 +27,7 @@ User/
 Comment/
     comment_id/
         list< user_id
-              comment
+              commentInput
               date_time>
 
 Post/

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="match_parent"
+                                             tools:context=".main.wall.PostFragment" android:id="@+id/frameLayout2">
+
+    <android.support.design.card.MaterialCardView
+            android:id="@+id/postContentCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp" app:cardCornerRadius="4dp"
+            app:cardBackgroundColor="@color/browser_actions_bg_grey">
+
+        <android.support.constraint.ConstraintLayout android:layout_width="match_parent"
+                                                     android:layout_height="wrap_content">
+            <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    tools:src="@tools:sample/avatars"
+                    android:id="@+id/postPhoto" android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent" android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="8dp"/>
+            <TextView
+                    android:text="What post creator added as content"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" android:id="@+id/postContentView"
+                    app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+                    app:layout_constraintStart_toEndOf="@+id/postPhoto" android:layout_marginStart="8dp"
+                    android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
+                    android:fontFamily="casual" android:textSize="18sp" android:textAlignment="center"/>
+        </android.support.constraint.ConstraintLayout>
+    </android.support.design.card.MaterialCardView>
+
+    <android.support.v7.widget.RecyclerView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:padding="4dp"
+            android:id="@+id/commentsRecyclerView" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginBottom="8dp" app:layout_constraintBottom_toTopOf="@+id/inputLayout"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/postContentCard"
+    />
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:id="@+id/inputLayout"
+                  android:layout_height="wrap_content"
+                  android:orientation="horizontal"
+                  android:layout_width="fill_parent"
+                  android:layout_marginBottom="8dp"
+                  app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
+                  android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent"
+                  android:layout_marginEnd="8dp">
+
+        <EditText
+                android:hint="What do you want to say?"
+                android:id="@+id/commentInputView"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_width="0dp" android:textAlignment="center">
+        </EditText>
+
+        <Button android:text="post"
+                android:id="@+id/commentSubmitButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+        </Button>
+
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

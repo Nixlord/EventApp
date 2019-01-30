@@ -16,10 +16,13 @@ import com.example.overlord.eventapp.main.guests.GuestFragment
 import com.example.overlord.eventapp.main.wall.WallFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter
+import com.example.overlord.eventapp.extensions.addFragment
 
 import com.example.overlord.eventapp.extensions.replaceFragment
 import com.example.overlord.eventapp.extensions.toastSuccess
+import com.example.overlord.eventapp.main.wall.PostFragment
 import com.example.overlord.eventapp.mechanisms.filters.FilterActivity
+import com.example.overlord.eventapp.model.Post
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.RuntimeException
 
@@ -29,8 +32,9 @@ class MainActivity : BaseActivity() {
         return WallFragment.newInstance(
             inputs,
             object : WallFragment.FragmentInteractor {
-                override fun onButtonPressed(message: String) {
-                    logDebug("snackbar pressed")
+                override fun addPostFragment(post: Post) {
+                    logDebug("Opening Post Fragment")
+                    addFragment(R.id.fragmentContainer, PostFragment())
                 }
             }
         )
@@ -133,7 +137,7 @@ class MainActivity : BaseActivity() {
             true
         }
 
-        bottomNavigation.currentItem = 1
+        bottomNavigation.currentItem = 2
 
     }
 }

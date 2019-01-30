@@ -44,18 +44,16 @@
                     card_view:layout_constraintStart_toEndOf="@+id/postAuthorProfileView"
                     android:layout_marginStart="24dp"/>
             <ImageView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/postImageView"
                     android:src="@drawable/placeholder"
                     android:layout_gravity="center_horizontal"
                     android:adjustViewBounds="true"
                     android:scaleType="centerCrop"
-                    card_view:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginStart="8dp" android:layout_marginEnd="8dp"
-                    card_view:layout_constraintEnd_toEndOf="parent" card_view:layout_constraintHorizontal_bias="0.503"
                     card_view:layout_constraintTop_toBottomOf="@+id/line_separator_1"
-            />
+                    android:layout_marginStart="8dp" card_view:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginEnd="8dp" card_view:layout_constraintEnd_toEndOf="parent"/>
 
 
             <ImageView
@@ -64,7 +62,7 @@
                     android:id="@+id/postAuthorProfileView" card_view:layout_constraintStart_toStartOf="parent"
                     android:layout_marginStart="16dp"
                     card_view:layout_constraintTop_toTopOf="parent" android:layout_marginTop="16dp"
-                    android:scaleType="centerCrop"/>
+                    />
             <View
                     android:layout_width="wrap_content"
                     android:layout_height="1dp"

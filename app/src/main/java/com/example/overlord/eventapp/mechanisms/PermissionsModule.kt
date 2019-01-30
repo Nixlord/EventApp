@@ -43,14 +43,16 @@ class PermissionsModule {
 
         fun execute(
             onGranted : () -> Unit = { logDebug("DefaultPermitCallback", "Default") }
-        ) {
+        ) : PermissionBuilder {
             permissionRequests[requestCode].apply {
                 this?.onGranted = onGranted
                 this?.onError = { error -> logError("DefaultPermitCallback", error) }
                 this?.requestPermissions?.invoke()
             }
+            return this
         }
 
+        //ToDo improve this in future apps.
         fun onError(onError: (Error) -> Unit = { error -> logError("DefaultPermitCallback", error) }) {
             permissionRequests[requestCode]?.onError = onError
         }

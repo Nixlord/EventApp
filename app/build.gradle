@@ -9,7 +9,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         resConfigs "en"
-        applicationId "com.example.overlord.eventapp"
+        applicationId "com.phoenixoverlord.eventapp"
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 1

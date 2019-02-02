@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.TextView
 
 import com.phoenixoverlord.eventapp.R
 import com.phoenixoverlord.eventapp.base.BaseFragment
@@ -23,10 +24,12 @@ import com.phoenixoverlord.eventapp.model.Post
 import com.phoenixoverlord.eventapp.model.User
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import com.google.android.gms.tasks.Tasks
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.Query
 import kotlinx.android.synthetic.main.fragment_wall.*
+import kotlinx.android.synthetic.main.fragment_wall_item.*
 import kotlinx.android.synthetic.main.fragment_wall_item.view.*
 import java.io.Serializable
 import java.lang.Error
@@ -119,6 +122,7 @@ class WallFragment : BaseFragment() {
 
         private fun View.setupLikeView(post: Post) {
             postLikesView.text = "${post.likedByUIDs.size} likes"
+            setupLikeDialog(post, postLikesView)
         }
 
         private fun View.setupLikeButton(
@@ -152,14 +156,18 @@ class WallFragment : BaseFragment() {
         }
 
         private fun View.setupImage(post: Post) {
+
+            val view = this
             post.imageID?.apply {
+
                 base.apply {
-                    loadImage(postImageView, post.imageID!!).setOnClickListener {
+
+                    loadImage(view.postImageView, post.imageID!!).setOnClickListener {
                         loadFragment(ImageFragment.newInstance(post.imageID!!))
                     }
 
                     downloadImage(post.imageID!!) { file ->
-                        postShareButton.setOnClickListener {
+                        view.postShareButton.setOnClickListener {
                             safeIntentDispatch(
                                 Intent(Intent.ACTION_SEND).apply {
                                     putExtra(Intent.EXTRA_STREAM, getExternallyAccessibleURI(file))
@@ -169,8 +177,6 @@ class WallFragment : BaseFragment() {
                         }
                     }
                 }
-
-
             } ?: logError(Error("No Image ID"))
         }
 
@@ -187,10 +193,37 @@ class WallFragment : BaseFragment() {
         }
     }
 
+
+    private fun createLikedByDialog(users : List<String>) : AlertDialog {
+        return AlertDialog.Builder(base)
+            .setTitle("Liked By")
+            .setItems(users.toTypedArray()) { _, _ -> }
+            .create()
+    }
+
+    private fun setupLikeDialog(post : Post, likeView: View) {
+
+        val userPromises = post.likedByUIDs
+            .map { firestore.document("users/$it").get() }
+
+        Tasks.whenAll(userPromises).addOnSuccessListener {
+            val userNames =
+                userPromises
+                    .mapNotNull { it.result }
+                    .mapNotNull { it.toObject(User::class.java) }
+                    .map { it.name }
+
+            likeView.setOnClickListener {
+                createLikedByDialog(userNames).show()
+            }
+        }
+    }
+
     private fun loadFragment(fragment: Fragment) {
         fragmentManager?.beginTransaction()
             ?.replace(R.id.fragmentContainer, fragment, fragment.getSimpleName())
             ?.addToBackStack(fragment.getSimpleName())
             ?.commit() ?: logError(Error("Null Fragment Manager"))
     }
+
 }

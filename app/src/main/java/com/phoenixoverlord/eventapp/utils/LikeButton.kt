@@ -11,11 +11,6 @@ import com.phoenixoverlord.eventapp.R
 
 class LikeButton(context : Context, attributes: AttributeSet) : MaterialButton(context, attributes), Checkable {
 
-    var likeCount : Int = 0
-    set(value) {
-        field = value
-        text = "$field LIKES"
-    }
     private var checked : Boolean = false
     private var onCheckedChange : ((likeButton : LikeButton, checked: Boolean) -> Unit)? = null
 
@@ -29,10 +24,12 @@ class LikeButton(context : Context, attributes: AttributeSet) : MaterialButton(c
         if (checked) {
             background.setColorFilter(colorAccent, PorterDuff.Mode.SRC)
             setTextColor(Color.WHITE)
+            text = "Liked"
         }
         else {
             background.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC)
             setTextColor(colorAccent)
+            text = "Like"
         }
 
         onCheckedChange?.invoke(this, checked)

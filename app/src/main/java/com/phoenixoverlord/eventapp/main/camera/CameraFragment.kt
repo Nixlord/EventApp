@@ -143,13 +143,21 @@ class CameraFragment : BaseFragment() {
                 post.tags = getSelectedChips()
 
 
-                firestore.savePost(post, this) {
+                val uploadTask = firestore.savePost(post, this) {
                     //ToDo create notification here to signal completion
-                    val success = "Uploaded : ${post.postID}"
+
+                    val postID = post.postID
+                    val success = "Uploaded : $postID"
                     logDebug(success)
                     base.toastSuccess(success)
-                    resetViews()
                 }
+
+                base.notificationModule.createUploadProgressNotification(
+                    "Photo Upload",
+                    uploadTask
+                )
+
+                resetViews()
             }
         }
     }

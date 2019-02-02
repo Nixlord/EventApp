@@ -8,7 +8,6 @@ import android.support.v4.content.ContextCompat
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation
 import com.phoenixoverlord.eventapp.R
 import com.phoenixoverlord.eventapp.base.BaseActivity
-import com.phoenixoverlord.eventapp.extensions.logDebug
 import com.phoenixoverlord.eventapp.main.album.AlbumFragment
 import com.phoenixoverlord.eventapp.main.camera.CameraFragment
 import com.phoenixoverlord.eventapp.main.event.EventFragment
@@ -16,10 +15,10 @@ import com.phoenixoverlord.eventapp.main.guests.GuestFragment
 import com.phoenixoverlord.eventapp.main.wall.WallFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationAdapter
-import com.phoenixoverlord.eventapp.extensions.addFragment
+import com.phoenixoverlord.eventapp.extensions.*
+import com.phoenixoverlord.eventapp.extensions.Firebase.auth
+import com.phoenixoverlord.eventapp.intro.LoginActivity
 
-import com.phoenixoverlord.eventapp.extensions.replaceFragment
-import com.phoenixoverlord.eventapp.extensions.toastSuccess
 import com.phoenixoverlord.eventapp.main.wall.PostFragment
 import com.phoenixoverlord.eventapp.mechanisms.filters.FilterActivity
 import com.phoenixoverlord.eventapp.model.Post
@@ -81,15 +80,8 @@ class MainActivity : BaseActivity() {
         )
     }
 
-    fun createGuestsFragment(inputs : GuestFragment.FragmentInputs? = null) : GuestFragment {
-        return GuestFragment.newInstance(
-            inputs,
-            object : GuestFragment.FragmentInteractor {
-                override fun onButtonPressed(message: String) {
-                    logDebug("snackbar pressed")
-                }
-            }
-        )
+    fun createGuestsFragment() : GuestFragment {
+        return GuestFragment()
     }
 
     private fun setupBottomNavigation(bottomNavigation : AHBottomNavigation, menuID : Int, colorsID : Int) {
@@ -122,6 +114,10 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        if (auth.currentUser == null) {
+            finishAndStart(LoginActivity::class.java)
+        }
 
         fragments["wall"]   =  createWallFragment()
         fragments["event"]  =  createEventFragment()

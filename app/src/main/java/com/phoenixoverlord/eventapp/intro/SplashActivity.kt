@@ -32,7 +32,7 @@ class SplashActivity : AppCompatActivity() {
                 else
                     IntroActivity::class.java
             )},
-            0
+            1000
         )
     }
 }

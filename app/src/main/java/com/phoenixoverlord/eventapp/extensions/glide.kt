@@ -1,6 +1,7 @@
 package com.phoenixoverlord.eventapp.extensions
 
 import android.net.Uri
+import android.os.Handler
 import android.support.v4.content.FileProvider
 import android.widget.ImageView
 import com.bumptech.glide.Glide
@@ -60,7 +61,6 @@ fun BaseActivity.downloadImage(imageName: String, onSuccess : (file : File) -> U
                 dataSource: DataSource?,
                 isFirstResource: Boolean
             ): Boolean {
-
                 if (resource != null)
                     onSuccess(resource)
                 else
@@ -75,7 +75,7 @@ fun BaseActivity.downloadImage(imageName: String, onSuccess : (file : File) -> U
 fun BaseActivity.getExternallyAccessibleURI(file : File) : Uri {
     return FileProvider.getUriForFile(
         this,
-        "com.overlord.fileprovider",
+        "com.phoenixoverlord.fileprovider",
         file
     )
 }

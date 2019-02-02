@@ -28,15 +28,6 @@ import java.lang.Error
 import java.text.SimpleDateFormat
 import java.util.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- *
- */
 class PostFragment : BaseFragment() {
 
     private var postID : String? = null
@@ -142,7 +133,7 @@ class PostFragment : BaseFragment() {
             commentInput = ""
         }
 
-        val commentsQuery = commentsCollection.orderBy("date", Query.Direction.DESCENDING)
+        val commentsQuery = commentsCollection.orderBy("date")
         setupRecyclerView(commentsQuery)
     }
 

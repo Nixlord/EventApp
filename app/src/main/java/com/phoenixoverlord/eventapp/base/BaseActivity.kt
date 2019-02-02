@@ -6,6 +6,7 @@ import android.os.PersistableBundle
 import android.support.v7.app.AppCompatActivity
 import com.phoenixoverlord.eventapp.mechanisms.ActivityResultHandler
 import com.phoenixoverlord.eventapp.mechanisms.CameraModule
+import com.phoenixoverlord.eventapp.mechanisms.NotificationModule
 import com.phoenixoverlord.eventapp.mechanisms.PermissionsModule
 import com.phoenixoverlord.eventapp.utils.LoopingAtomicInteger
 import icepick.Icepick
@@ -16,7 +17,8 @@ abstract class BaseActivity : AppCompatActivity() {
     protected val compositeDisposable = CompositeDisposable()
     private val loopingAtomicInteger = LoopingAtomicInteger(100, 10000)
     private val activityResultHandler = ActivityResultHandler()
-//    private val compressionModule = CompressionModule()
+    // Improve notificationModule later, implement lifecycle
+    val notificationModule : NotificationModule by lazy { NotificationModule(this) }
     private val permissionsModule = PermissionsModule()
     private val camera = CameraModule()
 

@@ -15,10 +15,54 @@
       },
       "oauth_client": [
         {
-          "client_id": "26983506438-5epqre6akdqsr9i5ll7odko4mg0c4qnc.apps.googleusercontent.com",
+          "client_id": "26983506438-kldvn520grig8qbspv032r25uqhfovc7.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.phoenixoverlord.eventapp",
+            "certificate_hash": "6b00f40eb1f68e823d13d6529b27066841caba2f"
+          }
+        },
+        {
+          "client_id": "26983506438-r2ugu5j0orqvutd358lag1i29s6l19i8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAcN29jb5LOVBvMTWXGe5ie6X7D9HS68tY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "26983506438-806g7mh2kludc31ajb422h2hfmig3g1m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:26983506438:android:56f0975b9626c15b",
+        "android_client_info": {
+          "package_name": "com.phoenixoverlord.eventapp.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "26983506438-pavg5bshfotn09vd9prj7dvgmn951eal.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.phoenixoverlord.eventapp.debug",
             "certificate_hash": "a60ccc810b25f1cc25f45dd90d5e11e0ecc69f61"
           }
         },

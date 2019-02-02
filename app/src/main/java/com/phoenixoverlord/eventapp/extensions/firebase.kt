@@ -1,5 +1,7 @@
 package com.phoenixoverlord.eventapp.extensions
 
+import android.net.Uri
+import com.google.android.gms.tasks.Tasks
 import com.phoenixoverlord.eventapp.extensions.Firebase.storage
 import com.phoenixoverlord.eventapp.model.Post
 import com.google.firebase.auth.FirebaseAuth
@@ -8,6 +10,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
+import com.phoenixoverlord.eventapp.EventApp
 import java.io.File
 import java.io.FileInputStream
 import java.lang.Error
@@ -32,31 +35,24 @@ object Firebase {
 fun StorageReference.pushImage(compressedImage : File, imageName: String) : UploadTask {
     val imageStorage = this.child("images").child(imageName)
 
-    return imageStorage.putStream(
-            FileInputStream(
-                compressedImage
-            )
-        )
+    return imageStorage.putFile(Uri.fromFile(compressedImage))
 }
 
 
-fun FirebaseFirestore.savePost(post: Post, image: File, onSuccess : (task: UploadTask.TaskSnapshot) -> Unit) {
+fun FirebaseFirestore.savePost(post: Post, image: File, onSuccess : () -> Unit) : UploadTask {
 
     val postDocument = this.collection("posts").document(post.postID)
 
-    postDocument.set(post)
-        .addOnSuccessListener {
+    val storeImageTask = storage.pushImage(image, post.imageID!!)
 
-            post.imageID?.apply {
+    storeImageTask.addOnSuccessListener {
+        postDocument.set(post)
+            .addOnSuccessListener {
+                onSuccess()
+            }
+    }
 
-                storage.pushImage(image, this)
-                    .addOnSuccessListener(onSuccess)
-                    .addOnFailureListener(::logError)
-
-            } ?: logError(Error("Null Image ID"))
-
-        }
-        .addOnFailureListener(::logError)
+    return storeImageTask
 }
 
 fun<T> DocumentReference.addSnapshotListener(
@@ -76,6 +72,5 @@ fun<T> DocumentReference.addSnapshotListener(
             val obj = documentSnapshot.toObject(valueType)
             obj?.apply(objectListener) ?: logError(Error("Null Object"))
         }
-
     }
 }

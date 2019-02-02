@@ -1,6 +1,7 @@
 package com.phoenixoverlord.eventapp
 
 import android.app.Application
+import android.content.Context
 import com.phoenixoverlord.eventapp.model.Constants
 import pl.aprilapps.easyphotopicker.EasyImage
 import java.util.*

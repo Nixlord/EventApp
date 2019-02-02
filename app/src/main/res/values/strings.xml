@@ -12,8 +12,9 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!--Intro Activity String -->
+    <string name="intro_header"> We cordially invite you to our wedding. </string>
+    <string name="intro_sentence"> Save the dates and the photos,\nIn this app as everything it knows;\nAbout all the events in our wedding,\nIn which we want you to be heading.    </string>
 
     <!-- Login Activity Strings -->
     <string name="user_name">Name</string>

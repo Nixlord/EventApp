@@ -95,7 +95,16 @@ class EventFragment : BaseFragment() {
             "Lunch at 12:30 PM",
             "Palm Heights Gymkhana, Bhubaneswar",
             R.drawable.mehendi,
-            "Darker the color, darker is his love. Lets shower our blessings on this dove.")
+            "Mehendi adorns the hands and life takes on a new color.")
+        )
+
+        events.add(Event("Sangeet",
+            format.parse("2019-02-09T06:00 PM"),
+            "6:00 PM onwards",
+            "Dinner at 7 PM",
+            "Mayfair Lagoon, Bhubaneswar",
+            R.drawable.sangeet,
+            "Be ready to groove on some dhol and bollywood music! ")
         )
 
         events.add(Event("Wedding",
@@ -104,7 +113,7 @@ class EventFragment : BaseFragment() {
             "Lunch at 12:30 PM",
             "Mayfair Convention, Bhubaneswar",
             R.drawable.wedding,
-            "Shaaadiii Shaadiiiiiiiii")
+            "This being the most important day of their life, lets be a part of it and make it more special")
         )
 
 

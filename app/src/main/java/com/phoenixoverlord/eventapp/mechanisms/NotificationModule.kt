@@ -9,11 +9,10 @@ import android.content.Intent
 import android.os.Build
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
+import com.google.firebase.storage.FileDownloadTask
 import com.google.firebase.storage.UploadTask
-import com.phoenixoverlord.eventapp.extensions.logDebug
 import com.phoenixoverlord.eventapp.main.MainActivity
 import com.phoenixoverlord.eventapp.utils.LoopingAtomicInteger
-import java.util.*
 
 
 // Make lifecycle aware
@@ -110,5 +109,37 @@ class NotificationModule(context: Context) : ContextWrapper(context) {
         }
 
         return notificationId
+    }
+
+    // Refactor Ugly Piece of Shit
+    fun createDownloadProgressNotification(id: Int, title: String, fileDownloadTask: FileDownloadTask) {
+
+        val notificationBuilder = NotificationCompat.Builder(this, CHANNEL_ID_UPLOAD)
+            .setContentTitle(title)
+            .setContentText("Downloading")
+            .setSmallIcon(android.R.drawable.ic_menu_upload)
+            .setPriority(NotificationCompat.PRIORITY_LOW)
+
+        NotificationManagerCompat.from(this).apply {
+
+            // Start
+            notificationBuilder.setProgress(100, 0, false)
+            notify(id, notificationBuilder.build())
+
+            //Progress
+            fileDownloadTask.addOnProgressListener {
+                val percent = (100.0 * it.bytesTransferred) / it.totalByteCount
+                notificationBuilder.setProgress(100, percent.toInt(), false)
+                notify(id, notificationBuilder.build())
+
+            }.addOnSuccessListener {
+
+                notificationBuilder.setContentText("Download complete")
+                    .setProgress(0, 0, false)
+                    .setContentIntent(createHandlerIntent())
+                    .setAutoCancel(true)
+                notify(id, notificationBuilder.build())
+            }
+        }
     }
 }

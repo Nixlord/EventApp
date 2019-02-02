@@ -19,7 +19,6 @@ fun BaseActivity.loadImage(imageView: ImageView, imageName : String) : ImageView
     val storageReference = storage.child("images").child(imageName)
     return Glide.with(this)
         .load(storageReference)
-        .apply(RequestOptions.centerCropTransform())
         .into(imageView)
         .view
 }

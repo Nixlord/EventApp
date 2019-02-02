@@ -38,17 +38,6 @@ class MainActivity : BaseActivity() {
             }
         )
     }
-    fun createEventFragment(inputs: EventFragment.FragmentInputs? = null) : EventFragment {
-        return EventFragment.newInstance(
-            inputs,
-            object : EventFragment.FragmentInteractor {
-                override fun onButtonPressed(message: String) {
-                    logDebug("snackbar pressed")
-                }
-            }
-        )
-    }
-
     fun createCameraFragment(inputs : CameraFragment.FragmentInputs? = null) : CameraFragment {
         return CameraFragment.newInstance(
             inputs,
@@ -56,8 +45,8 @@ class MainActivity : BaseActivity() {
                 override fun onImageUploaded(postID : String) {
                     fragments["wall"] = createWallFragment(
                         WallFragment.FragmentInputs(
-                        postID = postID
-                    ))
+                            postID = postID
+                        ))
                     bottomNavigation.currentItem = fragmentNames.indexOf("wall")
                 }
 
@@ -69,15 +58,12 @@ class MainActivity : BaseActivity() {
         )
     }
 
-    fun createAlbumFragment(inputs : AlbumFragment.FragmentInputs? = null) : AlbumFragment {
-        return AlbumFragment.newInstance(
-            inputs,
-            object : AlbumFragment.FragmentInteractor {
-                override fun onButtonPressed(message: String) {
-                    logDebug("snackbar pressed")
-                }
-            }
-        )
+    fun createEventFragment() : EventFragment {
+        return EventFragment()
+    }
+
+    fun createAlbumFragment() : AlbumFragment {
+        return AlbumFragment()
     }
 
     fun createGuestsFragment() : GuestFragment {

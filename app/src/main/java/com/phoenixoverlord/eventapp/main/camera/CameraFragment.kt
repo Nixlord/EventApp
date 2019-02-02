@@ -123,14 +123,16 @@ class CameraFragment : BaseFragment() {
         setupCamera()
         setupEditText()
 
-        editButton.setOnClickListener {
-            base.apply {
-                startActivityGetResult(
-                    Intent(this, FilterActivity::class.java)
-                ).addOnSuccessListener {
+        compressedImage?.let {image ->
+            editButton.setOnClickListener {
+                base.apply {
+                    startActivityGetResult(
+                        FilterActivity.newIntent(this, image)
+                    ).addOnSuccessListener {
 
 
-                }.addOnFailureListener { error, _ -> logError(error) }
+                    }.addOnFailureListener { error, _ -> logError(error) }
+                }
             }
         }
 

@@ -16,32 +16,6 @@ import java.lang.Error
 
 class AlbumFragment : BaseFragment() {
 
-    //Declare your data here
-    class FragmentInputs(val firstName: String = "Diksha", val surname: String = "Agarwal") : Serializable
-
-    interface FragmentInteractor : Serializable {
-        //Implement your methods here
-        fun onButtonPressed(message: String)
-    }
-
-    private var inputs: FragmentInputs? = null
-    private var interactor: FragmentInteractor?  = null
-
-    companion object {
-        @JvmStatic
-        fun newInstance(inputs: FragmentInputs?, interactor: FragmentInteractor) =
-            AlbumFragment().apply {
-                this.interactor = interactor
-                arguments = Bundle().apply { putSerializable("inputs", inputs) }
-            }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        inputs = arguments?.getSerializable("inputs") as FragmentInputs?
-        //Initialize Heavier things here because onCreateView and onViewCreated are called much more number of times
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_album, container, false)
     }
@@ -49,63 +23,19 @@ class AlbumFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //Pool Party
         arrayOf(
-            pool_party_image,
-            pool_party_name
+            Pair("Pool Party",  arrayOf(pool_party_image, pool_party_name)),
+            Pair("Haldi",       arrayOf(haldi_image, haldi_name)),
+            Pair("Mehendi",     arrayOf(mehendi_image, mehendi_name)),
+            Pair("Sangeet",     arrayOf(sangeet_image, sangeet_name)),
+            Pair("Wedding",     arrayOf(wedding_image, wedding_name)),
+            Pair("Reception",   arrayOf(reception_image, reception_name ))
         ).forEach {
-            it.setOnClickListener {
-                loadFragment(PhotosFragment.newInstance("Pool Party"))
-            }
-        }
-
-        //Haldi
-        arrayOf(
-            haldi_image,
-            haldi_name
-        ).forEach {
-            it.setOnClickListener {
-                loadFragment(PhotosFragment.newInstance("Haldi"))
-            }
-        }
-
-        //Mehendi
-        arrayOf(
-            mehendi_image,
-            mehendi_name
-        ).forEach {
-            it.setOnClickListener {
-                loadFragment(PhotosFragment.newInstance("Mehendi"))
-            }
-        }
-
-        //Sangeet
-        arrayOf(
-            sangeet_image,
-            sangeet_name
-        ).forEach {
-            it.setOnClickListener {
-                loadFragment(PhotosFragment.newInstance("Sangeet"))
-            }
-        }
-
-        //Wedding
-        arrayOf(
-            wedding_image,
-            wedding_name
-        ).forEach {
-            it.setOnClickListener {
-                loadFragment(PhotosFragment.newInstance("Wedding"))
-            }
-        }
-
-        //Reception
-        arrayOf(
-            reception_image,
-            reception_name
-        ).forEach {
-            it.setOnClickListener {
-                loadFragment(PhotosFragment.newInstance("Reception"))
+            val (eventTag, views) = it
+            views.forEach {
+                it.setOnClickListener {
+                    loadFragment(PhotosFragment.newInstance(eventTag))
+                }
             }
         }
 
@@ -117,5 +47,4 @@ class AlbumFragment : BaseFragment() {
             ?.addToBackStack(fragment.getSimpleName())
             ?.commit() ?: logError(Error("Null Fragment Manager"))
     }
-
 }

@@ -1,5 +1,6 @@
 package com.phoenixoverlord.eventapp.mechanisms.filters
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
@@ -8,9 +9,12 @@ import android.support.annotation.DrawableRes
 import android.support.v7.widget.LinearLayoutManager
 import com.phoenixoverlord.eventapp.R
 import com.phoenixoverlord.eventapp.base.BaseActivity
+import com.phoenixoverlord.eventapp.extensions.loadImage
+import com.phoenixoverlord.eventapp.extensions.toastError
 import com.zomato.photofilters.SampleFilters
 import com.zomato.photofilters.imageprocessors.Filter
 import kotlinx.android.synthetic.main.activity_filter.*
+import java.io.File
 import java.util.*
 
 class FilterActivity : BaseActivity(){
@@ -19,13 +23,29 @@ class FilterActivity : BaseActivity(){
         init {
             System.loadLibrary("NativeImageProcessor")
         }
+        fun newIntent(activity: BaseActivity, image : File) : Intent {
+            return Intent(activity, FilterActivity::class.java).apply {
+                putExtra("imageFile", image)
+            }
+        }
     }
+
+    private var imageFile : File? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_filter)
-        filterImageView.setImageBitmap(getScaledBitmap(R.drawable.photo))
+
+        imageFile = intent.getSerializableExtra("imageFile") as File?
+
+        if (imageFile == null) {
+            toastError("Null Image")
+            finish()
+        }
+
+        loadImage(filterImageView, imageFile!!)
         initHorizontalList()
+        bindDataToAdapter(imageFile!!)
     }
 
 
@@ -35,19 +55,20 @@ class FilterActivity : BaseActivity(){
         layoutManager.scrollToPosition(0)
         thumbnailRecyclerView.layoutManager = layoutManager
         thumbnailRecyclerView.setHasFixedSize(true)
-        bindDataToAdapter()
     }
 
-    private fun getScaledBitmap(@DrawableRes resourceID: Int): Bitmap? {
+
+
+    private fun getScaledBitmap(image : File): Bitmap? {
         return Bitmap.createScaledBitmap(
-                BitmapFactory.decodeResource(resources, resourceID),
-                640, 640, false
-            )
+            BitmapFactory.decodeFile(image.absolutePath),
+            640, 640, false
+        )
     }
 
-    private fun bindDataToAdapter() {
+    private fun bindDataToAdapter(image : File) {
         Handler().post {
-            val thumbImage = getScaledBitmap(R.drawable.photo)
+            val thumbImage = getScaledBitmap(image)
 
             val filters = arrayListOf(
                     Filter(),
@@ -73,7 +94,7 @@ class FilterActivity : BaseActivity(){
 
             val adapter = ThumbnailsAdapter(thumbs) { filter ->
                     filterImageView.setImageBitmap(
-                        filter.processFilter(getScaledBitmap(R.drawable.photo)))
+                        filter.processFilter(getScaledBitmap(image)))
             }
 
             thumbnailRecyclerView.adapter = adapter

@@ -1,19 +1,16 @@
 package com.phoenixoverlord.eventapp.mechanisms
 
-import android.os.Environment
-import android.support.v7.app.AppCompatActivity
-import com.phoenixoverlord.eventapp.model.Constants
+import com.phoenixoverlord.eventapp.base.BaseActivity
+import com.phoenixoverlord.eventapp.extensions.getDefaultFolder
 import id.zelory.compressor.Compressor
 import java.io.File
 
-fun AppCompatActivity.compressImage(image : File, name : String) : File {
 
-    val destinationRoot = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-    val destination = File(destinationRoot, Constants.localCompressedImages)
+fun BaseActivity.compressImage(image : File, name : String) : File {
 
     // Do this in background
     val compressor = Compressor(this)
-        .setDestinationDirectoryPath(destination.absolutePath)
+        .setDestinationDirectoryPath(getDefaultFolder().absolutePath)
         .setMaxWidth(1920)
         .setMaxHeight(1080)
         .setQuality(50)

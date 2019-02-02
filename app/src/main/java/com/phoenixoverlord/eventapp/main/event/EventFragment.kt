@@ -27,32 +27,6 @@ import android.provider.CalendarContract
 
 class EventFragment : BaseFragment() {
 
-    //Declare your data here
-    class FragmentInputs(val firstName: String = "Diksha", val surname: String = "Agarwal") : Serializable
-
-    interface FragmentInteractor : Serializable {
-        //Implement your methods here
-        fun onButtonPressed(message: String)
-    }
-
-    private var inputs: FragmentInputs? = null
-    private var interactor: FragmentInteractor? = null
-
-    companion object {
-        @JvmStatic
-        fun newInstance(inputs: FragmentInputs?, interactor: FragmentInteractor) =
-            EventFragment().apply {
-                this.interactor = interactor
-                arguments = Bundle().apply { putSerializable("inputs", inputs) }
-            }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        inputs = arguments?.getSerializable("inputs") as FragmentInputs?
-        //Initialize Heavier things here because onCreateView and onViewCreated are called much more number of times
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_event, container, false)
     }
@@ -76,7 +50,7 @@ class EventFragment : BaseFragment() {
             "10:00 AM onwards",
             "Lunch at 1:00 PM",
             "Palm Heights Gymkhana, Bhubaneswar",
-            R.drawable.poolparty,
+            R.drawable.event_pool,
             "Come in blue and white and enjoy our party with great delight!!")
         )
 
@@ -85,7 +59,7 @@ class EventFragment : BaseFragment() {
             "4:00 PM onwards",
             "Dinner at 7:30 PM",
             "Palm Heights Gymkhana, Bhubaneswar",
-            R.drawable.haldi,
+            R.drawable.event_haldi,
             "Together, lets make yellow an auspicious color for the bride.")
         )
 
@@ -94,7 +68,7 @@ class EventFragment : BaseFragment() {
             "8:00 AM onwards",
             "Lunch at 12:30 PM",
             "Palm Heights Gymkhana, Bhubaneswar",
-            R.drawable.mehendi,
+            R.drawable.event_mehendi,
             "Mehendi adorns the hands and life takes on a new color.")
         )
 
@@ -103,7 +77,7 @@ class EventFragment : BaseFragment() {
             "6:00 PM onwards",
             "Dinner at 7 PM",
             "Mayfair Lagoon, Bhubaneswar",
-            R.drawable.sangeet,
+            R.drawable.event_sangeet,
             "Be ready to groove on some dhol and bollywood music! ")
         )
 
@@ -112,7 +86,7 @@ class EventFragment : BaseFragment() {
             "7:00 AM onwards",
             "Lunch at 12:30 PM",
             "Mayfair Convention, Bhubaneswar",
-            R.drawable.wedding,
+            R.drawable.event_wedding,
             "This being the most important day of their life, lets be a part of it and make it more special")
         )
 
@@ -122,7 +96,7 @@ class EventFragment : BaseFragment() {
             "7:30 PM onwards",
             "Dinner at 7:30 PM",
             "Sri Venkateshwara Swamy Kalyana Mandapam, SriNagar Colony, Hyderabad",
-            R.drawable.reception,
+            R.drawable.event_reception,
             "Let's bless the newly married couple for a long and a happy life together forever.")
         )
 

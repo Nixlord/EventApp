@@ -11,7 +11,7 @@
     <ImageView
             android:layout_width="170dp"
             android:layout_height="145dp"
-            android:src="@drawable/poolparty"
+            android:src="@drawable/event_pool"
             android:id="@+id/pool_party_image"
             android:layout_marginTop="48dp" app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="24dp"/>
@@ -31,7 +31,7 @@
             android:layout_width="170dp"
             android:layout_height="145dp"
             android:id="@+id/haldi_image"
-            android:src="@drawable/haldi"
+            android:src="@drawable/event_haldi"
             android:layout_marginTop="48dp"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="8dp" app:layout_constraintStart_toEndOf="@+id/pool_party_image"
@@ -53,7 +53,7 @@
             android:layout_width="170dp"
             android:layout_height="145dp"
             android:id="@+id/mehendi_image"
-            android:src="@drawable/mehendi" android:layout_marginTop="40dp"
+            android:src="@drawable/event_mehendi" android:layout_marginTop="40dp"
             app:layout_constraintTop_toBottomOf="@+id/pool_party_name" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="24dp"/>
 
@@ -72,7 +72,7 @@
             android:layout_width="170dp"
             android:layout_height="145dp"
             android:id="@+id/sangeet_image"
-            android:src="@drawable/sangeet"
+            android:src="@drawable/event_sangeet"
             android:layout_marginTop="40dp"
             app:layout_constraintTop_toBottomOf="@+id/haldi_name" app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="8dp" app:layout_constraintStart_toEndOf="@+id/mehendi_image"
@@ -94,7 +94,7 @@
             android:layout_width="170dp"
             android:layout_height="145dp"
             android:id="@+id/wedding_image"
-            android:src="@drawable/wedding" android:layout_marginTop="40dp"
+            android:src="@drawable/event_wedding" android:layout_marginTop="40dp"
             app:layout_constraintTop_toBottomOf="@+id/mehendi_name" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="24dp"/>
 
@@ -114,7 +114,7 @@
             android:layout_width="170dp"
             android:layout_height="145dp"
             android:id="@+id/reception_image"
-            android:src="@drawable/reception"
+            android:src="@drawable/event_reception"
             android:layout_marginTop="40dp"
             app:layout_constraintTop_toBottomOf="@+id/sangeet_name" app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="8dp" app:layout_constraintStart_toEndOf="@+id/wedding_image"

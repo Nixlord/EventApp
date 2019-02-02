@@ -13,8 +13,10 @@
         <com.github.chrisbanes.photoview.PhotoView
                 android:id="@+id/fullSizePhotoView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"
+                android:scaleType="center"
+                android:src="@drawable/photo"
+                android:adjustViewBounds="true"
+        />
     </android.support.design.card.MaterialCardView>
-    <!-- TODO: Update blank fragment layout -->
-
 </FrameLayout>

@@ -7,7 +7,11 @@ import android.support.design.chip.Chip
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.android.gms.tasks.Tasks
+import com.google.firebase.storage.FileDownloadTask
+import com.google.firebase.storage.UploadTask
 import com.phoenixoverlord.eventapp.R
+import com.phoenixoverlord.eventapp.base.BaseActivity
 import com.phoenixoverlord.eventapp.base.BaseFragment
 import com.phoenixoverlord.eventapp.extensions.*
 import com.phoenixoverlord.eventapp.extensions.Firebase.auth
@@ -19,6 +23,7 @@ import com.phoenixoverlord.eventapp.utils.uniqueName
 import kotlinx.android.synthetic.main.fragment_camera.*
 import java.io.File
 import java.io.Serializable
+import java.util.*
 
 class CameraFragment : BaseFragment() {
 
@@ -63,7 +68,8 @@ class CameraFragment : BaseFragment() {
         Pair("Party", false),
         Pair("Haldi", false),
         Pair("Mehendi", false),
-        Pair("Shaadi", false),
+        Pair("Sangeet", false),
+        Pair("Wedding", false),
         Pair("Reception", false)
     )
 
@@ -73,6 +79,7 @@ class CameraFragment : BaseFragment() {
             chipHaldi,
             chipMehendi,
             chipParty,
+            chipSangeet,
             chipShaadi,
             chipReception
         )
@@ -87,6 +94,45 @@ class CameraFragment : BaseFragment() {
 
     fun getSelectedChips() = selectedTags.filter { it.value }.keys.toCollection(ArrayList())
 
+    class ImageUploadTask(private val imageFiles : MutableList<File>) {
+        fun execute(activity : BaseActivity) {
+            fun createUploadTask(index : Int)  : UploadTask {
+                val file = imageFiles[index]
+
+                val post = Post(
+                    userID = auth.uid!!,
+                    postID = uniqueName(),
+                    imageID = uniqueName(),
+                    tags = arrayListOf("Wedding"),
+                    content = "Snigdha Charan Marriage"
+                )
+                val task =  firestore.savePost(post, file)
+
+                activity.notificationModule
+                    .createUploadProgressNotification(
+                        54321,
+                        "Uploading ${index + 1}/${imageFiles.size}th image",
+                        task
+                    )
+
+                return task
+            }
+
+            val uploadFunctions = imageFiles.mapIndexed { index, _ -> { createUploadTask(index) } }
+
+            var uploadTask : UploadTask? = null
+
+            uploadFunctions.forEach {function ->
+                if (uploadTask == null)
+                    uploadTask = function.invoke()
+                else {
+                    uploadTask?.addOnSuccessListener {
+                        uploadTask = function.invoke()
+                    }
+                }
+            }
+        }
+    }
 
     fun setupCamera() {
         photoView.setOnClickListener {
@@ -96,16 +142,25 @@ class CameraFragment : BaseFragment() {
                     Manifest.permission.CAMERA
                 ).execute {
                     takePhoto("Upload Photos")
-                        .addOnSuccessListener { image ->
+                        .addOnSuccessListener { images ->
 
-                            logDebug("Cache File ${image.name}")
+                            if (images.size == 1) {
+                                val image = images[0]
 
-                            val imageName = uniqueName()
+                                logDebug("Cache File ${image.name}")
 
-                            compressedImage = compressImage(image, imageName)
-                            post.imageID = imageName
+                                val imageName = uniqueName()
 
-                            loadImage(photoView, image)
+                                compressedImage = compressImage(image, imageName)
+                                post.imageID = imageName
+
+                                loadImage(photoView, image)
+                            }
+                            else if (images.size > 1) {
+                                val uploadTask = ImageUploadTask(images)
+                                uploadTask.execute(base)
+                                resetViews()
+                            }
                         }
                 }
             }
@@ -123,19 +178,6 @@ class CameraFragment : BaseFragment() {
         setupCamera()
         setupEditText()
 
-        compressedImage?.let {image ->
-            editButton.setOnClickListener {
-                base.apply {
-                    startActivityGetResult(
-                        FilterActivity.newIntent(this, image)
-                    ).addOnSuccessListener {
-
-
-                    }.addOnFailureListener { error, _ -> logError(error) }
-                }
-            }
-        }
-
         submitButton.setOnClickListener {
 
             compressedImage?.apply {
@@ -143,7 +185,6 @@ class CameraFragment : BaseFragment() {
                 post.userID = auth.uid ?: "NULL UID"
                 post.postID = uniqueName()
                 post.tags = getSelectedChips()
-
 
                 val uploadTask = firestore.savePost(post, this) {
                     //ToDo create notification here to signal completion
@@ -155,6 +196,7 @@ class CameraFragment : BaseFragment() {
                 }
 
                 base.notificationModule.createUploadProgressNotification(
+                    123,
                     "Photo Upload",
                     uploadTask
                 )

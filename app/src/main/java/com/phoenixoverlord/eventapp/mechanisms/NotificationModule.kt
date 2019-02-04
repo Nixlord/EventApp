@@ -76,8 +76,9 @@ class NotificationModule(context: Context) : ContextWrapper(context) {
         return notificationId
     }
 
-    fun createUploadProgressNotification(title: String, uploadTask: UploadTask) : Int {
-        val notificationId = loopingAtomicInteger.nextInt()
+    fun createUploadProgressNotification(id : Int = loopingAtomicInteger.nextInt(),
+                                         title: String, uploadTask: UploadTask) : Int {
+        val notificationId = id
 
         val notificationBuilder = NotificationCompat.Builder(this, CHANNEL_ID_UPLOAD)
             .setContentTitle(title)

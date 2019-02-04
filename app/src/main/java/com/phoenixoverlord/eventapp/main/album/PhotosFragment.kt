@@ -1,6 +1,7 @@
 package com.phoenixoverlord.eventapp.main.album
 
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -20,6 +21,7 @@ import com.google.firebase.storage.FileDownloadTask
 import com.phoenixoverlord.eventapp.base.BaseActivity
 import com.phoenixoverlord.eventapp.extensions.Firebase.firestore
 import com.phoenixoverlord.eventapp.extensions.Firebase.storage
+import com.phoenixoverlord.eventapp.main.wall.ImageFragment
 import com.phoenixoverlord.eventapp.model.Post
 import kotlinx.android.synthetic.main.fragment_photo_item.view.*
 
@@ -77,8 +79,6 @@ class PhotosFragment : BaseFragment() {
     }
 
     class DownloadTask(private val imageIDs : ArrayList<String>) {
-
-
 
         fun execute(activity : BaseActivity) {
 
@@ -156,9 +156,23 @@ class PhotosFragment : BaseFragment() {
         fun bindItems(post : Post) {
             itemView.apply {
                 post.imageID?.apply {
+
                     base.loadImage(albumImageView, this)
+
+                    albumImageView.setOnClickListener {
+                        loadFragment(
+                            ImageFragment.newInstance(this)
+                        )
+                    }
                 }
             }
         }
+    }
+
+    private fun loadFragment(fragment: Fragment) {
+        fragmentManager?.beginTransaction()
+            ?.replace(R.id.fragmentContainer, fragment, fragment.getSimpleName())
+            ?.addToBackStack(fragment.getSimpleName())
+            ?.commit() ?: logError(Error("Null Fragment Manager"))
     }
 }

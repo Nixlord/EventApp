@@ -27,14 +27,14 @@
                     android:layout_marginTop="12dp"
                     android:textColor="#EA5C46"
                     android:textStyle="italic"
-                    android:textSize="20sp"
+                    android:textSize="22sp"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
                     card_view:layout_constraintTop_toTopOf="parent"
                     card_view:layout_constraintStart_toStartOf="parent"
                     android:layout_marginStart="8dp"
                     card_view:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginEnd="8dp"
-                    card_view:layout_constraintHorizontal_bias="0.0"/>
+                    card_view:layout_constraintHorizontal_bias="0.0" android:fontFamily="cursive"/>
 
             <ImageView
                     android:layout_width="248dp"
@@ -52,57 +52,49 @@
                     android:layout_marginStart="8dp"/>
 
             <LinearLayout
-                    android:layout_width="79dp"
-                    android:layout_height="150dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
                     android:orientation="vertical"
                     card_view:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginEnd="8dp"
                     android:layout_marginTop="8dp"
                     card_view:layout_constraintTop_toBottomOf="@+id/event_header"
                     card_view:layout_constraintStart_toEndOf="@+id/eventImageView" android:layout_marginStart="8dp"
-                    android:id="@+id/linearLayout2">
+                    android:id="@+id/linearLayout2" android:backgroundTint="@color/black_overlay">
 
                 <TextView
+                        android:padding="4dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/event_year"
-                        android:hint="@string/event_year"
-                        android:textSize="20sp"
-                        android:layout_weight="0.25"
-                        android:textAlignment="center"
-                        android:background="@android:color/darker_gray"
-                        android:textColor="#000000"/>
-
-                <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/event_month"
-                        android:hint="@string/event_month"
+                        android:id="@+id/event_day"
+                        android:hint="8 Feb"
                         android:textSize="22sp"
                         android:textAlignment="center"
                         android:textColor="#000000"
-                        android:background="@android:color/darker_gray"
-                        android:layout_weight="0.25"/>
+                        android:layout_weight="0.25" android:background="FFFF8A80" android:backgroundTint="FFFF8A80"/>
 
                 <TextView
+                        android:padding="4dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/event_date"
-                        android:hint="@string/event_date"
-                        android:textSize="24sp"
+                        android:id="@+id/event_date_year"
+                        android:hint="2019"
+                        android:textSize="20sp"
                         android:textAlignment="center"
                         android:textColor="#000000"
-                        android:background="@android:color/darker_gray"
-                        android:layout_weight="0.25"/>
+                        android:layout_weight="0.25" android:backgroundTint="FFFF8A80" android:background="FFFF8A80"/>
 
                 <ImageButton
+                        android:padding="4dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/set_date"
                         android:src="@drawable/alarm"
                         android:textAlignment="center"
                         android:textColor="#66000000"
-                        android:layout_weight="0.25"/>
+                        android:layout_weight="0.25" android:tint="@android:color/white"
+                        android:background="#EA5C46"/>
 
             </LinearLayout>
             <ImageView

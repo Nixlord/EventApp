@@ -2,14 +2,16 @@ package com.phoenixoverlord.eventapp.intro
 
 import android.os.Bundle
 import android.os.Handler
-import android.support.v7.app.AppCompatActivity
 import com.phoenixoverlord.eventapp.R
 import com.phoenixoverlord.eventapp.extensions.Firebase.auth
 import com.phoenixoverlord.eventapp.extensions.finishAndStart
-
 import com.phoenixoverlord.eventapp.main.MainActivity
+import com.phoenixoverlord.eventapp.base.BaseActivity
+import com.phoenixoverlord.eventapp.extensions.loadImage
+import kotlinx.android.synthetic.main.activity_splash.*
 
-class SplashActivity : AppCompatActivity() {
+
+class SplashActivity : BaseActivity() {
 
     private val SPLASH_TIME_OUT = 3000L
 
@@ -17,14 +19,8 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        /*
-        ToDo @Diksha
-        Do not create activity objects for simple tasks like this, they are very heavy
-        Handler().postDelayed(
-            { startActivity(this, IntroActivity() },
-            SPLASH_TIME_OUT
-        )
-        */
+        loadImage(splashScreen, R.drawable.ss)
+
         Handler().postDelayed({
             finishAndStart(
                 if (auth.currentUser != null)
@@ -32,7 +28,7 @@ class SplashActivity : AppCompatActivity() {
                 else
                     IntroActivity::class.java
             )},
-            1000
+            SPLASH_TIME_OUT
         )
     }
 }

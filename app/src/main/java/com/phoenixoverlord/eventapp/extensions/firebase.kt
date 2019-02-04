@@ -40,7 +40,10 @@ fun StorageReference.pushImage(compressedImage : File, imageName: String) : Uplo
 }
 
 
-fun FirebaseFirestore.savePost(post: Post, image: File, onSuccess : () -> Unit) : UploadTask {
+fun FirebaseFirestore.savePost(
+    post: Post, image: File,
+    onSuccess : () -> Unit = { logDebug("savePost", "default") }
+) : UploadTask {
 
     val postDocument = this.collection("posts").document(post.postID)
 

@@ -10,11 +10,11 @@ import java.lang.Exception
 
 // Not Thread Safe, May not be required. Requires Polish
 class CameraModule {
-    private lateinit var onSuccess: ((File) -> Unit)
+    private lateinit var onSuccess: ((MutableList<File>) -> Unit)
     private lateinit var onError: ((Error) -> Unit)
 
     private fun reset() {
-        onSuccess = { image -> logDebug("DefaultCameraCallback", image.name) }
+        onSuccess = { images -> images.forEach { image -> logDebug("DefaultCameraCallback", image.name) } }
         onError = { error -> logError("DefaultCameraCallback", error) }
     }
 
@@ -28,7 +28,7 @@ class CameraModule {
         return this
     }
 
-    fun addOnSuccessListener(onSuccess: (File) -> Unit) : CameraModule{
+    fun addOnSuccessListener(onSuccess: (MutableList<File>) -> Unit) : CameraModule{
         this.onSuccess = onSuccess
         return this
     }
@@ -48,9 +48,9 @@ class CameraModule {
 
             override fun onImagesPicked(p0: MutableList<File>, p1: EasyImage.ImageSource?, p2: Int) {
 
+                onSuccess(p0)
                 p0.forEach { image ->
                     logDebug("CameraModuleHandler", image.toString())
-                    onSuccess(image)
                 }
 
                 reset()

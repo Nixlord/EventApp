@@ -41,7 +41,7 @@ class LoginActivity : BaseActivity() {
                     AuthUI.IdpConfig.PhoneBuilder().build()
                 )
             )
-            .setIsSmartLockEnabled(false)
+            .setIsSmartLockEnabled(true)
             .build()
     }
 
@@ -177,14 +177,17 @@ class LoginActivity : BaseActivity() {
                 Manifest.permission.CAMERA
             ).execute {
                 takePhoto("Add Profile Photo")
-                    .addOnSuccessListener { image ->
+                    .addOnSuccessListener { images ->
+
+                        val image = images[0]
+
                         logDebug("Profile photo name: ${image.name}")
 
                         user.profile_photo = uniqueName()
 
                         compressedImage = compressImage(image, user.profile_photo)
 
-                        Glide.with(this).load(image).into(userProfilePhoto)
+                        loadImage(userProfilePhoto, image)
                     }
             }
         }

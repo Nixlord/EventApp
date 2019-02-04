@@ -2,6 +2,7 @@ package com.phoenixoverlord.eventapp.extensions
 
 import android.net.Uri
 import android.os.Handler
+import android.support.annotation.DrawableRes
 import android.support.v4.content.FileProvider
 import android.widget.ImageView
 import com.bumptech.glide.Glide
@@ -35,6 +36,10 @@ fun BaseActivity.loadCircularImage(imageView: ImageView, imageName : String) : I
 
 fun BaseActivity.loadImage(imageView: ImageView, imageFile : File) : ImageView {
     return Glide.with(this).load(imageFile).into(imageView).view
+}
+
+fun BaseActivity.loadImage(imageView: ImageView, @DrawableRes drawableID : Int) : ImageView {
+    return Glide.with(this).load(drawableID).into(imageView).view
 }
 
 fun BaseActivity.downloadImage(imageName: String, onSuccess : (file : File) -> Unit) {

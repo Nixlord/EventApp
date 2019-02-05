@@ -14,7 +14,6 @@ import com.phoenixoverlord.eventapp.base.BaseFragment
 import com.phoenixoverlord.eventapp.extensions.toastError
 import kotlinx.android.synthetic.main.fragment_guests.*
 
-import java.io.Serializable
 import java.lang.IllegalArgumentException
 
 class GuestFragment : BaseFragment() {
@@ -26,24 +25,17 @@ class GuestFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (fragmentManager != null) {
-            val viewPagerAdapter = ViewPagerAdapter(fragmentManager!!)
-            guest_side_view_pager.adapter = viewPagerAdapter
-            guest_side_tab.setupWithViewPager(guest_side_view_pager)
-        }
-        else {
-            base.toastError("Null Fragment Manager")
-        }
-
-
+        val viewPagerAdapter = ViewPagerAdapter(childFragmentManager)
+        guest_side_view_pager.adapter = viewPagerAdapter
+        guest_side_tab.setupWithViewPager(guest_side_view_pager)
     }
 
-    inner class ViewPagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
+    inner class ViewPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
         override fun getItem(position: Int): Fragment {
             return when(position) {
-                0 -> BrideFragment()
-                1 -> GroomFragment()
+                0 -> BrideGroomFragment.newInstance("Bride")
+                1 -> BrideGroomFragment.newInstance("Groom")
                 else -> throw IllegalArgumentException("Illegal Page Position $position")
             }
         }

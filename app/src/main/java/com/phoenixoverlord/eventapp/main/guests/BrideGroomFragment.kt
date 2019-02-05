@@ -21,7 +21,23 @@ import com.google.firebase.firestore.Query
 import kotlinx.android.synthetic.main.fragment_bride.*
 import kotlinx.android.synthetic.main.fragment_guest_item.view.*
 
-class BrideFragment : BaseFragment() {
+class BrideGroomFragment : BaseFragment() {
+
+    var side : String? = null
+
+    companion object {
+        @JvmStatic
+        fun newInstance(side : String) : BrideGroomFragment {
+            return BrideGroomFragment().apply {
+                arguments = Bundle().apply { putString("side", side) }
+            }
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        side = arguments?.getString("side") ?: "Bride"
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_bride, container, false)
@@ -31,7 +47,7 @@ class BrideFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val firestoreQuery = Firebase.firestore.collection("users")
-            .whereEqualTo("wedding_side", "Bride")
+            .whereEqualTo("wedding_side", side!!)
             .whereEqualTo("key_contact", "true")
         setupFirestoreRecyclerView(firestoreQuery)
     }
@@ -42,13 +58,13 @@ class BrideFragment : BaseFragment() {
             .setQuery(query, User::class.java)
             .build()
 
-        val firestoreRecyclerAdapter = object : FirestoreRecyclerAdapter<User, BrideFragment.BrideGuestHolder>(firestoreOptions) {
-            override fun onCreateViewHolder(p0: ViewGroup, p1: Int): BrideFragment.BrideGuestHolder {
+        val firestoreRecyclerAdapter = object : FirestoreRecyclerAdapter<User, BrideGroomFragment.BrideGuestHolder>(firestoreOptions) {
+            override fun onCreateViewHolder(p0: ViewGroup, p1: Int): BrideGroomFragment.BrideGuestHolder {
                 return BrideGuestHolder(
                     p0.inflate(R.layout.fragment_guest_item)
                 )
             }
-            override fun onBindViewHolder(holder: BrideFragment.BrideGuestHolder, position: Int, guest: User) {
+            override fun onBindViewHolder(holder: BrideGroomFragment.BrideGuestHolder, position: Int, guest: User) {
                 holder.bindItems(guest)
             }
         }
@@ -65,7 +81,7 @@ class BrideFragment : BaseFragment() {
                 guest_name.text = guest.name
                 guest_relation.text = guest.relation
 
-                if(guest.relation == "Bride") {
+                if(guest.relation in setOf("Bride", "Groom")) {
                     bride_groom_image.visibility = View.VISIBLE
                     Glide.with(this).load(R.drawable.crown).into(bride_groom_image)
                 }

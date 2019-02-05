@@ -130,9 +130,9 @@ class EventFragment : BaseFragment() {
                 itemView.event_message.text = event.message
 
                 val calendar = Calendar.getInstance()
-                val day = calendar.get(Calendar.DAY_OF_MONTH).toString() + " Feb"
-
                 calendar.time = event.date
+
+                val day = calendar.get(Calendar.DAY_OF_MONTH).toString() + " Feb"
                 itemView.event_date_year.text = calendar.get(Calendar.YEAR).toString()
                 itemView.event_day.text = day
 

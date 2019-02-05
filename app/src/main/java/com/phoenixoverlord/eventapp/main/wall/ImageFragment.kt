@@ -2,15 +2,15 @@ package com.phoenixoverlord.eventapp.main.wall
 
 
 import android.os.Bundle
-import android.app.Fragment
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.phoenixoverlord.eventapp.R
 import com.phoenixoverlord.eventapp.base.BaseFragment
-import com.phoenixoverlord.eventapp.extensions.loadImage
-import com.phoenixoverlord.eventapp.extensions.logError
+import com.phoenixoverlord.eventapp.extensions.*
 import kotlinx.android.synthetic.main.fragment_image.*
+import kotlinx.android.synthetic.main.fragment_image.view.*
 import java.lang.Error
 
 
@@ -43,8 +43,20 @@ class ImageFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        imageID?.apply {
-            base.loadImage(fullSizePhotoView, this)
+        base.apply {
+
+            loadImage(view.fullSizePhotoView, imageID!!)
+            downloadImage(imageID!!) { file ->
+                view.fullSizePhotoView.setOnLongClickListener {
+                    safeIntentDispatch(
+                        Intent(Intent.ACTION_SEND).apply {
+                            putExtra(Intent.EXTRA_STREAM, getExternallyAccessibleURI(file))
+                            type = "image/jpeg"
+                        }
+                    )
+                    true
+                }
+            }
         }
     }
 }

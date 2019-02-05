@@ -167,16 +167,11 @@ class CameraFragment : BaseFragment() {
         }
     }
 
-    fun setupEditText() {
-        contentView.onTextChange { content -> post.content = content }
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setupChipLayout()
         setupCamera()
-        setupEditText()
 
         submitButton.setOnClickListener {
 
@@ -185,6 +180,7 @@ class CameraFragment : BaseFragment() {
                 post.userID = auth.uid ?: "NULL UID"
                 post.postID = uniqueName()
                 post.tags = getSelectedChips()
+                post.content = contentView.text.toString()
 
                 val uploadTask = firestore.savePost(post, this) {
                     //ToDo create notification here to signal completion

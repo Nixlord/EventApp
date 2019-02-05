@@ -1,10 +1,13 @@
 package com.phoenixoverlord.eventapp.main
 
 import android.content.Intent
+import android.content.res.TypedArray
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
+import android.view.Window
+import android.view.WindowManager
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation
 import com.phoenixoverlord.eventapp.R
 import com.phoenixoverlord.eventapp.base.BaseActivity
@@ -97,6 +100,15 @@ class MainActivity : BaseActivity() {
     private val fragments : MutableMap<String, Fragment> = ConcurrentHashMap()
     private val fragmentNames = arrayListOf("wall", "event", "camera", "album", "guest")
 
+
+
+    fun setStatusBarColor(colors: TypedArray, position : Int) {
+
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window.statusBarColor = colors.getColor(position, 0)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -111,15 +123,21 @@ class MainActivity : BaseActivity() {
         fragments["album"]  =  createAlbumFragment()
         fragments["guest"]  =  createGuestsFragment()
 
+        val colors = resources.obtainTypedArray(R.array.colors)
+
         setupBottomNavigation(bottomNavigation, R.menu.navigation, R.array.colors)
         bottomNavigation.setOnTabSelectedListener { position, wasSelected ->
-            if ( ! wasSelected )
-                replaceFragment(R.id.fragmentContainer,
-                    fragments[fragmentNames[position]] ?: throw RuntimeException("$position not found"))
+            if ( ! wasSelected ) {
+                replaceFragment(
+                    R.id.fragmentContainer,
+                    fragments[fragmentNames[position]] ?: throw RuntimeException("$position not found")
+                )
+                setStatusBarColor(colors, position)
+            }
             true
         }
 
-        bottomNavigation.currentItem = 2
+        bottomNavigation.currentItem = 1
 
     }
 }

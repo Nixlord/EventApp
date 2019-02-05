@@ -12,12 +12,22 @@
     <color name="album_tab">@color/colorAccent</color>
     <color name="guest_tab">@color/colorPrimary</color>
 
-    <array name="colors">
+
+
+    <array name="colorsOld">
         <item>#6CCC3D</item>
         <item>#EA5C46</item>
         <item>#33b3cc</item>
         <item>#EA5C46</item>
         <item>#33b3cc</item>
+    </array>
+
+    <array name="colors">
+        <item>@color/colorAccent</item>
+        <item>#EA5C46</item>
+        <item>@color/colorAccent</item>
+        <item>#EA5C46</item>
+        <item>@color/colorAccent</item>
     </array>
 
     <color name="black_overlay">#ff8a80</color>

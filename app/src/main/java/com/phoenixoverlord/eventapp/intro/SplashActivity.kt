@@ -19,7 +19,6 @@ class SplashActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        loadImage(splashScreen, R.drawable.ss)
 
         Handler().postDelayed({
             finishAndStart(
